@@ -1,0 +1,32 @@
+fieldset {
+  margin-bottom: rem(20px);
+}
+
+.select-wrapper {
+  position: relative;
+
+  .select {
+    background: var(--white);
+    padding: rem(15px) rem(40px);
+    border-radius: rem(10px);
+    border: 1px solid var(--border-color);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%;
+
+    &:focus-visible {
+      outline: 0;
+      border-color: var(--primary);
+      box-shadow: 0 0 6px var(--primary-50);
+    }
+  }
+
+  [class*='icon-'] {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: rem(40px);
+    color: var(--gray-dark);
+  }
+}
