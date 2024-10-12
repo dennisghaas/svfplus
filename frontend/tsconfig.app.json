@@ -29,5 +29,9 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["../../svfplus/frontend/src/**/*.ts", "../../svfplus/frontend/src/**/*.tsx", "../../svfplus/frontend/src/**/*.vue"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue"
+  ]
 }
