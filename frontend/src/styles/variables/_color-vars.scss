@@ -1,0 +1,52 @@
+@use 'sass:color';
+
+// NEUTRAL COLORS
+$white: #fff;
+$gray-very-soft: #f5f5f5;
+$gray-soft: #ededef;
+$gray-light: #d3d3d3; // border-color
+$gray-dark: #6e6e6e;
+$gray-dark-50: #{color.change($gray-dark, $alpha: 0.5)};
+$black: #383838;
+
+// WARNING COLORS
+$warning-soft: #feeecb;
+$warning-light: #f39c12;
+$warning-dark: #935401;
+
+// SECONDARY COLORS
+$blue-light: #cce5ff;
+$blue-primary: #4b7bec;
+$blue-primary-highlight: #7699ea;
+$blue-primary-50: #{color.change($blue-primary-highlight, $alpha: 0.5)};
+$blue-soft-gray: #778ca3;
+$blue-light-gray: #4b6584;
+$blue-dark-gray: #324358;
+
+// PRIMARY COLORS
+$error-soft: #ffc3c9;
+$error-light: #ee5253;
+$error-dark: #a71529;
+
+// SUCCESS COLORS
+$success-soft: #e9f5ce;
+$success-light: #78e08f;
+$success-light-50: #{color.change($success-light, $alpha: 0.5)};
+$success-mint: #10ac84;
+$success-dark: #436f00;
+
+// OTHERS
+$purple: #9b59b6;
+
+// LIGHTER TEXT COLORS
+$white-75: #{color.change($white, $alpha: 0.75)};
+$white-50: #{color.change($white, $alpha: 0.5)};
+$white-25: #{color.change($white, $alpha: 0.25)};
+
+// DARKER TEXT COLORS
+$black-75: #{color.change($black, $alpha: 0.75)};
+$black-50: #{color.change($black, $alpha: 0.5)};
+$black-25: #{color.change($black, $alpha: 0.25)};
+
+// PRIMARY SHADOW COLORS
+$error-light-50: #{color.change($error-light, $alpha: 0.5)};

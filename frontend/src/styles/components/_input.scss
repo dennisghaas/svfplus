@@ -1,0 +1,52 @@
+fieldset {
+  position: relative;
+  margin-bottom: rem(20px);
+
+  &.vote-options {
+    margin-bottom: rem(10px);
+  }
+
+  span {
+    margin-top: rem(5px);
+    display: block;
+    font-size: $font-size-12;
+  }
+
+  button {
+    display: block;
+  }
+}
+
+.input {
+  padding: rem(15px) rem(40px);
+  border-radius: rem(10px);
+  border: 1px solid var(--border-color);
+  font-size: $font-size-16;
+  width: 100%;
+
+  &:focus-visible {
+    outline: 0;
+    border-color: var(--primary);
+    box-shadow: 0 0 rem(6px) var(--primary-50);
+  }
+
+  &::placeholder {
+    color: var(--black-50);
+  }
+}
+
+.input-password {
+  position: relative;
+}
+
+.show-password {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: rem(40px);
+  color: var(--gray-dark);
+
+  i::before {
+    font-size: $font-size-18;
+  }
+}
