@@ -26,21 +26,21 @@ app.use('/api/event-responses', eventResponseRoutes);
 app.use('/api/standing-orders', standingOrdersRoutes);
 app.use('/api/blocked-users', blockedUsersRoutes);
 
+const PORT = process.env.PORT || 3000;
+
 sequelize.sync({ alter: true })
     .then(() => {
         console.log('Datenbank synchronisiert');
 
-        // Server starten
-        const PORT = process.env.PORT || 3000;
         app.listen(PORT, () => {
             console.log('Access-Control-Allow-Origin:', process.env.CORS_ORIGIN);
             console.log(`Server läuft auf Port ${PORT}`);
         });
     })
-    .catch(err => console.error('Fehler beim Synchronisieren der Datenbank:', err));
+    .catch(err => {
+        console.error('Fehler beim Synchronisieren der Datenbank:', err);
+        process.exit(1); // Beende den Prozess im Fehlerfall
+    });
 
 // Exportiere die App für Vercel
-module.exports = async (req, res) => {
-    await syncDatabase(); // Synchronisiere die DB beim ersten Aufruf
-    return app(req, res); // Leitet die Anfrage an die Express-App weiter
-};
+module.exports = app;
