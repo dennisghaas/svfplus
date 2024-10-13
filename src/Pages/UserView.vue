@@ -1,11 +1,11 @@
 <template>
   <LinkType
-    v-if="!isCurrentUsersProfile"
-    :btn-class="'btn-prev'"
-    :btn-link="'./'"
-    :btn-text="'Zurück zur Team Übersicht'"
-    :btn-icon-prev="true"
-    :btn-icon="'icon-chevron-left'"
+      v-if="!isCurrentUsersProfile"
+      :btn-class="'btn-prev'"
+      :btn-link="'./'"
+      :btn-text="'Zurück zur Team Übersicht'"
+      :btn-icon-prev="true"
+      :btn-icon="'icon-chevron-left'"
   />
 
   <template v-if="loaded">
@@ -13,27 +13,27 @@
       <div class="row">
         <div class="col-xs-12 col-md-6 col-lg-12 col-xl-6">
           <CardProfile
-            :title="getSelectedUser?.name || ''"
-            :subtitle="getSelectedUser?.role || ''"
-            :name="getSelectedUser?.name || ''"
-            :surname="getSelectedUser?.surname || ''"
-            :email="getSelectedUser?.email || ''"
-            :position="getSelectedUser?.position || ''"
-            :birthday="
+              :title="getSelectedUser?.name || ''"
+              :subtitle="getSelectedUser?.role || ''"
+              :name="getSelectedUser?.name || ''"
+              :surname="getSelectedUser?.surname || ''"
+              :email="getSelectedUser?.email || ''"
+              :position="getSelectedUser?.position || ''"
+              :birthday="
               getSelectedUser?.birthday instanceof Date
                 ? getSelectedUser.birthday.toISOString().split('T')[0]
                 : ''
             "
-            :got-suit="getSelectedUser?.gotSuit || false"
-            :debts="getSelectedUser?.debts || 0"
-            :id="getSelectedUser?.id || 0"
-            :is-injured="getSelectedUser?.isInjured || false"
-            :is-injured-type="getSelectedUser?.isInjuredType || ''"
-            :role="getSelectedUser?.role || ''"
-            :jersey-number="getSelectedUser?.jerseyNumber || 0"
-            :bg-color="getSelectedUser?.userImage?.bgColor || ''"
-            :initials="getSelectedUser?.userImage?.initials || ''"
-            :is-current-users-profile="isCurrentUsersProfile"
+              :got-suit="getSelectedUser?.gotSuit || false"
+              :debts="getFormattedDebts"
+              :id="getSelectedUser?.id || 0"
+              :is-injured="getSelectedUser?.isInjured || false"
+              :is-injured-type="getSelectedUser?.isInjuredType || ''"
+              :role="getSelectedUser?.role || ''"
+              :jersey-number="getSelectedUser?.jerseyNumber || 0"
+              :bg-color="getSelectedUser?.userImage?.bgColor || ''"
+              :initials="getSelectedUser?.userImage?.initials || ''"
+              :is-current-users-profile="isCurrentUsersProfile"
           />
         </div>
 
@@ -41,16 +41,16 @@
           <div class="row">
             <div class="col-xs-12 col-lg-6">
               <CardDebts
-                :debts="getSelectedUser?.debts || 0"
-                :role="getSelectedUser?.role || ''"
+                  :debts="getFormattedDebts"
+                  :role="getSelectedUser?.role || ''"
               />
             </div>
 
             <div class="col-xs-12 col-lg-6">
               <CardParticipation
-                :current-user-profile="isCurrentUsersProfile"
-                :current-user-name="store.state.userData.name || ''"
-                :user-name="getSelectedUser?.name || ''"
+                  :current-user-profile="isCurrentUsersProfile"
+                  :current-user-name="store.state.userData.name || ''"
+                  :user-name="getSelectedUser?.name || ''"
               />
             </div>
           </div>
@@ -60,8 +60,8 @@
 
     <template v-else>
       <BadgeType
-        :badge-text="'Wir konnten keinen Nutzer finden'"
-        :badge-type="'error'"
+          :badge-text="'Wir konnten keinen Nutzer finden'"
+          :badge-type="'error'"
       />
     </template>
   </template>
@@ -69,7 +69,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUser } from '@/composables/useUser.ts'
 import { UserData } from '@/interface'
@@ -86,6 +86,7 @@ const currentRoute = router.currentRoute.value.path
 const userID = ref(Number(currentRoute.split('/').pop()))
 const getSelectedUser = ref<UserData | null>(null)
 const getUserNotFound = ref(false)
+const getFormattedDebts = ref(0)
 const loaded = ref(false)
 const isCurrentUsersProfile = ref(false)
 
@@ -96,6 +97,10 @@ onMounted(async () => {
 
   getUserNotFound.value = userNotFound.value
   getSelectedUser.value = selectedUser.value
+
+  if (getSelectedUser.value) {
+    getFormattedDebts.value = Number(getSelectedUser.value.debts);
+  }
 
   loaded.value = true
 
