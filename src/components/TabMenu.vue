@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineEmits } from 'vue'
+import { ref } from 'vue'
 
 // Props for the tabs to be passed from the parent
 defineProps({
