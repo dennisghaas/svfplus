@@ -19,11 +19,7 @@
               :surname="getSelectedUser?.surname || ''"
               :email="getSelectedUser?.email || ''"
               :position="getSelectedUser?.position || ''"
-              :birthday="
-              getSelectedUser?.birthday instanceof Date
-                ? getSelectedUser.birthday.toISOString().split('T')[0]
-                : ''
-            "
+              :birthday="getSelectedUser?.birthday"
               :got-suit="getSelectedUser?.gotSuit || false"
               :debts="getFormattedDebts"
               :id="getSelectedUser?.id || 0"

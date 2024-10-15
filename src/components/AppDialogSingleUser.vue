@@ -130,12 +130,7 @@
       <div class="col-xs-12">
         <InjuredDropdown
           :is-injured="getSelectedUser.isInjured"
-          :is-injured-type="getSelectedUser.isInjuredType"
-          :is-injured-until="formattedInjuredUntil"
-          :throw-error="injuredUntilError"
           @update:is-injured="updateInjuredStatus"
-          @update:is-injured-type="updateInjuredType"
-          @update:is-injured-until="updateInjuredUntil"
         />
       </div>
 
@@ -332,7 +327,6 @@ const surNameError = ref(false)
 const jerseyNumberError = ref(false)
 const debtsError = ref(false)
 const promotionError = ref(false)
-const injuredUntilError = ref(false)
 
 /* change password */
 const showChangePasswordModel = ref(false)
@@ -376,29 +370,12 @@ const handleUserAction = () => {
   promotionError.value =
     getSelectedUser.value.role === '[]' || !getSelectedUser.value.role
 
-  /* validate injured data */
-  const getDateOnly = (dateString: string) => {
-    const date = new Date(dateString)
-    return new Date(date.getFullYear(), date.getMonth(), date.getDate())
-  }
-
-  if (getSelectedUser.value.isInjured) {
-    const today = getDateOnly(new Date().toISOString())
-    const injuredUntil = getDateOnly(
-      getSelectedUser.value.isInjuredUntil.toISOString(),
-    )
-    injuredUntilError.value = today >= injuredUntil
-  } else {
-    injuredUntilError.value = false
-  }
-
   if (
     !nameError.value &&
     !surNameError.value &&
     !jerseyNumberError.value &&
     !debtsError.value &&
-    !promotionError.value &&
-    !injuredUntilError.value
+    !promotionError.value
   ) {
     const updates = {
       name: getSelectedUser.value.name,
@@ -412,8 +389,6 @@ const handleUserAction = () => {
       role: getSelectedUser.value.role,
       accessRights: usersAccessRights.value,
       isInjured: getSelectedUser.value.isInjured,
-      isInjuredType: getSelectedUser.value.isInjuredType,
-      isInjuredUntil: getSelectedUser.value.isInjuredUntil,
       initials: getSelectedUser.value.userImage.initials,
     }
 
@@ -422,20 +397,27 @@ const handleUserAction = () => {
   }
 }
 
-const usersBirthday = ref<string>('')
+const usersBirthday = ref<string>("");
 const formattedDate = computed(() => {
-  const date = new Date(usersBirthday.value)
-  return date.toISOString().split('T')[0]
-})
+  return usersBirthday.value
+      ? new Date(usersBirthday.value).toISOString().split('T')[0]
+      : '';
+});
+
 const updateUsersBirthday = (newDate: string | number | Date) => {
-  // Convert the input to a Date
-  const parsedDate = new Date(newDate)
-  if (!isNaN(parsedDate.getTime())) {
-    usersBirthday.value = parsedDate.toISOString().split('T')[0] // Store the formatted date
+  if (newDate instanceof Date) {
+    usersBirthday.value = newDate.toISOString().split('T')[0];
+  } else if (typeof newDate === 'string' || typeof newDate === 'number') {
+    const parsedDate = new Date(newDate);
+    if (!isNaN(parsedDate.getTime())) {
+      usersBirthday.value = parsedDate.toISOString().split('T')[0];
+    } else {
+      console.error('Ungültiges Datumsformat:', newDate);
+    }
   } else {
-    console.warn('Ungültiges Datum:', newDate)
+    console.error('Unbekannter Typ für newDate:', newDate);
   }
-}
+};
 
 const updateGotSuit = (gotSuit: boolean) => {
   if (getSelectedUser.value) {
@@ -474,38 +456,24 @@ const updateInjuredStatus = (injured: boolean) => {
   }
 }
 
-const updateInjuredType = (type: string) => {
-  if (getSelectedUser.value) {
-    getSelectedUser.value.isInjuredType = type
-  }
-}
-
-const updateInjuredUntil = (until: Date) => {
-  if (getSelectedUser.value) {
-    getSelectedUser.value.isInjuredUntil = until
-  }
-}
-
-const formattedInjuredUntil = computed(() => {
-  if (getSelectedUser.value) {
-    return getSelectedUser.value.isInjuredUntil
-      ? new Date(getSelectedUser.value.isInjuredUntil)
-          .toISOString()
-          .split('T')[0]
-      : ''
-  }
-})
-
 onMounted(async () => {
   await getUserByID(props.id)
 
   if (selectedUser.value) {
     getSelectedUser.value = selectedUser.value
 
-    if (selectedUser.value.birthday) {
-      usersBirthday.value = selectedUser.value.birthday
-        .toISOString()
-        .split('T')[0]
+    const birthday = selectedUser.value.birthday;
+
+    if (birthday) {
+      const parsedDate = new Date(birthday);
+
+      if (!isNaN(parsedDate.getTime())) {
+        usersBirthday.value = parsedDate.toISOString().split('T')[0];
+      } else {
+        console.error('Ungültiges Datumsformat:', birthday);
+      }
+    } else {
+      console.error('Geburtstag nicht vorhanden.');
     }
 
     if (selectedUser.value.accessRights) {

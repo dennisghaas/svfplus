@@ -65,12 +65,7 @@
         <div class="card-body-profile--item">
           <span class="typo-label"> Geburtstag </span>
           <span>
-            <template v-if="formattedDate === 'Invalid date'"> k.A. </template>
-            <template v-else>
-              {{
-                `${formattedDate.day}.${formattedDate.month}.${formattedDate.year}`
-              }}
-            </template>
+            {{formattedDate?.day}}.{{formattedDate?.month}}.{{formattedDate?.year}}
           </span>
         </div>
 
@@ -158,8 +153,8 @@ const props = defineProps({
     default: null,
   },
   birthday: {
-    type: String,
-    default: '',
+    type: Date,
+    default: new Date(),
   },
   gotSuit: {
     type: Boolean,
@@ -200,13 +195,6 @@ const props = defineProps({
 })
 
 const formattedDate = computed(() => {
-  if (
-    !props.birthday ||
-    isNaN(new Date(props.birthday).getTime()) ||
-    props.birthday === '1955-01-01T00:00:00.000Z'
-  ) {
-    return 'Invalid date'
-  }
   return formatDate(props.birthday)
 })
 
