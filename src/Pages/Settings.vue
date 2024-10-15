@@ -30,6 +30,8 @@
               :bg-color="user.userImage.bgColor"
               :user-initials="user.userImage.initials"
               :user-name="user.name + ' ' + user.surname"
+              :is-image="!user.userImage.bgColor.includes('--')"
+              :add-border="true"
             />
 
             <ButtonWrapper :align-as-row="true">
