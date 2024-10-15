@@ -9,6 +9,7 @@
           :label="'Kompletten Dauerauftrag bearbeiten'"
           :id="'checkbox-for-standing-order'"
           :value="standingOrderCheckbox"
+          :margin-bottom="true"
           @update:model-value="updateStandingOrderCheckbox"
         />
       </div>

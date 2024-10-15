@@ -42,6 +42,8 @@
           :label="'Im Dashboard der Spieler anzeigen'"
           :id="'checkbox-for-dashboard'"
           :value="selectedEvent[0].showInDashboard"
+          :margin-bottom="!selectedEvent[0].showInDashboard"
+          :no-border="selectedEvent[0].showInDashboard"
           @update:model-value="updateShowInDashboard"
         />
 
@@ -149,6 +151,8 @@
           :label="'Im Dashboard der Spieler anzeigen'"
           :id="'checkbox-for-dashboard'"
           :value="selectedEvent[0].showInDashboard"
+          :margin-bottom="!selectedEvent[0].showInDashboard"
+          :no-border="selectedEvent[0].showInDashboard"
           @update:model-value="updateShowInDashboard"
         />
 

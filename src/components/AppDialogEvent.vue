@@ -1,42 +1,44 @@
 <template>
   <div class="app-dialog--event" v-if="!isLoading">
     <div class="app-dialog--event__header">
-      <div class="body-text-b2">
-        <p>Bearbeite alle wichtigen Informationen für dein Event</p>
-      </div>
+      <BadgeType
+        :badge-type="'warning'"
+        :badge-text="'Daten des ausgewählten Events bearbeiten'"
+      />
     </div>
 
     <AppDialogEventTraining
-      v-if="eventType === 'Training'"
-      :event-i-d="eventID"
-      :event-type="eventType"
-      :date="`${getDate?.year}-${getDate?.month}-${getDate?.day}`"
+        v-if="eventType === 'Training'"
+        :event-i-d="eventID"
+        :event-type="eventType"
+        :date="`${getDate?.year}-${getDate?.month}-${getDate?.day}`"
     />
     <AppDialogEventSpielFeier
-      v-if="eventType === 'Spiel' || eventType === 'Feier'"
-      :event-type="eventType"
-      :event-i-d="eventID"
-      :date="`${getDate?.year}-${getDate?.month}-${getDate?.day}`"
+        v-if="eventType === 'Spiel' || eventType === 'Feier'"
+        :event-type="eventType"
+        :event-i-d="eventID"
+        :date="`${getDate?.year}-${getDate?.month}-${getDate?.day}`"
     />
-    <AppDialogEventAbstimmung v-if="eventType === 'Abstimmung'" />
+    <AppDialogEventAbstimmung v-if="eventType === 'Abstimmung'"/>
 
     <MetaInformation
-      :author="selectedEvent[0].author"
-      :created-at="`${createdAt?.day}.${createdAt?.month}.${createdAt?.year}`"
-      :updated-at="`${updatedAt?.day}.${updatedAt?.month}.${updatedAt?.year}`"
+        :author="selectedEvent[0].author"
+        :created-at="`${createdAt?.day}.${createdAt?.month}.${createdAt?.year}`"
+        :updated-at="`${updatedAt?.day}.${updatedAt?.month}.${updatedAt?.year}`"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, computed } from 'vue'
-import { useEvents } from '@/composables/useEvents.ts'
-import { formatDate } from '@/helpers/formatDate.ts'
-import { Event } from '@/interface'
+import {onMounted, ref, computed} from 'vue'
+import {useEvents} from '@/composables/useEvents.ts'
+import {formatDate} from '@/helpers/formatDate.ts'
+import {Event} from '@/interface'
 import AppDialogEventTraining from '@/components/AppDialogEventTraining.vue'
 import AppDialogEventAbstimmung from '@/components/AppDialogEventAbstimmung.vue'
 import AppDialogEventSpielFeier from '@/components/AppDialogEventSpielFeier.vue'
 import MetaInformation from '@/components/MetaInformation.vue'
+import BadgeType from "@/components/BadgeType.vue";
 
 // Define props
 const props = defineProps({
@@ -50,7 +52,7 @@ const props = defineProps({
   },
 })
 
-const { fetchEventsByID, selectedEvent } = useEvents()
+const {fetchEventsByID, selectedEvent} = useEvents()
 const isLoading = ref(true)
 
 const resolveDate = (eventValue: keyof Event) => {

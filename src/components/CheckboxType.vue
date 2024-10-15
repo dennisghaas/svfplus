@@ -1,6 +1,6 @@
 <template>
-  <fieldset :class="['checkbox', { 'checkbox--no-border': noBorder }]">
-    <input type="checkbox" :id="id" :checked="value" @change="onInput" />
+  <fieldset :class="['checkbox', { 'checkbox--no-border': noBorder, 'checkbox--add-margin-btm' : marginBottom }]">
+    <input type="checkbox" :id="id" :checked="value" @change="onInput"/>
     <label class="checkbox-label" :for="id">
       {{ label }}
     </label>
@@ -25,6 +25,10 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  marginBottom: {
+    type: Boolean,
+    default: false
+  }
 })
 
 const emit = defineEmits<{

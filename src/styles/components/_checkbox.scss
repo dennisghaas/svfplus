@@ -8,6 +8,10 @@
     border-bottom: 0;
   }
 
+  &--add-margin-btm {
+    margin-bottom: rem(20px);
+  }
+
   input {
     visibility: hidden;
     display: none;

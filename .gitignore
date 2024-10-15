@@ -9,6 +9,7 @@ lerna-debug.log*
 
 # Umgebungsvariablen
 .env
+.env-example
 
 node_modules
 dist
