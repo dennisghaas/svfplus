@@ -99,7 +99,8 @@ export const accessibleRoles = [
   'Spieler',
 ]
 
-export const accessibleEventTypes = ['Training', 'Spiel', 'Feier', 'Abstimmung']
+export const accessibleEventTypes = ['Training', 'Spiel', 'Feier']
+// export const accessibleEventTypes = ['Training', 'Spiel', 'Feier', 'Abstimmung'] /* Abstimmung mit Reaktion muss noch umgesetzt werden, allerdings nicht relevant erstmal für launch */
 
 export const accessibleWeekday = [
   'Montag',
