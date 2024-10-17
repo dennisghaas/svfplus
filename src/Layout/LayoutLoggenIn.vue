@@ -43,10 +43,10 @@ console.log(
 
 <style scoped lang="scss">
 .pageMain {
-  margin-top: rem(40px);
+  padding-top: rem(40px);
 
   /* (bottom navigation height) */
-  margin-bottom: rem(80px);
+  padding-bottom: $bottomNavigationHeight;
 
   @include media-breakpoint-up(lg) {
     margin-left: auto;

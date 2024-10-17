@@ -259,10 +259,14 @@ watch(
     margin-bottom: 0;
     padding: rem(20px) 0;
     position: sticky;
-    top: 0;
+    top: $pageHeaderHeight;
     left: 0;
     background: var(--gray-soft);
     z-index: 2;
+
+    @include media-breakpoint-up(lg) {
+      top: 0;
+    }
   }
 }
 </style>

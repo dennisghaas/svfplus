@@ -74,8 +74,12 @@ defineProps({
 
   &__reverse {
     padding-top: rem(20px);
-    margin-top: rem(20px);
+    margin: rem(20px) 0;
     border-top: 1px solid var(--border-color);
+
+    @include media-breakpoint-up(lg) {
+      margin-top: rem(20px);
+    }
   }
 }
 </style>

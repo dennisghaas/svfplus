@@ -65,7 +65,10 @@
 
         <div class="card-body-profile--item">
           <span class="typo-label"> Geburtstag </span>
-          <span>
+          <span v-if="`${formattedDate?.day}.${formattedDate?.month}.${formattedDate?.year}` === '01.01.1955'">
+            k.A.
+          </span>
+          <span v-else>
             {{formattedDate?.day}}.{{formattedDate?.month}}.{{formattedDate?.year}}
           </span>
         </div>

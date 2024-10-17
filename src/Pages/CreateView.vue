@@ -1,46 +1,52 @@
 <template>
-  <div class="create-form-page">
-    <div v-if="!eventCreatedSuccessful" class="create-form-page__create-event">
-      <ul class="step-navigation blanklist">
-        <li
-          v-for="(step, index) in steps"
-          :key="index"
-          :class="[
+  <SectionType :class="'mt-0'">
+    <template #sectionContent>
+      <div class="create-form-page">
+        <div v-if="!eventCreatedSuccessful" class="create-form-page__create-event">
+          <ul class="step-navigation blanklist">
+            <li
+                v-for="(step, index) in steps"
+                :key="index"
+                :class="[
             'step-navigation--item',
             {
               'step-navigation--item__is-active':
                 store.state.createCardSelected.includes(step.id),
             },
           ]"
-        >
-          <button
-            type="button"
-            @click="handleForm(step.id)"
-            :disabled="store.state.createCardSelected.length - 1 < index"
-          >
+            >
+              <button
+                  type="button"
+                  @click="handleForm(step.id)"
+                  :disabled="store.state.createCardSelected.length - 1 < index"
+              >
             <span class="step-navigation--item--control-icon">
               <i
-                :class="
+                  :class="
                   store.state.createCardSelected.includes(step.id)
                     ? 'icon-check'
                     : 'icon-close'
                 "
               ></i>
             </span>
-            <span>
-              <strong>{{ step.step }}</strong> - {{ step.name }}
+                <span>
+              <strong>{{ step.step }}</strong>
+              <template v-if="isDesktop">
+                - {{ step.name }}
+              </template>
             </span>
-          </button>
-        </li>
-      </ul>
+              </button>
+            </li>
+          </ul>
 
-      <div class="row">
-        <div
-          v-if="store.state.createCardSelected.includes('meta')"
-          class="col-xl-4 col-xs-12"
-        >
-          <div
-            :class="[
+          <div class="row">
+            <div
+                v-if="store.state.createCardSelected.includes('meta')"
+                class="col-xl-4 col-xs-12"
+            >
+              <div
+                  v-show="isMobile ?  store.state.createCardSelected[store.state.createCardSelected.length - 1] === 'meta' : true"
+                  :class="[
               'create-form-card',
               {
                 'create-form-card__is-active':
@@ -49,17 +55,18 @@
                   ] === 'meta',
               },
             ]"
-          >
-            <h3 v-if="isMobile">Meta Daten erstellen</h3>
-            <CreateFormCardMeta />
-          </div>
-        </div>
-        <div
-          v-if="store.state.createCardSelected.includes('desc')"
-          class="col-xl-4 col-xs-12"
-        >
-          <div
-            :class="[
+              >
+                <h3 v-if="isMobile">Meta Daten erstellen</h3>
+                <CreateFormCardMeta/>
+              </div>
+            </div>
+            <div
+                v-if="store.state.createCardSelected.includes('desc')"
+                class="col-xl-4 col-xs-12"
+            >
+              <div
+                  v-show="isMobile ?  store.state.createCardSelected[store.state.createCardSelected.length - 1] === 'desc' : true"
+                  :class="[
               'create-form-card',
               {
                 'create-form-card__is-active':
@@ -68,17 +75,18 @@
                   ] === 'desc',
               },
             ]"
-          >
-            <h3 v-if="isMobile">Beschreibung für Event</h3>
-            <CreateFormCardDesc />
-          </div>
-        </div>
-        <div
-          v-if="store.state.createCardSelected.includes('result')"
-          class="col-xl-4 col-xs-12"
-        >
-          <div
-            :class="[
+              >
+                <h3 v-if="isMobile">Beschreibung für Event</h3>
+                <CreateFormCardDesc/>
+              </div>
+            </div>
+            <div
+                v-if="store.state.createCardSelected.includes('result')"
+                class="col-xl-4 col-xs-12"
+            >
+              <div
+                  v-show="isMobile ?  store.state.createCardSelected[store.state.createCardSelected.length - 1] === 'result' : true"
+                  :class="[
               'create-form-card',
               {
                 'create-form-card__is-active':
@@ -87,63 +95,66 @@
                   ] === 'result',
               },
             ]"
-          >
-            <h3 v-if="isMobile">Event kontrollieren</h3>
-            <CreateFormCardResult />
+              >
+                <h3 v-if="isMobile">Event kontrollieren</h3>
+                <CreateFormCardResult/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div v-else class="create-form-page__create-new-event">
+          <div class="create-form-page__create-new-event--header">
+            <div class="animation">
+              <CheckAnimation/>
+            </div>
+            <h2 class="text-center">Event wurde erfolgreich erstellt!</h2>
+          </div>
+
+          <div class="body-text-b2 text-center text-color-black-75">
+            <p>
+              Das Event ist nun in deinem Kalender oder Dashboard der Nutzer
+              sichtbar.<br/>
+              Über den Button kannst du weitere Events hinzufügen.
+            </p>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12 d-flex justify-content-center">
+              <ButtonType
+                  :btn-text="'Neues Event erstellen'"
+                  :btn-class="'w-max-content spacing-top'"
+                  :type-button="true"
+                  @click="createNewEvent()"
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-
-    <div v-else class="create-form-page__create-new-event">
-      <div class="create-form-page__create-new-event--header">
-        <div class="animation">
-          <CheckAnimation />
-        </div>
-        <h2 class="text-center">Event wurde erfolgreich erstellt!</h2>
-      </div>
-
-      <div class="body-text-b2 text-center text-color-black-75">
-        <p>
-          Das Event ist nun in deinem Kalender oder Dashboard der Nutzer
-          sichtbar.<br />
-          Über den Button kannst du weitere Events hinzufügen.
-        </p>
-      </div>
-
-      <div class="row">
-        <div class="col-xs-12 d-flex justify-content-center">
-          <ButtonType
-            :btn-text="'Neues Event erstellen'"
-            :btn-class="'w-max-content spacing-top'"
-            :type-button="true"
-            @click="createNewEvent()"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
+    </template>
+  </SectionType>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import { useBreakpoint } from '@/composables/useBreakpoint.ts'
-import { useEvents } from '@/composables/useEvents.ts'
+import {onMounted} from 'vue'
+import {useBreakpoint} from '@/composables/useBreakpoint.ts'
+import {useEvents} from '@/composables/useEvents.ts'
 import store from '@/store'
-import { steps } from '@/config.ts'
+import {steps} from '@/config.ts'
 import CreateFormCardMeta from '@/components/CreateFormCardMeta.vue'
 import CreateFormCardDesc from '@/components/CreateFormCardDesc.vue'
 import CreateFormCardResult from '@/components/CreateFormCardResult.vue'
 import ButtonType from '@/components/ButtonType.vue'
 import CheckAnimation from '@/components/CheckAnimation.vue'
+import SectionType from "@/components/SectionType.vue";
 
-const { isMobile } = useBreakpoint()
+const {isMobile, isDesktop} = useBreakpoint()
 
 const handleForm = (step: string) => {
   store.updateCreateCardSelected(step)
 }
 
-const { eventCreatedSuccessful, createNewEvent } = useEvents()
+const {eventCreatedSuccessful, createNewEvent} = useEvents()
 
 onMounted(() => {
   store.pageHeadline('Erstellen')

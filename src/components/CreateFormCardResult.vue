@@ -32,7 +32,7 @@
           :nextID="'meta'"
           :btnText="'Änderungen verwerfen'"
           :btn-class="'btn-secondary w-100'"
-          @click="discardEventChanges()"
+          @click="discardEvent()"
         />
 
         <BadgeType
@@ -48,11 +48,14 @@
 
 <script setup lang="ts">
 import { useEvents } from '@/composables/useEvents.ts'
+import {useRouter} from "vue-router";
 import ButtonType from '@/components/ButtonType.vue'
 import ButtonWrapper from '@/components/ButtonWrapper.vue'
 import CreateFormNextButton from '@/components/CreateFormNextButton.vue'
 import BadgeType from '@/components/BadgeType.vue'
 import CardEvent from '@/components/CardEvent.vue'
+
+const router = useRouter();
 
 const {
   eventType,
@@ -78,6 +81,13 @@ const handleCreateEvent = () => {
   /* possible place to validate the last time the users input */
   createEvent()
 }
+
+const discardEvent = () => {
+  discardEventChanges();
+
+  router.go(0);
+}
+
 </script>
 
 <style scoped lang="scss">

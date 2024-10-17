@@ -4,7 +4,6 @@
       <span class="typo-label"> Menü </span>
     </li>
     <template v-for="item in navigation" :key="item.linkName">
-
       <li v-if="item.accessibleRouteFrom.includes(store.state.userData.accessRights)">
         <!-- handleRouteLeave() just for mobile -->
         <router-link
@@ -68,6 +67,8 @@ const onLogout = () => {
 <style scoped lang="scss">
 .sidebar-navigation {
   .main-navigation {
+    overflow-y: scroll;
+
     li {
       &:first-child {
         margin-bottom: rem(20px);
@@ -119,11 +120,13 @@ const onLogout = () => {
 
 .pageHeader {
   .main-navigation {
+    overflow-y: scroll;
+
     li {
       border-bottom: 1px solid var(--border-color);
 
       a {
-        padding: rem(10px) 0;
+        padding: rem(20px) 0;
       }
 
       &:first-child {
@@ -137,6 +140,10 @@ const onLogout = () => {
       &:last-child,
       &:nth-last-child(2) {
         border-bottom: 0;
+      }
+
+      &:nth-last-child(2) {
+        margin-bottom: rem(40px);
       }
     }
   }

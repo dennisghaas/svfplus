@@ -46,12 +46,24 @@ const closeDialog = () => {
 .app-dialog {
   background: var(--white);
   position: absolute;
-  border-radius: rem(10px);
-  box-shadow: $box-shadow-large;
   overflow-y: scroll;
+  height: 100%;
+  width: 100%;
+  padding: 0 20px 40px;
+
+  &--alt {
+    padding: rem(40px) rem(20px);
+
+    .app-dialog__close {
+      top: rem(33px);
+    }
+  }
 
   @include media-breakpoint-up(lg) {
-    height: rem(800px);
+    box-shadow: $box-shadow-large;
+    border-radius: rem(10px);
+    max-height: rem(800px);
+    height: auto;
     width: 75%;
     top: 50%;
     left: 50%;
@@ -67,14 +79,15 @@ const closeDialog = () => {
 
   @include media-breakpoint-up(xl) {
     width: 50%;
-    height: 75%;
+    height: auto;
+    max-height: 75%;
   }
 
   &__wrapper {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 99;
+    z-index: $overlayIndex;
     width: 100%;
     height: 100%;
     background: var(--black-50);
@@ -84,11 +97,15 @@ const closeDialog = () => {
     position: sticky;
     top: 0;
     left: 0;
-    padding: rem(40px) 0 rem(20px);
+    padding: rem(20px) 0 rem(20px);
     margin-bottom: rem(20px);
     border-bottom: 1px solid var(--border-color);
     background: var(--white);
     z-index: 4;
+
+    @include media-breakpoint-up(lg) {
+      padding: rem(40px) 0 rem(20px);
+    }
 
     .app-dialog--alt & {
       position: absolute;
@@ -102,10 +119,14 @@ const closeDialog = () => {
 
   &__close {
     position: absolute;
-    top: rem(36px);
+    top: 1rem;
     padding: rem(14px);
     right: rem(-14px);
     transition: $transition-fast;
+
+    @include media-breakpoint-up(lg) {
+      top: rem(36px);
+    }
 
     [class*='icon-'] {
       font-size: $font-size-21;

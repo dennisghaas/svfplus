@@ -3,10 +3,10 @@
     <template v-if="sectionHeader">
       <div class="section--header">
         <div class="row">
-          <div class="col-xs-6">
+          <div class="col-xs-12 col-lg-8">
             <slot name="sectionHeaderLeft"></slot>
           </div>
-          <div class="col-xs-6 d-flex justify-content-end align-items-center">
+          <div class="col-xs-12 col-lg-4 d-flex justify-content-lg-end align-items-center">
             <slot name="sectionHeaderRight"></slot>
           </div>
         </div>

@@ -82,7 +82,7 @@ watch(
 .pageHeader {
   position: sticky;
   top: 0;
-  z-index: 998;
+  z-index: $pageHeaderIndex;
 
   @include media-breakpoint-up(lg) {
     width: 66.6%;

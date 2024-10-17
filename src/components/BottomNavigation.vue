@@ -57,6 +57,7 @@ defineProps({
 $border-radius-dots: rem(4px);
 
 .bottom-navigation {
+  height: $bottomNavigationHeight;
   position: fixed;
   padding: rem(20px) 0;
   bottom: 0;
@@ -64,8 +65,8 @@ $border-radius-dots: rem(4px);
   width: 100%;
   background: var(--white);
   border-radius: rem(20px) rem(20px) 0 0;
-  z-index: 998;
-  box-shadow: $box-shadow-mobile-navigation;
+  z-index: $pageHeaderIndex;
+  box-shadow: $box-shadow-mobile-navigation-reverse;
 
   ul {
     display: flex;
