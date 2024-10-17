@@ -26,9 +26,6 @@
       :label="'Beschreibung'"
       :placeholder="'z.B. Wir trainieren wirklich in roten Trikots'"
       v-model:model-value="description"
-      :error-message="
-        descriptionError ? 'Dieses Feld darf nicht leer sein' : ''
-      "
     />
 
     <InputType
@@ -113,7 +110,6 @@ import BadgeType from '@/components/BadgeType.vue'
 /* ERROR REFS */
 const titleError = ref(false)
 const subtitleError = ref(false)
-const descriptionError = ref(false)
 const meetAtError = ref(false)
 const beginAtError = ref(false)
 const deadlineError = ref(false)
@@ -124,7 +120,6 @@ const { handleNextForm } = useHandleNextCreateForm()
 const validateForm = () => {
   titleError.value = title.value.length <= 0
   subtitleError.value = subtitle.value.length <= 0
-  descriptionError.value = description.value.length <= 0
   meetAtError.value = meetAt.value.length <= 0
   beginAtError.value = beginAt.value.length <= 0
 
@@ -144,7 +139,6 @@ const validateForm = () => {
     if (
       !titleError.value &&
       !subtitleError.value &&
-      !descriptionError.value &&
       !meetAtError.value &&
       !beginAtError.value &&
       !deadlineError.value

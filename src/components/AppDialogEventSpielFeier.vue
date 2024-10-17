@@ -89,7 +89,6 @@
         :deadlineToStartTime="deadlineToStartTime"
         :title-error="titleError"
         :subtitle-error="subtitleError"
-        :description-error="descriptionError"
         :meetAt-error="meetAtError"
         :beginAt-error="beginAtError"
         :deadline-error="deadlineError"
@@ -174,7 +173,6 @@
         :deadlineToStartTime="deadlineToStartTime"
         :title-error="titleError"
         :subtitle-error="subtitleError"
-        :description-error="descriptionError"
         :meetAt-error="meetAtError"
         :beginAt-error="beginAtError"
         :deadline-error="deadlineError"
@@ -335,7 +333,6 @@ const venueStreetError = ref(false)
 const venuePostalCodeError = ref(false)
 const titleError = ref(false)
 const subtitleError = ref(false)
-const descriptionError = ref(false)
 const meetAtError = ref(false)
 const beginAtError = ref(false)
 const deadlineError = ref(false)
@@ -370,7 +367,6 @@ const validateForm = (eventID: number, eventType: string, router: any) => {
     venuePostalCode.value.length <= 0
   titleError.value = title.value.length <= 0
   subtitleError.value = subtitle.value.length <= 0
-  descriptionError.value = description.value.length <= 0
   meetAtError.value = meetAt.value.length <= 0
   beginAtError.value = beginAt.value.length <= 0
 
@@ -386,7 +382,6 @@ const validateForm = (eventID: number, eventType: string, router: any) => {
       !venuePostalCodeError.value &&
       !titleError.value &&
       !subtitleError.value &&
-      !descriptionError.value &&
       !meetAtError.value &&
       !beginAtError.value &&
       !linkExternError.value
@@ -399,7 +394,6 @@ const validateForm = (eventID: number, eventType: string, router: any) => {
       !venuePostalCodeError.value &&
       !titleError.value &&
       !subtitleError.value &&
-      !descriptionError.value &&
       !meetAtError.value &&
       !beginAtError.value
     ) {

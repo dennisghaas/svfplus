@@ -33,9 +33,6 @@
       :placeholder="'z.B. Wir trainieren wirklich in roten Trikots'"
       :model-value="description"
       @update:model-value="updateDescription"
-      :error-message="
-        descriptionError ? 'Dieses Feld darf nicht leer sein' : ''
-      "
     />
   </div>
 
@@ -118,7 +115,6 @@ defineProps({
   deadlineToStartTime: String,
   titleError: Boolean,
   subtitleError: Boolean,
-  descriptionError: Boolean,
   meetAtError: Boolean,
   beginAtError: Boolean,
   deadlineError: Boolean,

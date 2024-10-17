@@ -38,7 +38,6 @@
           :endAt="selectedEvent[0].eventDescription.endAt || ''"
           :title-error="titleError"
           :subtitle-error="subtitleError"
-          :description-error="descriptionError"
           :meetAt-error="meetAtError"
           :beginAt-error="beginAtError"
           :deadline-error="deadlineError"
@@ -175,7 +174,6 @@ watch(formattedDate, (newVal) => {
 /* validate form errors */
 const titleError = ref(false)
 const subtitleError = ref(false)
-const descriptionError = ref(false)
 const meetAtError = ref(false)
 const beginAtError = ref(false)
 const deadlineError = ref(false)
