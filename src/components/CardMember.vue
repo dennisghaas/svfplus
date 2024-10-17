@@ -36,11 +36,7 @@
     <div v-if="user.isInjured" class="card-member--additional body-text-b3">
       <InjuredIcon />
       <p>
-        <span v-if="user.isInjuredType">
-          {{
-            user.isInjuredType ? `Verletzt: ${user.isInjuredType}` : `Verletzt`
-          }}
-        </span>
+        Verletzt
       </p>
     </div>
 

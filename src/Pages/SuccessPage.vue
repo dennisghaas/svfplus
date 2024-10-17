@@ -15,10 +15,7 @@
         </p>
 
         <p>
-          Sobald dein Account freigeschaltet worden ist, bekommst du eine E-Mail
-          von uns zugeschickt.<br />
-          Falls es aus technischen Gründen nicht funktionieren sollte, sagen wir
-          dir das persönlich, oder über die Gruppe.
+          Sobald dein Account freigeschaltet ist, wird dich dein Trainer informieren.
         </p>
       </div>
 
