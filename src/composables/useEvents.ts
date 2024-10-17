@@ -5,8 +5,8 @@ import { subtractHours } from '../helpers/substractHours.ts';
 import { extractDateAndTime } from '../helpers/extractDateAndTime.ts';
 import { useEventResponse } from './useEventResponse.ts';
 import store from '../store';
-import { ApiError } from '../interface';
-import { Event, StandingOrder } from '../interface';
+import { ApiError } from '@/interface';
+import { Event, StandingOrder } from '@/interface';
 
 const events = ref<Event[]>([]);
 const selectedEvent = ref<Event[]>([]);
@@ -113,6 +113,7 @@ export const useEvents = () => {
     genericDeadline?: string | null,
     isStandingOrder?: boolean,
   ) => {
+    console.log(store.state.userData.username)
     return {
       author: store.state.userData.username,
       eventDate: date || eventDate.value,
@@ -150,6 +151,7 @@ export const useEvents = () => {
         isStandingOrder?: boolean,
       ) => {
         const payload = payLoad(date, genericDeadline, isStandingOrder);
+        console.log(payload)
 
         try {
           const response = await fetchDataFromApi(
@@ -167,7 +169,7 @@ export const useEvents = () => {
           eventCreatedSuccessful.value = true;
           store.resetCreateCardSelected();
 
-          return response.id; // Return the created event ID
+          return response.id;
         } catch (error) {
           const apiError: ApiError = error as ApiError;
 

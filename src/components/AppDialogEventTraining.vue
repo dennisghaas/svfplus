@@ -1,70 +1,76 @@
 <template>
   <div
-    v-if="selectedEvent[0] && selectedEvent[0].eventDescription"
-    class="app-dialog--event__body"
+      v-if="selectedEvent[0] && selectedEvent[0].eventDescription"
+      class="app-dialog--event__body"
   >
     <div class="row">
       <div class="col-xs-12">
+        <BadgeType
+            v-if="!standingOrderCheckbox"
+            :badge-type="'warning'"
+            :badge-text="'Du bearbeitest aktuell nur ein Training und nicht den kompletten Dauerauftrag'"
+        />
         <CheckboxType
-          :label="'Kompletten Dauerauftrag bearbeiten'"
-          :id="'checkbox-for-standing-order'"
-          :value="standingOrderCheckbox"
-          :margin-bottom="true"
-          @update:model-value="updateStandingOrderCheckbox"
+            :label="'Kompletten Dauerauftrag bearbeiten'"
+            :id="'checkbox-for-standing-order'"
+            :value="standingOrderCheckbox"
+            :margin-bottom="true"
+            @update:model-value="updateStandingOrderCheckbox"
         />
       </div>
 
       <div v-if="!standingOrderCheckbox" class="col-xs-12">
         <InputType
-          :id="'party-date'"
-          :label="'Datum'"
-          :input-type="'date'"
-          v-model:modelValue="formattedDate"
+            :id="'party-date'"
+            :label="'Datum'"
+            :input-type="'date'"
+            v-model:modelValue="formattedDate"
         />
       </div>
 
       <AppDialogEventDesc
-        :is-training="true"
-        :title="selectedEvent[0].eventDescription.title"
-        :subtitle="selectedEvent[0].eventDescription.subtitle"
-        :description="selectedEvent[0].eventDescription.description"
-        :meetAt="selectedEvent[0].eventDescription.meetAt || ''"
-        :beginAt="selectedEvent[0].eventDescription.beginAt || ''"
-        :endAt="selectedEvent[0].eventDescription.endAt || ''"
-        :title-error="titleError"
-        :subtitle-error="subtitleError"
-        :description-error="descriptionError"
-        :meetAt-error="meetAtError"
-        :beginAt-error="beginAtError"
-        :deadline-error="deadlineError"
-        @update:title="updateTitle"
-        @update:subtitle="updateSubtitle"
-        @update:description="updateDescription"
-        @update:meetAt="updateMeetAt"
-        @update:beginAt="updateBeginAt"
-        @update:endAt="updateEndAt"
+          :is-training="true"
+          :title="selectedEvent[0].eventDescription.title"
+          :subtitle="selectedEvent[0].eventDescription.subtitle"
+          :description="selectedEvent[0].eventDescription.description"
+          :meetAt="selectedEvent[0].eventDescription.meetAt || ''"
+          :beginAt="selectedEvent[0].eventDescription.beginAt || ''"
+          :endAt="selectedEvent[0].eventDescription.endAt || ''"
+          :title-error="titleError"
+          :subtitle-error="subtitleError"
+          :description-error="descriptionError"
+          :meetAt-error="meetAtError"
+          :beginAt-error="beginAtError"
+          :deadline-error="deadlineError"
+          @update:title="updateTitle"
+          @update:subtitle="updateSubtitle"
+          @update:description="updateDescription"
+          @update:meetAt="updateMeetAt"
+          @update:beginAt="updateBeginAt"
+          @update:endAt="updateEndAt"
       />
     </div>
 
     <div class="col-xs-12">
       <ButtonType
-        :type-button="true"
-        :btn-class="''"
-        :btn-text="'Änderungen speichern'"
-        @click="getCurrentStandingOrderIDs(eventID, eventType, router)"
+          :type-button="true"
+          :btn-class="''"
+          :btn-text="'Änderungen speichern'"
+          @click="getCurrentStandingOrderIDs(eventID, eventType, router)"
       />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
-import { useEvents } from '@/composables/useEvents.ts'
-import { useRouter } from 'vue-router'
+import {onMounted, ref, watch} from 'vue'
+import {useEvents} from '@/composables/useEvents.ts'
+import {useRouter} from 'vue-router'
 import CheckboxType from '@/components/CheckboxType.vue'
 import InputType from '@/components/InputType.vue'
 import AppDialogEventDesc from '@/components/AppDialogEventDesc.vue'
 import ButtonType from '@/components/ButtonType.vue'
+import BadgeType from "@/components/BadgeType.vue";
 
 const router = useRouter()
 const props = defineProps({
@@ -113,8 +119,8 @@ const updateStandingOrderCheckbox = (isStandingOrder: boolean) => {
       eventDateNewValue.value = parsedDate
     } else {
       console.error(
-        'formattedDate.value is not a valid date string:',
-        formattedDate.value,
+          'formattedDate.value is not a valid date string:',
+          formattedDate.value,
       )
       eventDateNewValue.value = new Date() // Setze auf das aktuelle Datum als Fallback
     }
@@ -147,13 +153,13 @@ const updateEndAt = (newEndAt: string) => {
 }
 
 const getCurrentStandingOrderIDs = (
-  eventID: number,
-  eventType: string,
-  router: any,
+    eventID: number,
+    eventType: string,
+    router: any,
 ) => {
   const currentStandingOrder = selectedEvent.value[0].standingOrderID
   const currentStandingOrderIndex =
-    standingOrderArray.value[currentStandingOrder - 1]
+      standingOrderArray.value[currentStandingOrder - 1]
   const currentStandingOrderEvents = currentStandingOrderIndex.eventIDs
 
   validateForm(eventID, eventType, router, currentStandingOrderEvents)
@@ -175,10 +181,10 @@ const beginAtError = ref(false)
 const deadlineError = ref(false)
 
 const validateForm = async (
-  eventID: number,
-  eventType: string,
-  router: any,
-  currentStandingOrderEvents: any,
+    eventID: number,
+    eventType: string,
+    router: any,
+    currentStandingOrderEvents: any,
 ) => {
   venue.value = selectedEvent.value[0]?.venue
   standingOrderID.value = selectedEvent.value[0]?.standingOrderID
@@ -195,38 +201,38 @@ const validateForm = async (
   if (standingOrderCheckbox.value) {
     await fetchEventsByID(eventID, currentStandingOrderEvents)
     standingOrderDates = selectedEvent.value.map(
-      (event) => event.eventDate || '',
+        (event) => event.eventDate || '',
     )
   } else {
     eventDate.value = eventDateNewValue.value
   }
 
   saveForm(
-    eventID,
-    eventType,
-    router,
-    currentStandingOrderEvents,
-    standingOrderDates,
+      eventID,
+      eventType,
+      router,
+      currentStandingOrderEvents,
+      standingOrderDates,
   )
 }
 
 const saveForm = (
-  eventID: number,
-  eventType: string,
-  router: any,
-  currentStandingOrderEvents: any,
-  standingOrderDates: any,
+    eventID: number,
+    eventType: string,
+    router: any,
+    currentStandingOrderEvents: any,
+    standingOrderDates: any,
 ) => {
   if (!standingOrderCheckbox.value) {
     editEventByID(eventID, eventType, router)
   } else {
     editEventByID(
-      eventID,
-      eventType,
-      router,
-      true,
-      currentStandingOrderEvents,
-      standingOrderDates,
+        eventID,
+        eventType,
+        router,
+        true,
+        currentStandingOrderEvents,
+        standingOrderDates,
     )
   }
 }

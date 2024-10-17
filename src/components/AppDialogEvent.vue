@@ -1,39 +1,34 @@
 <template>
   <div class="app-dialog--event" v-if="!isLoading">
-    <div class="app-dialog--event__header">
-      <BadgeType
-        :badge-type="'warning'"
-        :badge-text="'Daten des ausgewählten Events bearbeiten'"
-      />
-    </div>
-
     <AppDialogEventTraining
         v-if="eventType === 'Training'"
         :event-i-d="eventID"
         :event-type="eventType"
-        :date="`${getDate?.year}-${getDate?.month}-${getDate?.day}`"
+        :date="`${formatEventDates.eventDate?.year}-${formatEventDates.eventDate?.month}-${formatEventDates.eventDate?.day}`"
     />
     <AppDialogEventSpielFeier
         v-if="eventType === 'Spiel' || eventType === 'Feier'"
         :event-type="eventType"
         :event-i-d="eventID"
-        :date="`${getDate?.year}-${getDate?.month}-${getDate?.day}`"
+        :date="`${formatEventDates.eventDate?.year}-${formatEventDates.eventDate?.month}-${formatEventDates.eventDate?.day}`"
     />
     <AppDialogEventAbstimmung v-if="eventType === 'Abstimmung'"/>
 
     <MetaInformation
         :author="selectedEvent[0].author"
-        :created-at="`${createdAt?.day}.${createdAt?.month}.${createdAt?.year}`"
-        :updated-at="`${updatedAt?.day}.${updatedAt?.month}.${updatedAt?.year}`"
+        :created-at="`${formatEventDates.createdAt?.day}.${formatEventDates.createdAt?.month}.${formatEventDates.createdAt?.year}`"
+        :updated-at="`${formatEventDates.updatedAt?.day}.${formatEventDates.updatedAt?.month}.${formatEventDates.updatedAt?.year}`"
     />
+  </div>
+  <div v-else>
+    Loading...
   </div>
 </template>
 
 <script setup lang="ts">
 import {onMounted, ref, computed} from 'vue'
 import {useEvents} from '@/composables/useEvents.ts'
-import {formatDate} from '@/helpers/formatDate.ts'
-import {Event} from '@/interface'
+import {formatDate} from "@/helpers/formatDate.ts";
 import AppDialogEventTraining from '@/components/AppDialogEventTraining.vue'
 import AppDialogEventAbstimmung from '@/components/AppDialogEventAbstimmung.vue'
 import AppDialogEventSpielFeier from '@/components/AppDialogEventSpielFeier.vue'
@@ -54,29 +49,14 @@ const props = defineProps({
 
 const {fetchEventsByID, selectedEvent} = useEvents()
 const isLoading = ref(true)
+const event = ref(selectedEvent.value[0])
 
-const resolveDate = (eventValue: keyof Event) => {
-  return computed(() => {
-    if (selectedEvent.value && selectedEvent.value.length > 0) {
-      const value = selectedEvent.value[0][eventValue]
+const formatEventDates = computed(() => ({
+  eventDate: formatDate(event.value.eventDate),
+  createdAt: formatDate(event.value.createdAt),
+  updatedAt: formatDate(event.value.updatedAt),
+}));
 
-      // Check if the value is a string or a Date before formatting
-      if (value instanceof Date) {
-        return formatDate(value)
-      } else if (value === null) {
-        return null
-      }
-      // Handle cases where the value is not a string or Date
-      console.warn(`Unexpected type for eventValue: ${typeof value}`)
-      return null // or some default value
-    }
-    return null
-  })
-}
-
-const createdAt = resolveDate('createdAt')
-const updatedAt = resolveDate('updatedAt')
-const getDate = resolveDate('eventDate')
 
 onMounted(async () => {
   try {
