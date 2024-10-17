@@ -215,65 +215,41 @@ const isCurrentWeek = (week: any) => {
 };
 
 onMounted(async () => {
-  // Prüfe, ob die URL-Parameter vorhanden sind, und setze die Werte entsprechend
-  const monthQuery = route.query.month
-    ? parseInt(route.query.month as string)
-    : null;
-  const yearQuery = route.query.year
-    ? parseInt(route.query.year as string)
-    : null;
+  const monthQuery = route.query.month ? parseInt(route.query.month as string) : null;
+  const yearQuery = route.query.year ? parseInt(route.query.year as string) : null;
 
-  if (monthQuery !== null && yearQuery !== null) {
-    /* user cant reach past month / years via url */
-    if (
-      (initialCurrentMonth.value > monthQuery &&
-        initialCurrentYear.value >= yearQuery) ||
-      initialCurrentYear.value > yearQuery
-    ) {
-      addQueryParams(route, router, {
-        year: currentYear.value.toString(),
-        month: currentMonth.value.toString(),
-      });
-    }
+  // If the query is missing, set it to current month and year
+  if (!monthQuery || !yearQuery) {
+    addQueryParams(route, router, {
+      year: currentYear.value.toString(),
+      month: currentMonth.value.toString(),
+    });
   }
 
-  currentMonth.value =
-    monthQuery !== null ? monthQuery : currentDate.getMonth();
-  currentYear.value =
-    yearQuery !== null ? yearQuery : currentDate.getFullYear();
+  // Use the query values or fallbacks
+  currentMonth.value = monthQuery !== null ? monthQuery : currentDate.getMonth();
+  currentYear.value = yearQuery !== null ? yearQuery : currentDate.getFullYear();
 
-  // Fetch events and update weeks based on initial query params or fallback values
-  await fetchEvents();
-  await updateWeeks();
-
-  // Setze die Query-Parameter erneut, um sie in der URL zu aktualisieren
-  addQueryParams(route, router, {
-    year: currentYear.value.toString(),
-    month: currentMonth.value.toString(),
-  });
-
-  store.pageHeadline(
-    `Termine im ${formatMonthToWord(currentMonth.value.toString(), true)}`,
-  );
+  // Initial fetch handled in watch, no need to duplicate here
+  store.pageHeadline(`Termine im ${formatMonthToWord(currentMonth.value.toString(), true)}`);
 });
 
 watch(
-  () => route.query, // Beobachten der Query-Parameter
-  async (newQuery) => {
-    if (newQuery.year && newQuery.month) {
-      // Aktualisiere Jahr und Monat basierend auf den neuen Query-Parametern
-      currentYear.value = parseInt(newQuery.year as string);
-      currentMonth.value = parseInt(newQuery.month as string);
+    () => route.query, // Watch the query parameters
+    async (newQuery) => {
+      if (newQuery.year && newQuery.month) {
+        // Update year and month based on the new query parameters
+        currentYear.value = parseInt(newQuery.year as string);
+        currentMonth.value = parseInt(newQuery.month as string);
 
-      // Events und Wochen aktualisieren
-      await fetchEvents();
-      await updateWeeks();
+        // Fetch events and update weeks
+        await fetchEvents();
+        await updateWeeks();
 
-      store.pageHeadline(
-        `Termine im ${formatMonthToWord(currentMonth.value.toString(), true)}`,
-      );
-    }
-  },
+        store.pageHeadline(`Termine im ${formatMonthToWord(currentMonth.value.toString(), true)}`);
+      }
+    },
+    { immediate: true }
 );
 </script>
 
