@@ -19,6 +19,7 @@
               :bg-color="user.userImage.bgColor"
               :is-image="!user.userImage.bgColor.includes('--')"
               :user-initials="user.userImage.initials"
+              :display-medium="true"
             />
           </div>
           <div
@@ -62,6 +63,7 @@
               :bg-color="user.userImage.bgColor"
               :is-image="!user.userImage.bgColor.includes('--')"
               :user-initials="user.userImage.initials"
+              :display-medium="true"
             />
           </div>
           <div
@@ -104,6 +106,7 @@
               :bg-color="user.userImage.bgColor"
               :is-image="!user.userImage.bgColor.includes('--')"
               :user-initials="user.userImage.initials"
+              :display-medium="true"
             />
           </div>
           <div
@@ -146,6 +149,7 @@
               :bg-color="user.userImage.bgColor"
               :is-image="!user.userImage.bgColor.includes('--')"
               :user-initials="user.userImage.initials"
+              :display-medium="true"
             />
           </div>
           <div
@@ -190,6 +194,7 @@
               :bg-color="user.userImage.bgColor"
               :is-image="!user.userImage.bgColor.includes('--')"
               :user-initials="user.userImage.initials"
+              :display-medium="true"
             />
           </div>
           <div
@@ -393,7 +398,11 @@ onMounted(async () => {
     &-controls {
       display: flex;
       flex-direction: row;
-      gap: 1rem;
+      gap: rem(5px);
+
+      @include media-breakpoint-up(lg) {
+        gap: 1rem;
+      }
     }
   }
 }

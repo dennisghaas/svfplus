@@ -147,7 +147,7 @@
         />
 
         <CardEventControls
-          v-if="!isAbstimmung && !preview"
+          v-if="!isAbstimmung && !preview && countdown !== 'Zeit zum reagieren abgelaufen'"
           :not-nominated="notNominated"
           :player-with-no-access="playerWithNoAccess"
           :event-i-d="id"

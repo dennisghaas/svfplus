@@ -83,7 +83,7 @@
         <div v-if="store.state.isMajor || isCurrentUsersProfile" class="card-body-profile--item">
           <span class="typo-label"> Offener betrag mannschaftskasse </span>
           <span v-if="role.includes('Trainer')"> Befreit </span>
-          <span v-else> {{ debts.toFixed(2) }} € </span>
+          <span v-else> {{ debts.toFixed(2) }}&nbsp;€ </span>
         </div>
       </div>
 

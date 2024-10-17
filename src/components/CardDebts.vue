@@ -17,9 +17,7 @@
           <span class="h1 font-weight-600 text-right">Befreit</span>
         </template>
         <template v-else>
-          <span class="h1 font-weight-600 text-right"
-            >{{ debts.toFixed(2) }} €</span
-          >
+          <span class="h1 font-weight-600 text-right">{{ debts.toFixed(2) }}&nbsp;€</span>
         </template>
       </div>
     </template>

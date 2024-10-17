@@ -99,15 +99,11 @@ watch(
   }
 
   &--main {
-    height: rem($pageHeaderHeight);
+    height: $pageHeaderHeight;
     padding: rem(20px) 0;
     background: var(--white);
     border-radius: 0 0 rem(20px) rem(20px);
     box-shadow: $box-shadow-mobile-navigation;
-
-    @include media-breakpoint-up(lg) {
-      box-shadow: 0 0 0 transparent;
-    }
 
     &.open {
       border-radius: 0;
@@ -123,9 +119,10 @@ watch(
 
     @include media-breakpoint-up(lg) {
       /* offset mobile styling */
-      height: inherit;
-      background: transparent;
+      height: $pageHeaderHeightDesktop;
       border-radius: 0;
+      background: var(--gray-soft);
+      box-shadow: 0 0 0 transparent;
 
       /* new styling */
       padding: rem(40px) 0;
@@ -148,7 +145,7 @@ watch(
   }
 
   &--nav {
-    height: calc(100dvh - rem($pageHeaderHeight));
+    height: calc(100dvh - $pageHeaderHeight);
     background: var(--white);
     padding: rem(20px) 0;
     position: absolute;

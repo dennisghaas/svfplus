@@ -29,7 +29,8 @@ body {
   font-weight: $font-weight-400;
   line-height: 1.5;
   font-size: $font-size-16;
-  background: var(--gray-soft);
+  background: var(--white);
+  height: 100svh;
 
   &.overflow-hidden {
     overflow: hidden;

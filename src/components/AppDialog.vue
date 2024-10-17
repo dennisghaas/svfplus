@@ -103,8 +103,16 @@ const closeDialog = () => {
     background: var(--white);
     z-index: 4;
 
+    h2, .h2 {
+      padding-right: rem(35px);
+    }
+
     @include media-breakpoint-up(lg) {
       padding: rem(40px) 0 rem(20px);
+
+      h2, .h2 {
+        padding-right: 0;
+      }
     }
 
     .app-dialog--alt & {

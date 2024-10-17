@@ -43,6 +43,7 @@
       :label="'Treffen'"
       :input-type="'time'"
       :model-value="meetAt"
+      :input-placeholder="'--:-- test'"
       @update:model-value="updateMeetAt"
       :error-message="meetAtError ? 'Dieses Feld darf nicht leer sein' : ''"
     />

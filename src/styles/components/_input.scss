@@ -24,6 +24,15 @@ fieldset {
   font-size: $font-size-16;
   width: 100%;
 
+  /* iOs adjustments */
+  -webkit-appearance: none;
+  color: var(--black);
+  background: var(--white);
+
+  &::-webkit-date-and-time-value {
+    text-align: left;
+  }
+
   &:focus-visible {
     outline: 0;
     border-color: var(--primary);

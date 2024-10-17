@@ -232,8 +232,12 @@ onMounted(() => {
 .create-form-card {
   background: var(--white);
   border-radius: rem(10px);
-  padding: rem(40px);
+  padding: rem(20px);
   position: relative;
+
+  @include media-breakpoint-up(lg) {
+    padding: rem(40px);
+  }
 
   &::before {
     content: '';

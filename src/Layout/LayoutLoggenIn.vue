@@ -44,6 +44,9 @@ console.log(
 <style scoped lang="scss">
 .pageMain {
   padding-top: rem(40px);
+  background: var(--gray-soft);
+  min-height: calc(100vh - #{$pageHeaderHeight});
+  height: 100%;
 
   /* (bottom navigation height) */
   padding-bottom: $bottomNavigationHeight;
@@ -51,6 +54,7 @@ console.log(
   @include media-breakpoint-up(lg) {
     margin-left: auto;
     width: 66.66%;
+    min-height: calc(100vh - #{$pageHeaderHeightDesktop});
   }
 
   @include media-breakpoint-up(xl) {

@@ -12,7 +12,12 @@
       @click="prevMonth()"
     >
       <i class="icon-chevron-left"></i>
-      <span> Vorheriger Monat </span>
+      <span v-if="isMobile">
+        Vrh. Monat
+      </span>
+      <span v-else>
+        Vorheriger Monat
+      </span>
     </button>
 
     <button
@@ -21,12 +26,21 @@
       @click="nextMonth()"
     >
       <i class="icon-chevron-right"></i>
-      <span> Nächster Monat </span>
+      <span v-if="isMobile">
+        Näch. Monat
+      </span>
+      <span v-else>
+        Nächster Monat
+      </span>
     </button>
   </div>
 </template>
 
 <script setup lang="ts">
+import {useBreakpoint} from "@/composables/useBreakpoint.ts";
+
+const {isMobile}  = useBreakpoint()
+
 const emit = defineEmits(['updatePrevMonth', 'updateNextMonth'])
 
 const prevMonth = () => {

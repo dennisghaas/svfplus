@@ -6,6 +6,7 @@
       'profile-panel',
       { 'profile-panel--reverse': displayReverse },
       { 'profile-panel--link': link },
+      { 'profile-panel--medium' : displayMedium },
       { 'profile-panel--small': displaySmall },
     ]"
   >
@@ -59,6 +60,10 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  displayMedium: {
+    type: Boolean,
+    default: false
+  },
   isImage: {
     type: Boolean,
     default: false,
@@ -83,6 +88,8 @@ defineProps({
     text-transform: uppercase;
     width: rem(50px);
     height: rem(50px);
+    min-width: rem(50px);
+    min-height: rem(50px);
     border-radius: 50%;
     color: var(--white);
     display: flex;
@@ -98,8 +105,19 @@ defineProps({
     .profile-panel--small & {
       width: rem(26px);
       height: rem(26px);
+      min-width: rem(26px);
+      min-height: rem(26px);
       border-width: 1px;
       font-size: rem(10px);
+    }
+
+    .profile-panel--medium & {
+      width: rem(36px);
+      height: rem(36px);
+      min-width: rem(36px);
+      min-height: rem(36px);
+      border-width: 1px;
+      font-size: rem(14px);
     }
 
     &.profile-panel__custom-image {
