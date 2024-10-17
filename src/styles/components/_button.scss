@@ -95,6 +95,7 @@
 
   &.btn-small {
     @extend .btn-light;
+    white-space: nowrap;
     background: var(--gray-soft);
     border-color: var(--border-color);
     color: var(--black);
