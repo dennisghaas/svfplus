@@ -502,6 +502,8 @@ onMounted(async () => {
 <style scoped lang="scss">
 .edit-users-image {
   display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
   padding: 0 0 rem(20px);
   margin: 0 0 rem(40px);
   border-bottom: 1px solid var(--border-color);
