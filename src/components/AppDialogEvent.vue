@@ -33,7 +33,6 @@ import AppDialogEventTraining from '@/components/AppDialogEventTraining.vue'
 import AppDialogEventAbstimmung from '@/components/AppDialogEventAbstimmung.vue'
 import AppDialogEventSpielFeier from '@/components/AppDialogEventSpielFeier.vue'
 import MetaInformation from '@/components/MetaInformation.vue'
-import BadgeType from "@/components/BadgeType.vue";
 
 // Define props
 const props = defineProps({
