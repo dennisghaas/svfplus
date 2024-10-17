@@ -41,7 +41,7 @@
       />
 
       <AppButton
-        v-if="!preview"
+        v-if="!preview && store.state.isMajor || eventType === 'Abstimmung' && store.state.isCorporal"
         :label="'Event bearbeiten'"
         :additional-class="`bg-white ${displayBackgroundColorOnEventType(eventType, true)}`"
         :icon="'icon-settings'"
@@ -99,8 +99,8 @@
           </address>
         </template>
 
-        <!--        <template v-else>
-          <template v-if="!voteMultipleSelection">
+        <template v-else>
+<!--          <template v-if="!voteMultipleSelection">
             <RadioType
                 :radio="voteOptions"
                 :name="`question_${id}`"
@@ -116,8 +116,8 @@
                   :label="checkbox.text"
               />
             </div>
-          </template>
-        </template>-->
+          </template>-->
+        </template>
 
         <BadgeType
           v-if="showCountdown && !notNominated && !preview"

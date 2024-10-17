@@ -22,6 +22,7 @@
 
     <template #cardHeaderRight>
       <LinkType
+        v-if="store.state.isMajor || isCurrentUsersProfile"
         :btn-class="'text-color-white'"
         :btn-text="'Bearbeiten'"
         :btn-icon="'icon-edit'"
@@ -38,7 +39,7 @@
           <span> {{ name }} {{ surname }} </span>
         </div>
 
-        <div class="card-body-profile--item">
+        <div v-if="store.state.isMajor || isCurrentUsersProfile" class="card-body-profile--item">
           <span class="typo-label"> E-Mail </span>
           <span>
             {{ email }}
@@ -76,7 +77,7 @@
           </span>
         </div>
 
-        <div class="card-body-profile--item">
+        <div v-if="store.state.isMajor || isCurrentUsersProfile" class="card-body-profile--item">
           <span class="typo-label"> Offener betrag mannschaftskasse </span>
           <span v-if="role.includes('Trainer')"> Befreit </span>
           <span v-else> {{ debts.toFixed(2) }} € </span>

@@ -43,6 +43,8 @@
     :label="'Im Dahsboard der Spieler anzeigen'"
     :id="'checkbox-for-dashboard'"
     :value="showInDashboard"
+    :no-border="showInDashboard"
+    :margin-bottom="!showInDashboard"
     @update:model-value="updateShowInDashboard"
   />
 

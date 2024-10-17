@@ -15,6 +15,9 @@ export const navigation: Navigation[] = [
         iconName: 'icon-dashboard',
       },
     ],
+    accessibleRouteFrom: [
+        'svf_private', 'svf_corporal', 'svf_sergeant', 'svf_major', 'svf_commander'
+    ]
   },
   {
     linkName: 'Termine',
@@ -28,6 +31,9 @@ export const navigation: Navigation[] = [
         iconName: 'icon-calendar',
       },
     ],
+    accessibleRouteFrom: [
+      'svf_private', 'svf_corporal', 'svf_sergeant', 'svf_major', 'svf_commander'
+    ]
   },
   {
     linkName: 'Mannschaft',
@@ -41,6 +47,9 @@ export const navigation: Navigation[] = [
         iconName: 'icon-svf',
       },
     ],
+    accessibleRouteFrom: [
+      'svf_private', 'svf_corporal', 'svf_sergeant', 'svf_major', 'svf_commander'
+    ]
   },
   {
     linkName: 'Profil',
@@ -53,6 +62,9 @@ export const navigation: Navigation[] = [
         isProfile: true,
       },
     ],
+    accessibleRouteFrom: [
+      'svf_private', 'svf_corporal', 'svf_sergeant', 'svf_major', 'svf_commander'
+    ]
   },
   {
     linkName: 'Erstellen',
@@ -66,6 +78,9 @@ export const navigation: Navigation[] = [
         iconName: 'icon-add',
       },
     ],
+    accessibleRouteFrom: [
+     'svf_major', 'svf_commander'
+    ]
   },
   {
     linkName: 'Einstellungen',
@@ -79,6 +94,9 @@ export const navigation: Navigation[] = [
         iconName: 'icon-settings-outline',
       },
     ],
+    accessibleRouteFrom: [
+      'svf_major', 'svf_commander'
+    ]
   },
 ]
 

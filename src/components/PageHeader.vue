@@ -61,6 +61,13 @@ const showDropdown = ref(store.state.menuOpen)
 
 const toggleDropdown = () => {
   store.menuOpen(!store.state.menuOpen)
+
+  /* handling overflow if menu is open */
+  if(store.state.menuOpen) {
+    store.updateOverflowHidden(true)
+  } else {
+    store.updateOverflowHidden(false)
+  }
 }
 
 watch(
@@ -75,6 +82,7 @@ watch(
 .pageHeader {
   position: sticky;
   top: 0;
+  z-index: 998;
 
   @include media-breakpoint-up(lg) {
     width: 66.6%;
@@ -95,6 +103,11 @@ watch(
     padding: rem(20px) 0;
     background: var(--white);
     border-radius: 0 0 rem(20px) rem(20px);
+    box-shadow: $box-shadow-mobile-navigation;
+
+    @include media-breakpoint-up(lg) {
+      box-shadow: 0 0 0 transparent;
+    }
 
     &.open {
       border-radius: 0;

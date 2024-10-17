@@ -4,26 +4,26 @@
       <div class="col-xs-12">
         <div v-if="isCurrentUsersProfile" class="edit-users-image">
           <ProfilePanel
-            :bg-color="getSelectedUser.userImage.bgColor"
-            :user-initials="getSelectedUser.userImage.initials"
-            :user-name="getSelectedUser.name"
-            :is-image="!getSelectedUser.userImage.bgColor.includes('--')"
+              :bg-color="getSelectedUser.userImage.bgColor"
+              :user-initials="getSelectedUser.userImage.initials"
+              :user-name="getSelectedUser.name"
+              :is-image="!getSelectedUser.userImage.bgColor.includes('--')"
           />
 
           <ButtonWrapper :align-as-row="true">
             <template #buttons>
               <ButtonType
-                :btn-class="'btn-small'"
-                :btn-text="'Profilbild bearbeiten'"
-                :type-button="true"
-                @click="showUserImageModel = !showUserImageModel"
+                  :btn-class="'btn-small'"
+                  :btn-text="'Profilbild bearbeiten'"
+                  :type-button="true"
+                  @click="showUserImageModel = !showUserImageModel"
               />
 
               <ButtonType
-                :btn-class="'btn-small'"
-                :btn-text="'Passwort ändern'"
-                :type-button="true"
-                @click="showChangePasswordModel = !showChangePasswordModel"
+                  :btn-class="'btn-small'"
+                  :btn-text="'Passwort ändern'"
+                  :type-button="true"
+                  @click="showChangePasswordModel = !showChangePasswordModel"
               />
             </template>
           </ButtonWrapper>
@@ -32,23 +32,23 @@
 
       <div class="col-lg-6 col-xs-12">
         <InputType
-          :id="'name'"
-          :label="'Name'"
-          :input-type="'text'"
-          :input-placeholder="'Name'"
-          v-model:modelValue="getSelectedUser.name"
-          :error-message="nameError ? 'Dieses Feld darf nicht leer sein' : ''"
+            :id="'name'"
+            :label="'Name'"
+            :input-type="'text'"
+            :input-placeholder="'Name'"
+            v-model:modelValue="getSelectedUser.name"
+            :error-message="nameError ? 'Dieses Feld darf nicht leer sein' : ''"
         />
       </div>
 
       <div class="col-lg-6 col-xs-12">
         <InputType
-          :id="'surname'"
-          :label="'Nachname'"
-          :input-type="'text'"
-          :input-placeholder="'Nachname'"
-          v-model:modelValue="getSelectedUser.surname"
-          :error-message="
+            :id="'surname'"
+            :label="'Nachname'"
+            :input-type="'text'"
+            :input-placeholder="'Nachname'"
+            v-model:modelValue="getSelectedUser.surname"
+            :error-message="
             surNameError ? 'Dieses Feld darf nicht leer sein' : ''
           "
         />
@@ -56,24 +56,24 @@
 
       <div class="col-lg-6 col-xs-12">
         <InputType
-          :id="'position'"
-          :label="'Position'"
-          :input-type="'text'"
-          :input-placeholder="'Position'"
-          v-model:modelValue="getSelectedUser.position"
+            :id="'position'"
+            :label="'Position'"
+            :input-type="'text'"
+            :input-placeholder="'Position'"
+            v-model:modelValue="getSelectedUser.position"
         />
       </div>
 
       <div class="col-lg-6 col-xs-12">
         <InputType
-          :id="'jerseyNumber'"
-          :label="'Spielernummer'"
-          :input-type="'number'"
-          :min-val="1"
-          :max-val="99"
-          :input-placeholder="'Spielernummer'"
-          v-model:modelValue="getSelectedUser.jerseyNumber"
-          :error-message="
+            :id="'jerseyNumber'"
+            :label="'Spielernummer'"
+            :input-type="'number'"
+            :min-val="1"
+            :max-val="99"
+            :input-placeholder="'Spielernummer'"
+            v-model:modelValue="getSelectedUser.jerseyNumber"
+            :error-message="
             jerseyNumberError ? 'Es sind nur Zahlen zwischen 1-99 erlaubt' : ''
           "
         />
@@ -81,116 +81,120 @@
 
       <div class="col-lg-6 col-xs-12">
         <InputType
-          :id="'birthday'"
-          :label="'Geburtstag'"
-          :input-type="'date'"
-          v-model:modelValue="formattedDate"
-          @update:model-value="updateUsersBirthday"
+            :id="'birthday'"
+            :label="'Geburtstag'"
+            :input-type="'date'"
+            v-model:modelValue="formattedDate"
+            @update:model-value="updateUsersBirthday"
         />
       </div>
 
-      <div class="col-lg-6 col-xs-12">
+      <div v-if="store.state.isSergeant" class="col-lg-6 col-xs-12">
         <InputType
-          :id="'debts'"
-          :label="'Offener Betrag MK'"
-          :input-type="'number'"
-          :input-placeholder="'Offener Betrag MK'"
-          v-model:modelValue="getSelectedUser.debts"
-          :error-message="debtsError ? 'Negative Werte sind nicht erlaubt' : ''"
+            :id="'debts'"
+            :label="'Offener Betrag MK'"
+            :input-type="'number'"
+            :input-placeholder="'Offener Betrag MK'"
+            v-model:modelValue="getSelectedUser.debts"
+            :error-message="debtsError ? 'Negative Werte sind nicht erlaubt' : ''"
         />
       </div>
 
       <div class="col-xs-12">
         <template v-if="formattedDate === '1955-01-01'">
           <BadgeType
-            :badge-type="'info'"
-            :badge-text="'Bei diesem Datum wird nur <q>k.A.</q> auf deinem Profil ausgegeben'"
+              :badge-type="'info'"
+              :badge-text="'Bei diesem Datum wird nur <q>k.A.</q> auf deinem Profil ausgegeben'"
           />
         </template>
       </div>
 
       <div class="col-xs-12">
         <PromoteUser
-          :name="getSelectedUser.name"
-          :roles="JSON.parse(getSelectedUser.role)"
-          @update-roles="handleRolesUpdate"
-          :throw-error="promotionError"
+            v-if="store.state.isMajor"
+            :name="getSelectedUser.name"
+            :roles="JSON.parse(getSelectedUser.role)"
+            @update-roles="handleRolesUpdate"
+            :throw-error="promotionError"
         />
       </div>
 
       <div class="col-xs-12">
         <CheckboxType
-          :label="'Trainingsanzug bekommen?'"
-          :id="'user-got-suit'"
-          :value="getSelectedUser.gotSuit"
-          @update:model-value="updateGotSuit"
+            v-if="store.state.isSergeant"
+            :label="'Trainingsanzug bekommen?'"
+            :id="'user-got-suit'"
+            :value="getSelectedUser.gotSuit"
+            @update:model-value="updateGotSuit"
         />
       </div>
 
       <div class="col-xs-12">
         <InjuredDropdown
-          :is-injured="getSelectedUser.isInjured"
-          @update:is-injured="updateInjuredStatus"
+            :is-injured="getSelectedUser.isInjured"
+            :users-name="getSelectedUser.name"
+            :is-current-users-profile="isCurrentUsersProfile"
+            @update:is-injured="updateInjuredStatus"
         />
       </div>
 
-      <div class="col-xs-12">
+      <div v-if="store.state.isMajor" class="col-xs-12">
         <CheckboxType
-          :label="`${getSelectedUser.name} Zugriff auf die Web-App gewähren?`"
-          :id="'set-active-status'"
-          :value="getSelectedUser.userIsActivated"
-          @update:model-value="updateUserActivated"
-          :no-border="true"
+            :label="`${getSelectedUser.name} Zugriff auf die Web-App gewähren?`"
+            :id="'set-active-status'"
+            :value="getSelectedUser.userIsActivated"
+            @update:model-value="updateUserActivated"
+            :no-border="true"
         />
         <template v-if="!getSelectedUser.userIsActivated">
           <BadgeType
-            :badge-type="'warning'"
-            :badge-text="`Mit dieser Einstellung blockierst du den Zugriff von ${getSelectedUser.name} auf die Web-App`"
+              :badge-type="'warning'"
+              :badge-text="`Mit dieser Einstellung blockierst du den Zugriff von ${getSelectedUser.name} auf die Web-App`"
           />
         </template>
       </div>
 
       <div class="col-xs-12">
         <ButtonType
-          :type-button="true"
-          :btn-text="'Änderungen speichern'"
-          :btn-class="'w-100 mt-8'"
-          @click="handleUserAction()"
+            :type-button="true"
+            :btn-text="'Änderungen speichern'"
+            :btn-class="'w-100 mt-8'"
+            @click="handleUserAction()"
         />
       </div>
     </div>
     <div
-      v-if="showChangePasswordModel && isCurrentUsersProfile"
-      class="change-password"
+        v-if="showChangePasswordModel && isCurrentUsersProfile"
+        class="change-password"
     >
       <div class="row">
         <div class="col-xs-12">
           <InputType
-            :id="'old-password'"
-            :label="'Aktuelles Password eingeben'"
-            :input-type="'password'"
-            :input-placeholder="'Aktuelles Passwort'"
-            v-model:modelValue="oldPassword"
-            :error-message="oldPasswordError ? 'Feld darf nicht leer sein' : ''"
+              :id="'old-password'"
+              :label="'Aktuelles Password eingeben'"
+              :input-type="'password'"
+              :input-placeholder="'Aktuelles Passwort'"
+              v-model:modelValue="oldPassword"
+              :error-message="oldPasswordError ? 'Feld darf nicht leer sein' : ''"
           />
         </div>
         <div class="col-xs-12 col-lg-6">
           <InputType
-            :id="'new-password'"
-            :label="'Neues Password eingeben'"
-            :input-type="'password'"
-            :input-placeholder="'Dein neues Passwort'"
-            v-model:modelValue="newPassword"
+              :id="'new-password'"
+              :label="'Neues Password eingeben'"
+              :input-type="'password'"
+              :input-placeholder="'Dein neues Passwort'"
+              v-model:modelValue="newPassword"
           />
         </div>
         <div class="col-xs-12 col-lg-6">
           <InputType
-            :id="'confirm-new-password'"
-            :label="'Neues Password bestätigen'"
-            :input-type="'password'"
-            :input-placeholder="'Passwort bestätigen'"
-            v-model:modelValue="confirmPassword"
-            :error-message="
+              :id="'confirm-new-password'"
+              :label="'Neues Password bestätigen'"
+              :input-type="'password'"
+              :input-placeholder="'Passwort bestätigen'"
+              v-model:modelValue="confirmPassword"
+              :error-message="
               passwordError
                 ? 'Das Passwort muss mindestens 8 Zeichen lang sein, einen Kleinbuchstaben, einen Großbuchstaben, eine Nummer und ein Sonderzeichen enthalten. Oder Passwörter stimmen nicht überein.'
                 : ''
@@ -200,8 +204,8 @@
 
         <div class="col-xs-12">
           <BadgeType
-            :badge-type="isError ? 'error' : 'success'"
-            :badge-text="responseMessage"
+              :badge-type="isError ? 'error' : 'success'"
+              :badge-text="responseMessage"
           />
         </div>
 
@@ -209,10 +213,10 @@
           <ButtonWrapper>
             <template #buttons>
               <ButtonType
-                :type-button="true"
-                :btn-text="'Passwort ändern'"
-                :btn-class="'w-100'"
-                @click="
+                  :type-button="true"
+                  :btn-text="'Passwort ändern'"
+                  :btn-class="'w-100'"
+                  @click="
                   handleChangePassword(
                     oldPassword,
                     newPassword,
@@ -222,10 +226,10 @@
               />
 
               <ButtonType
-                :type-button="true"
-                :btn-text="'Zurück'"
-                :btn-class="'w-100 btn-secondary'"
-                @click="showChangePasswordModel = !showChangePasswordModel"
+                  :type-button="true"
+                  :btn-text="'Zurück'"
+                  :btn-class="'w-100 btn-secondary'"
+                  @click="showChangePasswordModel = !showChangePasswordModel"
               />
             </template>
           </ButtonWrapper>
@@ -233,30 +237,30 @@
       </div>
     </div>
     <div
-      v-if="
+        v-if="
         !showChangePasswordModel && showUserImageModel && isCurrentUsersProfile
       "
-      class="change-profile-image"
+        class="change-profile-image"
     >
       <ProfilePanel
-        :user-name="getSelectedUser.name"
-        :user-initials="getSelectedUser.userImage.initials"
-        :bg-color="getSelectedUser.userImage.bgColor"
-        :is-image="!getSelectedUser.userImage.bgColor.includes('--')"
+          :user-name="getSelectedUser.name"
+          :user-initials="getSelectedUser.userImage.initials"
+          :bg-color="getSelectedUser.userImage.bgColor"
+          :is-image="!getSelectedUser.userImage.bgColor.includes('--')"
       />
       <ColorPicker
-        v-model:selectedColor="getImageColor"
-        :id="getSelectedUser.id"
-        @update:selected-color="updateSelectedColor"
+          v-model:selectedColor="getImageColor"
+          :id="getSelectedUser.id"
+          @update:selected-color="updateSelectedColor"
       />
 
       <ButtonWrapper>
         <template #buttons>
           <ButtonType
-            :type-button="true"
-            :btn-text="'Änderungen bestätigen'"
-            :btn-class="'w-100'"
-            @click="showUserImageModel = !showUserImageModel"
+              :type-button="true"
+              :btn-text="'Änderungen bestätigen'"
+              :btn-class="'w-100'"
+              @click="showUserImageModel = !showUserImageModel"
           />
         </template>
       </ButtonWrapper>
@@ -265,13 +269,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
-import { useUser } from '@/composables/useUser.ts'
-import { useRouter } from 'vue-router'
-import { getInitials } from '@/helpers/getInitials.ts'
-import { validatePassword } from '@/helpers/validatePassword.ts'
+import {computed, onMounted, ref} from 'vue'
+import {useUser} from '@/composables/useUser.ts'
+import {useRouter} from 'vue-router'
+import {getInitials} from '@/helpers/getInitials.ts'
+import {validatePassword} from '@/helpers/validatePassword.ts'
 import store from '@/store'
-import { UserData } from '@/interface'
+import {UserData} from '@/interface'
 import InputType from '@/components/InputType.vue'
 import CheckboxType from '@/components/CheckboxType.vue'
 import PromoteUser from '@/components/PromoteUser.vue'
@@ -337,9 +341,9 @@ const passwordError = ref(false)
 const oldPasswordError = ref(false)
 
 const handleChangePassword = (
-  oldPassword: string,
-  newPassword: string,
-  confirmPassword: string,
+    oldPassword: string,
+    newPassword: string,
+    confirmPassword: string,
 ) => {
   oldPasswordError.value = oldPassword.length <= 0
   passwordError.value = !validatePassword(newPassword, confirmPassword)
@@ -354,7 +358,7 @@ const handleUserAction = () => {
   if (!getSelectedUser.value) return
 
   const updateInitials = ref(
-    `${getInitials(getSelectedUser.value.name)}${getInitials(getSelectedUser.value.surname)}`,
+      `${getInitials(getSelectedUser.value.name)}${getInitials(getSelectedUser.value.surname)}`,
   )
   getSelectedUser.value.userImage.initials = updateInitials.value
 
@@ -362,20 +366,20 @@ const handleUserAction = () => {
   nameError.value = !getSelectedUser.value.name
   surNameError.value = !getSelectedUser.value.surname
   jerseyNumberError.value = !(
-    getSelectedUser.value.jerseyNumber !== null &&
-    getSelectedUser.value.jerseyNumber >= 1 &&
-    getSelectedUser.value.jerseyNumber <= 99
+      getSelectedUser.value.jerseyNumber !== null &&
+      getSelectedUser.value.jerseyNumber >= 1 &&
+      getSelectedUser.value.jerseyNumber <= 99
   )
   debtsError.value = getSelectedUser.value.debts < 0
   promotionError.value =
-    getSelectedUser.value.role === '[]' || !getSelectedUser.value.role
+      getSelectedUser.value.role === '[]' || !getSelectedUser.value.role
 
   if (
-    !nameError.value &&
-    !surNameError.value &&
-    !jerseyNumberError.value &&
-    !debtsError.value &&
-    !promotionError.value
+      !nameError.value &&
+      !surNameError.value &&
+      !jerseyNumberError.value &&
+      !debtsError.value &&
+      !promotionError.value
   ) {
     const updates = {
       name: getSelectedUser.value.name,
