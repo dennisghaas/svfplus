@@ -11,6 +11,11 @@ const state = reactive({
   createCardSelected: ['meta'],
   loadingResponse: false,
   loadingResponseText: '',
+  isPrivate: false,
+  isCorporal: false,
+  isSergeant: false,
+  isMajor: false,
+  isCommander: false
 })
 
 const setUserData = (data: any) => {
@@ -79,6 +84,30 @@ const updateIsRegisterSuccess = (status: boolean) => {
   state.isRegisterSuccess = status
 }
 
+const getUserAccessRights = (user: any) => {
+  if (user.accessRights === 'svf_private') {
+    state.isPrivate = true
+  } else if(user.accessRights === 'svf_corporal') {
+    state.isPrivate = true
+    state.isCorporal = true
+  } else if(user.accessRights === 'svf_sergeant') {
+    state.isPrivate = true
+    state.isCorporal = true
+    state.isSergeant = true
+  } else if(user.accessRights === 'svf_major') {
+    state.isPrivate = true
+    state.isCorporal = true
+    state.isSergeant = true
+    state.isMajor = true
+  } else {
+    state.isPrivate = true
+    state.isCorporal = true
+    state.isSergeant = true
+    state.isMajor = true
+    state.isCommander = true
+  }
+}
+
 export default {
   state: readonly(state),
   setUserData,
@@ -94,4 +123,5 @@ export default {
   updateLoadingResponse,
   updateLoadingResponseText,
   updateIsRegisterSuccess,
+  getUserAccessRights
 }

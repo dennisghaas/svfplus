@@ -72,6 +72,7 @@ export interface Navigation {
   openNewTab: boolean;
   showInMobileBar: boolean;
   properties: NavigationProperty[];
+  accessibleRouteFrom: Array<'svf_private' | 'svf_corporal' | 'svf_sergeant' | 'svf_major' | 'svf_commander'>;
 }
 
 export interface BirthdayEntry {

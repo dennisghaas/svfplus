@@ -29,6 +29,7 @@
               v-for="button in accessibleReactions"
               :key="button.reaction"
             >
+
               <ButtonCircle
                 :name="button.reaction"
                 :icon="button.icon"
@@ -217,6 +218,7 @@ import { UserData } from '@/interface'
 import ProfilePanel from '@/components/ProfilePanel.vue'
 import ButtonCircle from '@/components/ButtonCircle.vue'
 import BadgeType from '@/components/BadgeType.vue'
+import store from "../store";
 
 const { fetchAllUsers, completeUserData } = useUser()
 const { fetchEventResponse, selectEventResponses } = useEventResponse()
@@ -332,8 +334,12 @@ const accessibleReactions = ref([
 ])
 
 const sendResponse = async (reaction: string, userID: number) => {
-  const { eventResponse } = useEventResponse()
-  await eventResponse(reaction, props.eventID, '', router, true, userID)
+  if(store.state.isMajor) {
+    const { eventResponse } = useEventResponse()
+    await eventResponse(reaction, props.eventID, '', router, true, userID)
+  } else {
+    console.warn('Nur bestimmte Personen haben das Recht dazu, die Reaktionen der Spieler anzupassen');
+  }
 }
 
 onMounted(async () => {

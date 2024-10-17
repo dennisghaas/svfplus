@@ -40,11 +40,29 @@ const { deleteEventResponseByID } = useEventResponse();
 
 export const useEvents = () => {
   const fetchEvents = async () => {
+    store.updateLoadingResponse(true);
+    store.updateOverflowHidden(true);
+    store.updateLoadingResponseText(
+        'Events werden geladen...',
+    );
+
     try {
       const response = await fetchDataFromApi('/events', 'GET');
       events.value = response;
+
+      store.updateLoadingResponse(false);
+      store.updateOverflowHidden(false);
+      store.updateLoadingResponseText(
+          '',
+      );
     } catch (error) {
       console.error('Error fetching events:', error);
+
+      store.updateLoadingResponse(false);
+      store.updateOverflowHidden(false);
+      store.updateLoadingResponseText(
+          '',
+      );
     }
   };
 
@@ -565,6 +583,6 @@ export const useEvents = () => {
     standingOrderID,
     eventCreatedSuccessful,
     standingOrderArray,
-    selectedEvent,
+    selectedEvent
   };
 };

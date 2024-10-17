@@ -10,6 +10,11 @@
   >
     <template #sectionHeaderLeft>
       <h2>Übersicht: Wichtige Termine</h2>
+      <div class="body-text-b2">
+        <p>
+          Deine Trainer haben diese Termine als <u>äußert wichtig</u> gekennzeichnet. Bitte schnellstmöglich antworten. Sobald das geschehen ist, verschwinden diese aus deinem Dashboard 🚀
+        </p>
+      </div>
     </template>
     <template #sectionContent>
       <div class="row">

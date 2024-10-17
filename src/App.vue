@@ -1,5 +1,5 @@
 <template>
-  <template v-if="!store.state.loadData"> Loading... </template>
+  <template v-if="!store.state.loadData"></template>
   <template v-else>
     <template v-if="store.state.isLoggedIn && !store.state.isRegisterSuccess">
       <LayoutLoggenIn>

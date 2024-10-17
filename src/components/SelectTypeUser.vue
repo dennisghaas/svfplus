@@ -15,7 +15,10 @@
           {{ selectPlaceholder }}
         </option>
         <template v-for="user in completeUserData" :key="user.id">
-          <option v-if="!selectedUsers.includes(`${user.id}`)" :value="user.id">
+          <option
+              v-if="user.id !== 1 && user.name !== 'admin' && !selectedUsers.includes(`${user.id}`)"
+              :value="user.id"
+          >
             {{ user.name }}
           </option>
         </template>

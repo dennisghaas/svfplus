@@ -31,7 +31,7 @@ import ContentImage from '@/components/ContentImage.vue'
   align-items: center;
   justify-content: center;
   background: var(--black-75);
-  z-index: 998;
+  z-index: $loadingIndex;
   color: var(--white);
 
   &--inner {

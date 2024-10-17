@@ -1,6 +1,6 @@
 <template>
   <ul class="meta-data blanklist">
-    <li v-if="author" class="meta-data--author">
+    <li v-if="author" class="meta-data__author">
       <strong>Autor</strong>
       {{ author }}
     </li>
@@ -33,31 +33,36 @@ defineProps({
 </script>
 
 <style scoped lang="scss">
+
 .meta-data {
-  margin-top: rem(30px);
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
+  margin-top: rem(30px);
+  gap: 1rem;
 
   li {
-    margin-right: rem(20px);
-    padding-right: rem(20px);
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    padding-right: 1rem;
     position: relative;
 
     &::after {
       content: '';
-      width: rem(4px);
-      height: rem(4px);
-      background: var(--primary);
+      width: 4px;
+      height: 4px;
+      display: block;
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      right: rem(-2px);
+      right: -2px;
       border-radius: 50%;
+      background: var(--primary);
     }
 
     &:last-child {
-      margin-right: 0;
       padding-right: 0;
 
       &::after {
@@ -66,8 +71,13 @@ defineProps({
     }
   }
 
-  &--author {
+  @include media-breakpoint-up(lg) {
+
+  }
+
+  &__author {
     text-transform: capitalize;
   }
 }
+
 </style>

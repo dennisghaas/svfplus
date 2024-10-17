@@ -74,6 +74,8 @@
           :select-title="'Spieler nicht nominieren'"
           :select-placeholder="'Spieler auswählen'"
           :selected-users="selectedEvent[0].playerWithNoAccess.map(String)"
+          :select-i-d="'not-nominated-players-select-field'"
+          :select-name="'not-nominated'"
           @update:selection="updatePlayerWithNoAccess"
         />
       </div>

@@ -35,7 +35,7 @@
 
         <div class="col-xs-12 col-md-6 col-lg-12 col-xl-6">
           <div class="row">
-            <div class="col-xs-12 col-lg-6">
+            <div v-if="store.state.isSergeant || isCurrentUsersProfile" class="col-xs-12 col-lg-6">
               <CardDebts
                   :debts="getFormattedDebts"
                   :role="getSelectedUser?.role || ''"

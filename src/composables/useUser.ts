@@ -196,11 +196,29 @@ export const useUser = () => {
   }
 
   const fetchAllUsers = async () => {
+    store.updateLoadingResponse(true);
+    store.updateOverflowHidden(true);
+    store.updateLoadingResponseText(
+        'Nutzer werden geladen...',
+    );
+
     try {
       const response = await fetchDataFromApi('/users', 'GET')
       completeUserData.value = response
+
+      store.updateLoadingResponse(false);
+      store.updateOverflowHidden(false);
+      store.updateLoadingResponseText(
+          '',
+      );
     } catch (error: any) {
       console.log('Fehler beim Abrufen aller Nutzerdaten', error)
+
+      store.updateLoadingResponse(false);
+      store.updateOverflowHidden(false);
+      store.updateLoadingResponseText(
+          '',
+      );
     }
   }
 

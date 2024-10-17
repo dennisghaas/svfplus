@@ -15,15 +15,12 @@
 
     <template #cardBody>
       <div class="row">
-        <div class="col-xs-6">
-          <div class="body-text-b3">
-            <p class="text-capitalize">{{ currentUserName }} (Du)</p>
-          </div>
-        </div>
-        <div class="col-xs-6">
-          <div class="body-text-b3">
-            <p class="text-color-primary text-right">Controls (tbd)</p>
-          </div>
+        <div class="col-xs-12">
+          <BadgeType
+              :badge-type="'info'"
+              :badge-text="'Diese Ansicht folgt'"
+              :badge-centered="true"
+          />
         </div>
       </div>
     </template>
@@ -33,6 +30,7 @@
 <script setup lang="ts">
 import CardFrame from '@/components/CardFrame.vue'
 import { createGenetiveFromName } from '@/helpers/createGenetiveFromName.ts'
+import BadgeType from "@/components/BadgeType.vue";
 
 defineProps({
   currentUserName: {
