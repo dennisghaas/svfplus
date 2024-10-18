@@ -9,6 +9,9 @@
           @click="toggleReactionModel('Zusagen')"
         >
           <i class="icon-thumb-up"></i>
+          <strong>
+            {{getCountForEventResponse('Zusagen')}}
+          </strong>
           <span class="d-none">Zur Veranstaltung zusagen</span>
         </button>
       </li>
@@ -20,6 +23,9 @@
           @click="toggleReactionModel('Absagen')"
         >
           <i class="icon-thumb-down"></i>
+          <strong>
+            {{getCountForEventResponse('Absagen')}}
+          </strong>
           <span class="d-none">Zur Veranstaltung absagen</span>
         </button>
       </li>
@@ -31,6 +37,9 @@
           @click="toggleReactionModel('Unsicher')"
         >
           <i class="icon-question-mark"></i>
+          <strong>
+            {{getCountForEventResponse('Unsicher')}}
+          </strong>
           <span class="d-none">Ich bin mir unsicher</span>
         </button>
       </li>
@@ -75,10 +84,11 @@ import store from '@/store'
 import AppDialog from '@/components/AppDialog.vue'
 import AppDialogReaction from '@/components/AppDialogReaction.vue'
 import AppDialogEventOverview from '@/components/AppDialogEventOverview.vue'
+import {EventResponse} from "@/interface";
 
 const dialogOpen = ref(false)
 const getReaction = ref('')
-const { fetchUserResponseToEvent, getResponseForEvent } = useEventResponse()
+const { fetchUserResponseToEvent, getResponseForEvent, fetchEventResponse, selectEventResponses } = useEventResponse()
 const response = computed(() => getResponseForEvent(props.eventID))
 const reactionDialog = ref(false)
 const overviewDialog = ref(false)
@@ -97,6 +107,14 @@ const props = defineProps({
     default: null,
   },
 })
+
+const getEventResponse = ref<EventResponse[]>([])
+
+const getCountForEventResponse = (type: string) => {
+  if(getEventResponse.value) {
+    return getEventResponse.value.filter(response => response.response === type).length
+  }
+}
 
 const toggleReactionModel = (reaction: string) => {
   reactionDialog.value = true
@@ -131,6 +149,14 @@ const handleClose = () => {
 onMounted(() => {
   fetchUserResponseToEvent(props.eventID)
 })
+
+onMounted(async () => {
+  await fetchEventResponse(props.eventID);
+
+  if(selectEventResponses.value) {
+    getEventResponse.value = selectEventResponses.value
+  }
+})
 </script>
 
 <style scoped lang="scss">
@@ -148,9 +174,12 @@ onMounted(() => {
 
       button {
         display: flex;
+        align-items: center;
         justify-content: center;
+        gap: rem(8px);
         padding: rem(15px);
         width: 100%;
+        height: 100%;
         transition: $transition-fast;
 
         &:hover {
