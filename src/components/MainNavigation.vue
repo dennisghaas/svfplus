@@ -172,6 +172,18 @@ const onLogout = () => {
       }
     }
 
+    a {
+      &.router-link-exact-active {
+        span {
+          font-weight: $font-weight-600;
+
+          @include media-breakpoint-up(lg) {
+            font-weight: $font-weight-400;
+          }
+        }
+      }
+    }
+
     &:last-child {
       margin-top: auto;
     }

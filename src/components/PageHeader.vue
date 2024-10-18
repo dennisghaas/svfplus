@@ -60,14 +60,8 @@ const { isMobile, isTablet } = useBreakpoint()
 const showDropdown = ref(store.state.menuOpen)
 
 const toggleDropdown = () => {
+  store.updateOverflowHidden(true)
   store.menuOpen(!store.state.menuOpen)
-
-  /* handling overflow if menu is open */
-  if(store.state.menuOpen) {
-    store.updateOverflowHidden(true)
-  } else {
-    store.updateOverflowHidden(false)
-  }
 }
 
 watch(

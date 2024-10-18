@@ -14,14 +14,14 @@
             <template #buttons>
               <ButtonType
                   :btn-class="'btn-small'"
-                  :btn-text="'Profilbild bearbeiten'"
+                  :btn-text="textTruncate('Profilbild bearbeiten', 15)"
                   :type-button="true"
                   @click="showUserImageModel = !showUserImageModel"
               />
 
               <ButtonType
                   :btn-class="'btn-small'"
-                  :btn-text="'Passwort ändern'"
+                  :btn-text="textTruncate('Passwort ändern', 15)"
                   :type-button="true"
                   @click="showChangePasswordModel = !showChangePasswordModel"
               />
@@ -274,6 +274,7 @@ import {useUser} from '@/composables/useUser.ts'
 import {useRouter} from 'vue-router'
 import {getInitials} from '@/helpers/getInitials.ts'
 import {validatePassword} from '@/helpers/validatePassword.ts'
+import {textTruncate} from "@/helpers/textTruncate.ts";
 import store from '@/store'
 import {UserData} from '@/interface'
 import InputType from '@/components/InputType.vue'
@@ -501,15 +502,27 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 .edit-users-image {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
   padding: 0 0 rem(20px);
   margin: 0 0 rem(40px);
   border-bottom: 1px solid var(--border-color);
 
   .button-wrapper {
-    margin-left: auto;
+    margin-top: rem(20px);
+
+    > * {
+      width: 50%;
+      max-width: 50%;
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .button-wrapper {
+      margin-top: 0;
+    }
   }
 }
 

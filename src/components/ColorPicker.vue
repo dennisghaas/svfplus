@@ -49,20 +49,20 @@ const accessibleColors = reactive([
     name: 'Blau'
   },
   {
-    color: '--blue-dark-gray',
-    name: 'Dunkelblau'
-  },
-  {
     color: '--primary',
     name: 'Rot'
   },
   {
-    color: '--success-mint',
-    name: 'Minzgrün'
-  },
-  {
     color: '--purple',
     name: 'Lila'
+  },
+  {
+    color: '--blue-dark-gray',
+    name: 'Dunkelblau'
+  },
+  {
+    color: '--success-mint',
+    name: 'Minzgrün'
   },
   {
     name: 'Derbysieger',

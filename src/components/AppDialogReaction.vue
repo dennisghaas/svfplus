@@ -38,12 +38,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { validateSentence } from '@/helpers/validateSentence.ts'
 import { useEventResponse } from '@/composables/useEventResponse.ts'
 import { useRouter } from 'vue-router'
+import store from "@/store";
+import {EventResponse} from "@/interface"
 import InputType from '@/components/InputType.vue'
 import ButtonType from '@/components/ButtonType.vue'
+
 const router = useRouter()
 const resolveDialogHeadline = ref('')
 const resolveDialogIcon = ref('')
@@ -52,7 +55,8 @@ const resolveButtonClass = ref('')
 const resolveButtonText = ref('')
 const requiredMessage = ref('')
 
-const message = ref('')
+const {fetchEventResponse, selectEventResponses} = useEventResponse()
+
 const messageError = ref(false)
 const errorMessageString = ref('')
 
@@ -66,6 +70,26 @@ const props = defineProps({
     default: '',
   },
 })
+
+const message = ref('')
+const checkIfUserAlreadyResponded = async () => {
+  if(filterEventResponse.value) {
+    if(props.reaction === filterEventResponse.value.response) {
+      message.value = filterEventResponse.value?.reason
+    }
+  }
+}
+
+const filterEventResponse = computed<EventResponse | null>(() => {
+  if (selectEventResponses.value) {
+    return (
+        selectEventResponses.value.find(
+            (response) => response.userId === store.state.userData.id
+        ) || null
+    );
+  }
+  return null;
+});
 
 const resolveUserReaction = () => {
   if (props.reaction === 'Zusagen') {
@@ -121,6 +145,11 @@ const sendResponse = async () => {
 
 onMounted(() => {
   resolveUserReaction()
+})
+
+onMounted(async () => {
+  await fetchEventResponse(props.eventID)
+  await checkIfUserAlreadyResponded();
 })
 </script>
 

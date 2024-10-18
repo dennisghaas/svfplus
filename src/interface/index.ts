@@ -115,6 +115,7 @@ export interface BlockList {
 export interface EventResponse {
   userId: number;
   response: 'Zusagen' | 'Absagen' | 'Unsicher';
+  reason: string;
 }
 
 export interface answer {

@@ -43,7 +43,8 @@ console.log(
 
 <style scoped lang="scss">
 .pageMain {
-  padding-top: rem(40px);
+  margin-top: #{-$pageHeaderHeight};
+  padding-top: calc(#{$pageHeaderHeight} + rem(40px));
   background: var(--gray-soft);
   min-height: calc(100vh - #{$pageHeaderHeight});
   height: 100%;
@@ -55,6 +56,8 @@ console.log(
     margin-left: auto;
     width: 66.66%;
     min-height: calc(100vh - #{$pageHeaderHeightDesktop});
+    padding-top: rem(40px);
+    margin-top: 0;
   }
 
   @include media-breakpoint-up(xl) {
