@@ -69,13 +69,24 @@ onMounted(() => {
   padding: $space-5 $space-2_5;
   border-radius: rem(10px);
   background: var(--white);
-  min-height: 50dvh;
-  max-height: 50dvh;
   overflow-y: scroll;
+  width: calc(100% + #{$gutter-width * 4});
+  left: calc(#{-$gutter-width * 2});
+  position: relative;
+  height: 100dvh;
+
+  @include media-breakpoint-up(lg) {
+    min-height: 50dvh;
+    max-height: 50dvh;
+  }
 
   &.is-register {
-    min-height: 75dvh;
-    max-height: 75dvh;
+
+
+    @include media-breakpoint-up(lg) {
+      min-height: 75dvh;
+      max-height: 75dvh;
+    }
   }
 
   &--header {

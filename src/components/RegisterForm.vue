@@ -26,7 +26,7 @@
       <div v-if="stepOne" class="register__item">
         <div class="register__item-body">
           <div class="row">
-            <div class="col-xs-6">
+            <div class="col-xs-12 col-md-6">
               <InputType
                 :id="'name'"
                 :label="'Name'"
@@ -37,7 +37,7 @@
               />
             </div>
 
-            <div class="col-xs-6">
+            <div class="col-xs-12 col-md-6">
               <InputType
                 :id="'surname'"
                 :label="'Nachname'"
@@ -48,7 +48,7 @@
               />
             </div>
 
-            <div class="col-xs-6">
+            <div class="col-xs-12 col-md-6">
               <InputType
                 :id="'username'"
                 :label="'Benutzername'"
@@ -63,7 +63,7 @@
               />
             </div>
 
-            <div class="col-xs-6">
+            <div class="col-xs-12 col-md-6">
               <InputType
                 :id="'email'"
                 :label="'E-Mail Adresse'"
@@ -146,6 +146,7 @@
               :input-placeholder="'z.B. Stürmer'"
               :min-val="1"
               :max-val="99"
+              pattern="[0-9]*"
               v-model.number="jerseyNumber"
               :error-message="
                 jerseyNumberError

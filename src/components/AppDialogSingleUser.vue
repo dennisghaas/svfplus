@@ -72,6 +72,7 @@
             :min-val="1"
             :max-val="99"
             :input-placeholder="'Spielernummer'"
+            pattern="[0-9]*"
             v-model:modelValue="getSelectedUser.jerseyNumber"
             :error-message="
             jerseyNumberError ? 'Es sind nur Zahlen zwischen 1-99 erlaubt' : ''
@@ -95,6 +96,7 @@
             :label="'Offener Betrag MK'"
             :input-type="'number'"
             :input-placeholder="'Offener Betrag MK'"
+            pattern="[0-9,]*"
             v-model:modelValue="getSelectedUser.debts"
             :error-message="debtsError ? 'Negative Werte sind nicht erlaubt' : ''"
         />

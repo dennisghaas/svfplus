@@ -5,14 +5,6 @@
     </div>
 
     <ContentImage
-      class="d-md-none"
-      :lazy-load="false"
-      :img-src="'login-bg-mobile.jpg'"
-      :img-alt="'SVF Plus App Background'"
-      :img-class="'pageAuth--bg'"
-    />
-
-    <ContentImage
       class="d-none d-md-block"
       :lazy-load="false"
       :img-src="'login-bg-desktop.jpg'"
