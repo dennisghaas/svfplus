@@ -22,7 +22,7 @@
                 :display-medium="true"
             />
 
-            <span v-if="store.state.isMajor" class="event-reaction-overview__reason">
+            <span v-if="store.state.isMajor || isCurrentUsersProfile(user.id)" class="event-reaction-overview__reason">
               {{user.reason}}
             </span>
           </div>
@@ -70,7 +70,7 @@
                 :display-medium="true"
             />
 
-            <span v-if="store.state.isMajor" class="event-reaction-overview__reason">
+            <span v-if="store.state.isMajor || isCurrentUsersProfile(user.id)" class="event-reaction-overview__reason">
               {{user.reason}}
             </span>
 
@@ -120,7 +120,7 @@
                 :display-medium="true"
             />
 
-            <span v-if="store.state.isMajor" class="event-reaction-overview__reason">
+            <span v-if="store.state.isMajor || isCurrentUsersProfile(user.id)" class="event-reaction-overview__reason">
               {{user.reason}}
             </span>
           </div>
@@ -167,7 +167,7 @@
                 :display-medium="true"
             />
 
-            <span v-if="store.state.isMajor" class="event-reaction-overview__reason">
+            <span v-if="store.state.isMajor || isCurrentUsersProfile(user.id)" class="event-reaction-overview__reason">
               {{user.reason}}
             </span>
           </div>
@@ -401,6 +401,10 @@ const accessibleReactions = ref([
     background: '--gray-dark',
   },
 ])
+
+const isCurrentUsersProfile = (id: number) => {
+  return id === store.state.userData.id;
+}
 
 const sendResponse = async (reaction: string, userID: number) => {
   if (store.state.isMajor) {
