@@ -9,7 +9,7 @@
           @click="toggleReactionModel('Zusagen')"
         >
           <i class="icon-thumb-up"></i>
-          <strong>
+          <strong v-if="getCountForEventResponse('Zusagen') !== 0">
             {{getCountForEventResponse('Zusagen')}}
           </strong>
           <span class="d-none">Zur Veranstaltung zusagen</span>
@@ -23,7 +23,7 @@
           @click="toggleReactionModel('Absagen')"
         >
           <i class="icon-thumb-down"></i>
-          <strong>
+          <strong v-if="getCountForEventResponse('Absagen') !== 0">
             {{getCountForEventResponse('Absagen')}}
           </strong>
           <span class="d-none">Zur Veranstaltung absagen</span>
@@ -37,7 +37,7 @@
           @click="toggleReactionModel('Unsicher')"
         >
           <i class="icon-question-mark"></i>
-          <strong>
+          <strong v-if="getCountForEventResponse('Unsicher') !== 0">
             {{getCountForEventResponse('Unsicher')}}
           </strong>
           <span class="d-none">Ich bin mir unsicher</span>
