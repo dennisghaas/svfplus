@@ -38,6 +38,8 @@ import ContentImage from '@/components/ContentImage.vue'
     display: flex;
     align-items: center;
     flex-direction: column;
+    padding: 0 #{$gutter-width * 2};
+    text-align: center;
 
     .loading {
       max-width: rem(42px);
