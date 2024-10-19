@@ -33,7 +33,9 @@
 
         <div class="card-body-profile--item">
           <span class="typo-label"> Rolle </span>
-          <span>{{ resolveRole(subtitle) }}</span>
+          <span class="text-right">
+            {{resolveRole(subtitle)}}
+          </span>
         </div>
 
         <div class="card-body-profile--item">
