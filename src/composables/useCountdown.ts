@@ -23,7 +23,7 @@ export function useCountdown() {
 
     if (days === 0) {
       showCountdown.value = true
-      countdown.value = `Noch ${hours}h ${minutes}min ${seconds}s Zeit zum reagieren`
+      countdown.value = `Noch ${hours}h ${minutes}m ${seconds}s Zeit zum reagieren`
 
       if (!interval) {
         interval = window.setInterval(() => {
