@@ -33,12 +33,30 @@
           :type-button="true"
           @click="validateResponse()"
       />
+
+      <div v-if="reaction === 'Absagen' || reaction === 'Unsicher'" class="app-dialog--reaction__suggestions">
+        <div class="body-text-b3">
+          <p>
+            <strong>Unsere Vorschläge</strong>. Falls dein Grund nicht dabei sein sollte, nutze das Feld um dein Anliegen zu beschreiben
+          </p>
+        </div>
+        <div class="app-dialog--reaction__suggestions-inner">
+          <div class="app-dialog--reaction__suggestions-button" v-for="except in exceptions">
+            <ButtonType
+                :btn-class="'btn-small text-capitalize-first-letter'"
+                :btn-text="except"
+                :type-button="true"
+                @click="suggestionMessages(except)"
+            />
+          </div>
+        </div>
+      </div>
     </div>
 
     <BadgeType
         v-if="reaction === 'Absagen' || reaction === 'Unsicher'"
         :badge-type="'info'"
-        :badge-text="'Wir freuen uns, deine Laufeinheit in der Gruppe sehen zu können :)'"
+        :badge-text="'Wir freuen uns auf deine Laufeinheit 👀'"
         :badge-centered="true"
         :additional-class="'event'"
     />
@@ -50,6 +68,7 @@ import {ref, onMounted, computed} from 'vue'
 import {validateSentence} from '@/helpers/validateSentence.ts'
 import {useEventResponse} from '@/composables/useEventResponse.ts'
 import {useRouter} from 'vue-router'
+import {exceptions} from "@/config.ts";
 import store from "@/store";
 import {EventResponse} from "@/interface"
 import InputType from '@/components/InputType.vue'
@@ -81,6 +100,11 @@ const props = defineProps({
 })
 
 const message = ref('')
+
+const suggestionMessages = (newMessage: string) => {
+  message.value = newMessage;
+}
+
 const checkIfUserAlreadyResponded = async () => {
   if (filterEventResponse.value) {
     if (props.reaction === filterEventResponse.value.response) {
@@ -136,7 +160,7 @@ const validateResponse = () => {
       messageError.value = true
       errorMessageString.value =
           '' +
-          'Wir brauchen mehr als das! (Min. drei Wörter). <br>Ausnahmen sind: <q>Spätschicht</q>, <q>Nachtschicht</q>, <q>Frühschicht</q>, <q>Verletzt</q>, <q>bin krank</q>, <q>krank</q>, <q>Urlaub</q>, <q>brauch Pause</q>, <q>Pause</q>.'
+          'Wir brauchen mehr als das! (Min. drei Wörter). Ausnahmen sind: <i>Siehe Vorschläge</i>'
     } else {
       messageError.value = false
       sendResponse()
@@ -175,6 +199,31 @@ onMounted(async () => {
       font-size: 2rem;
       margin-right: rem(15px);
       color: var(--dialog-color);
+    }
+  }
+
+  &__suggestions {
+    --gap-space: .5rem;
+    gap: .5rem;
+    margin-top: rem(20px);
+
+    &-inner {
+      margin-top: rem(10px);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--gap-space);
+    }
+
+    &-button {
+      width: calc(50% - var(--gap-space) / 2);
+
+      @include media-breakpoint-up(sm) {
+        width: calc(33.3% - var(--gap-space));
+      }
+
+      @include media-breakpoint-up(md) {
+        width: auto;
+      }
     }
   }
 }
