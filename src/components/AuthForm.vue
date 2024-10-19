@@ -81,11 +81,9 @@ onMounted(() => {
   }
 
   &.is-register {
-
-
     @include media-breakpoint-up(lg) {
-      min-height: 75dvh;
-      max-height: 75dvh;
+      max-height: 80dvh;
+      height: auto;
     }
   }
 

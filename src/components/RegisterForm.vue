@@ -67,7 +67,7 @@
               <InputType
                 :id="'email'"
                 :label="'E-Mail Adresse'"
-                :input-type="'text'"
+                :input-type="'email'"
                 :input-placeholder="'mail@mail.de'"
                 v-model:model-value="email"
                 :error-message="
@@ -316,17 +316,19 @@ const passwordError = ref(false)
 const jerseyNumberError = ref(false)
 
 const liveCompareWithAPI = (
-  email: string,
-  username: string,
-  data: Array<{ email: string; username: string }>,
+    email: string | undefined,
+    username: string | undefined,
+    data: Array<{ email: string; username: string }>,
 ) => {
+  // Early exit if email or username is undefined
+  if (!email || !username) {
+    return; // Exit the function early if either is undefined
+  }
+
   let forbiddenEmail = false
   let forbiddenUsername = false
 
   for (const user of data) {
-    console.log(user)
-    console.log(user.email)
-
     if (user.email === email) {
       forbiddenEmail = true
       emailError.value = forbiddenEmail
@@ -344,60 +346,60 @@ const liveCompareWithAPI = (
 }
 
 const navigateInsideForm = (
-  nextStep: string,
-  name?: string,
-  surname?: string,
-  username?: string,
-  email?: string,
-  password?: string,
-  repeatPassword?: string,
-  jerseyNumber?: number,
+    nextStep: string,
+    name?: string,
+    surname?: string,
+    username?: string,
+    email?: string,
+    password?: string,
+    repeatPassword?: string,
+    jerseyNumber?: number,
 ) => {
   if (nextStep === 'stepTwo') {
     /* validate password */
-    if (name && surname && username && email && password && repeatPassword) {
-      nameError.value = name.length <= 0
-      surnameError.value = surname.length <= 0
-      usernameError.value = username.length <= 0
-      emailError.value = !validateMail(email)
-      passwordError.value = !validatePassword(password, repeatPassword)
+    nameError.value = !name || name.length === 0;
+    surnameError.value = !surname || surname.length === 0;
+    usernameError.value = !username || username.length === 0;
+    emailError.value = !email || !validateMail(email ?? '');
+    passwordError.value = !password || !repeatPassword || !validatePassword(password, repeatPassword);
 
-      liveCompareWithAPI(email, username, getAllUsers.value)
-      liveCompareWithAPI(email, username, getAllBlockedUsers.value)
+    // Check for errors and exit if any exist
+    if (nameError.value || surnameError.value || usernameError.value || emailError.value || passwordError.value) {
+      return; // Exit early if there is an error
     }
 
-    if (
-      !nameError.value &&
-      !surnameError.value &&
-      !usernameError.value &&
-      !emailError.value &&
-      !passwordError.value
-    ) {
-      stepOne.value = false
-      stepTwo.value = true
-      stepThree.value = false
+    liveCompareWithAPI(email, username, getAllUsers.value)
+    liveCompareWithAPI(email, username, getAllBlockedUsers.value)
 
-      /* pass current initials to register form */
-      initials.value = `${getInitials(name ?? '')}${getInitials(surname ?? '')}`
-    }
+    // Proceed to the next step
+    stepOne.value = false;
+    stepTwo.value = true;
+    stepThree.value = false;
+
+    /* pass current initials to register form */
+    initials.value = `${getInitials(name ?? '')}${getInitials(surname ?? '')}`;
+
   } else if (nextStep === 'stepThree') {
-    if (jerseyNumber !== 0 && jerseyNumber) {
-      jerseyNumberError.value = !(jerseyNumber >= 1 && jerseyNumber <= 99)
+    // Validate jersey number
+    if (jerseyNumber === 0 || !jerseyNumber || jerseyNumber < 1 || jerseyNumber > 99) {
+      jerseyNumberError.value = true;
+      return; // Exit early if jersey number is invalid
     } else {
-      jerseyNumberError.value = false
+      jerseyNumberError.value = false;
     }
 
-    if (!jerseyNumberError.value) {
-      stepOne.value = false
-      stepTwo.value = false
-      stepThree.value = true
-    }
+    // Proceed to the next step
+    stepOne.value = false;
+    stepTwo.value = false;
+    stepThree.value = true;
+
   } else if (nextStep === 'handleRegister') {
-    handleRegister(router)
+    handleRegister(router);
+
   } else {
-    stepOne.value = true
-    stepTwo.value = false
-    stepThree.value = false
+    stepOne.value = true;
+    stepTwo.value = false;
+    stepThree.value = false;
   }
 }
 
