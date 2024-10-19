@@ -1,7 +1,7 @@
 <template>
   <div
-    class="app-dialog--reaction"
-    :style="{ '--dialog-color': resolveDialogColor }"
+      class="app-dialog--reaction"
+      :style="{ '--dialog-color': resolveDialogColor }"
   >
     <div class="app-dialog--reaction-headline">
       <i :class="`icon-calendar-${resolveDialogIcon}`"></i>
@@ -10,42 +10,51 @@
 
     <div class="app-dialog--reaction-body">
       <InputType
-        :id="'reason'"
-        :label="
+          :id="'reason'"
+          :label="
           reaction === 'Zusagen'
             ? 'Möchtest du uns noch was mitteilen?'
             : 'Wieso?*'
         "
-        :input-type="'text'"
-        :input-placeholder="
+          :input-type="'text'"
+          :input-placeholder="
           reaction === 'Zusagen'
             ? 'Ich muss doch nicht länger arbeiten und bin dabei'
             : 'Ich muss länger arbeiten'
         "
-        v-model:model-value="message"
-        :required-message="requiredMessage"
-        :error-message="messageError ? errorMessageString : ''"
+          v-model:model-value="message"
+          :required-message="requiredMessage"
+          :error-message="messageError ? errorMessageString : ''"
       />
 
       <ButtonType
-        :btn-text="resolveButtonText"
-        :btn-class="[resolveButtonClass, 'w-100']"
-        :type-button="true"
-        @click="validateResponse()"
+          :btn-text="resolveButtonText"
+          :btn-class="[resolveButtonClass, 'w-100']"
+          :type-button="true"
+          @click="validateResponse()"
       />
     </div>
+
+    <BadgeType
+        v-if="reaction === 'Absagen' || reaction === 'Unsicher'"
+        :badge-type="'info'"
+        :badge-text="'Wir freuen uns, deine Laufeinheit in der Gruppe sehen zu können :)'"
+        :badge-centered="true"
+        :additional-class="'event'"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
-import { validateSentence } from '@/helpers/validateSentence.ts'
-import { useEventResponse } from '@/composables/useEventResponse.ts'
-import { useRouter } from 'vue-router'
+import {ref, onMounted, computed} from 'vue'
+import {validateSentence} from '@/helpers/validateSentence.ts'
+import {useEventResponse} from '@/composables/useEventResponse.ts'
+import {useRouter} from 'vue-router'
 import store from "@/store";
 import {EventResponse} from "@/interface"
 import InputType from '@/components/InputType.vue'
 import ButtonType from '@/components/ButtonType.vue'
+import BadgeType from "@/components/BadgeType.vue";
 
 const router = useRouter()
 const resolveDialogHeadline = ref('')
@@ -73,8 +82,8 @@ const props = defineProps({
 
 const message = ref('')
 const checkIfUserAlreadyResponded = async () => {
-  if(filterEventResponse.value) {
-    if(props.reaction === filterEventResponse.value.response) {
+  if (filterEventResponse.value) {
+    if (props.reaction === filterEventResponse.value.response) {
       message.value = filterEventResponse.value?.reason
     }
   }
@@ -106,7 +115,7 @@ const resolveUserReaction = () => {
     resolveButtonClass.value = 'btn-primary'
     resolveButtonText.value = 'Termin absagen'
     requiredMessage.value =
-      '*Nur Trainer und du selbst können den Grund deiner Absage einsehen'
+        '*Nur Trainer und du selbst können den Grund deiner Absage einsehen'
   } else {
     resolveDialogHeadline.value = 'Teilnahme unsicher'
     resolveDialogIcon.value = 'not-sure'
@@ -114,7 +123,7 @@ const resolveUserReaction = () => {
     resolveButtonClass.value = 'btn-tertiary'
     resolveButtonText.value = 'Unsicher'
     requiredMessage.value =
-      '*Nur Trainer und du selbst können den Grund deiner unsicheren Zu- oder Absage einsehen'
+        '*Nur Trainer und du selbst können den Grund deiner unsicheren Zu- oder Absage einsehen'
   }
 }
 
@@ -126,8 +135,8 @@ const validateResponse = () => {
     } else if (!validateSentence(message.value)) {
       messageError.value = true
       errorMessageString.value =
-        '' +
-        'Wir brauchen mehr als das! (Min. drei Wörter). <br>Ausnahmen sind: <q>Spätschicht</q>, <q>Nachtschicht</q>, <q>Frühschicht</q>, <q>Verletzt</q>, <q>bin krank</q>, <q>krank</q>, <q>Urlaub</q>, <q>brauch Pause</q>, <q>Pause</q>.'
+          '' +
+          'Wir brauchen mehr als das! (Min. drei Wörter). <br>Ausnahmen sind: <q>Spätschicht</q>, <q>Nachtschicht</q>, <q>Frühschicht</q>, <q>Verletzt</q>, <q>bin krank</q>, <q>krank</q>, <q>Urlaub</q>, <q>brauch Pause</q>, <q>Pause</q>.'
     } else {
       messageError.value = false
       sendResponse()
@@ -139,7 +148,7 @@ const validateResponse = () => {
 }
 
 const sendResponse = async () => {
-  const { eventResponse } = useEventResponse()
+  const {eventResponse} = useEventResponse()
   await eventResponse(props.reaction, props.eventID, message.value, router)
 }
 

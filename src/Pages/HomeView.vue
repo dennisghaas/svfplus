@@ -53,7 +53,7 @@
     </template>
   </SectionType>
 
-  <SectionType :section-header="true">
+  <SectionType :section-header="true" :class="allEventsResponded ? 'mt-0' : ''">
     <template #sectionHeaderLeft>
       <h2>Anstehende Termine</h2>
     </template>
