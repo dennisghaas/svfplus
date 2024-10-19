@@ -80,25 +80,13 @@
         />
       </div>
 
-      <div class="col-lg-6 col-xs-12">
+      <div class="col-xs-12">
         <InputType
             :id="'birthday'"
             :label="'Geburtstag'"
             :input-type="'date'"
             v-model:modelValue="formattedDate"
             @update:model-value="updateUsersBirthday"
-        />
-      </div>
-
-      <div v-if="store.state.isSergeant" class="col-lg-6 col-xs-12">
-        <InputType
-            :id="'debts'"
-            :label="'Offener Betrag MK'"
-            :input-type="'number'"
-            :input-placeholder="'Offener Betrag MK'"
-            pattern="[0-9,]*"
-            v-model:modelValue="getSelectedUser.debts"
-            :error-message="debtsError ? 'Negative Werte sind nicht erlaubt' : ''"
         />
       </div>
 
@@ -109,6 +97,18 @@
               :badge-text="'Bei diesem Datum wird nur <q>k.A.</q> auf deinem Profil ausgegeben'"
           />
         </template>
+      </div>
+
+      <div v-if="store.state.isSergeant" class="col-xs-12">
+        <InputType
+            :id="'debts'"
+            :label="'Offener Betrag MK'"
+            :input-type="'number'"
+            :input-placeholder="'Offener Betrag MK'"
+            pattern="[0-9,]*"
+            v-model:modelValue="getSelectedUser.debts"
+            :error-message="debtsError ? 'Negative Werte sind nicht erlaubt' : ''"
+        />
       </div>
 
       <div class="col-xs-12">
@@ -162,6 +162,12 @@
             :btn-text="'Änderungen speichern'"
             :btn-class="'w-100 mt-8'"
             @click="handleUserAction()"
+        />
+        <BadgeType
+            v-if="errorWasThrown"
+            :badge-type="'error'"
+            :badge-text="'Überprüfe deine Einstellungen! Änderungen können nicht gespeichert werden.'"
+            :additional-class="'event'"
         />
       </div>
     </div>
@@ -343,6 +349,8 @@ const confirmPassword = ref('')
 const passwordError = ref(false)
 const oldPasswordError = ref(false)
 
+const errorWasThrown = ref(false)
+
 const handleChangePassword = (
     oldPassword: string,
     newPassword: string,
@@ -373,7 +381,7 @@ const handleUserAction = () => {
       getSelectedUser.value.jerseyNumber >= 1 &&
       getSelectedUser.value.jerseyNumber <= 99
   )
-  debtsError.value = getSelectedUser.value.debts < 0
+  debtsError.value = !/^\d+([.,]\d{1,2})?$/.test(String(getSelectedUser.value.debts));
   promotionError.value =
       getSelectedUser.value.role === '[]' || !getSelectedUser.value.role
 
@@ -401,6 +409,10 @@ const handleUserAction = () => {
 
     setUserFields(getSelectedUser.value, updates)
     updateUserByID(props.id, router)
+  } else {
+    if (nameError.value || surNameError.value || jerseyNumberError.value || debtsError.value || promotionError.value) {
+      errorWasThrown.value = true
+    }
   }
 }
 
