@@ -12,9 +12,6 @@
 
           <div class="card-header-profile--content">
             <h4>{{ title }}</h4>
-            <div class="body-text-b3 text-color-white-75">
-              <p>{{ resolveRole(subtitle) }}</p>
-            </div>
           </div>
         </div>
       </div>
@@ -24,7 +21,7 @@
       <LinkType
         v-if="store.state.isMajor || isCurrentUsersProfile"
         :btn-class="'text-color-white'"
-        :btn-text="'Bearbeiten'"
+        :btn-text="isMobile ? '' : 'Bearbeiten'"
         :btn-icon="'icon-edit'"
         @click="toggleDialog()"
       />
@@ -33,6 +30,11 @@
     <template #cardBody>
       <div class="card-body-profile">
         <h3>Profildaten</h3>
+
+        <div class="card-body-profile--item">
+          <span class="typo-label"> Rolle </span>
+          <span>{{ resolveRole(subtitle) }}</span>
+        </div>
 
         <div class="card-body-profile--item">
           <span class="typo-label"> Name </span>
@@ -119,6 +121,7 @@ import { resolveRole } from '@/helpers/resolveRole.ts'
 import { formatDate } from '@/helpers/formatDate.ts'
 import { handleJerseyNumber } from '@/helpers/handleJerseyNumber.ts'
 import { handleSuit } from '@/helpers/handleSuit.ts'
+import {useBreakpoint} from "@/composables/useBreakpoint.ts";
 import CardFrame from '@/components/CardFrame.vue'
 import BadgeType from '@/components/BadgeType.vue'
 import ProfilePanel from '@/components/ProfilePanel.vue'
@@ -126,6 +129,8 @@ import LinkType from '@/components/LinkType.vue'
 import AppDialog from '@/components/AppDialog.vue'
 import store from '@/store'
 import AppDialogSingleUser from '@/components/AppDialogSingleUser.vue'
+
+const {isMobile} = useBreakpoint();
 
 const props = defineProps({
   title: {

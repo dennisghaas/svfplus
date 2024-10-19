@@ -95,7 +95,11 @@ const updateRoles = (role: string, event: Event) => {
   }
 
   .checkbox-label {
-    padding: rem(15px) 0;
+    padding: rem(15px) rem(67px) rem(15px) 0;
+
+    @include media-breakpoint-up(md) {
+      padding: rem(15px) 0;
+    }
   }
 }
 </style>

@@ -163,6 +163,12 @@
             :btn-class="'w-100 mt-8'"
             @click="handleUserAction()"
         />
+        <BadgeType
+            v-if="errorWasThrown"
+            :badge-type="'error'"
+            :badge-text="'Überprüfe deine Einstellungen! Änderungen können nicht gespeichert werden.'"
+            :additional-class="'event'"
+        />
       </div>
     </div>
     <div
@@ -343,6 +349,8 @@ const confirmPassword = ref('')
 const passwordError = ref(false)
 const oldPasswordError = ref(false)
 
+const errorWasThrown = ref(false)
+
 const handleChangePassword = (
     oldPassword: string,
     newPassword: string,
@@ -373,7 +381,7 @@ const handleUserAction = () => {
       getSelectedUser.value.jerseyNumber >= 1 &&
       getSelectedUser.value.jerseyNumber <= 99
   )
-  debtsError.value = getSelectedUser.value.debts < 0
+  debtsError.value = !/^\d+([.,]\d{1,2})?$/.test(String(getSelectedUser.value.debts));
   promotionError.value =
       getSelectedUser.value.role === '[]' || !getSelectedUser.value.role
 
@@ -401,6 +409,10 @@ const handleUserAction = () => {
 
     setUserFields(getSelectedUser.value, updates)
     updateUserByID(props.id, router)
+  } else {
+    if (nameError.value || surNameError.value || jerseyNumberError.value || debtsError.value || promotionError.value) {
+      errorWasThrown.value = true
+    }
   }
 }
 
