@@ -80,25 +80,13 @@
         />
       </div>
 
-      <div class="col-lg-6 col-xs-12">
+      <div class="col-xs-12">
         <InputType
             :id="'birthday'"
             :label="'Geburtstag'"
             :input-type="'date'"
             v-model:modelValue="formattedDate"
             @update:model-value="updateUsersBirthday"
-        />
-      </div>
-
-      <div v-if="store.state.isSergeant" class="col-lg-6 col-xs-12">
-        <InputType
-            :id="'debts'"
-            :label="'Offener Betrag MK'"
-            :input-type="'number'"
-            :input-placeholder="'Offener Betrag MK'"
-            pattern="[0-9,]*"
-            v-model:modelValue="getSelectedUser.debts"
-            :error-message="debtsError ? 'Negative Werte sind nicht erlaubt' : ''"
         />
       </div>
 
@@ -109,6 +97,18 @@
               :badge-text="'Bei diesem Datum wird nur <q>k.A.</q> auf deinem Profil ausgegeben'"
           />
         </template>
+      </div>
+
+      <div v-if="store.state.isSergeant" class="col-xs-12">
+        <InputType
+            :id="'debts'"
+            :label="'Offener Betrag MK'"
+            :input-type="'number'"
+            :input-placeholder="'Offener Betrag MK'"
+            pattern="[0-9,]*"
+            v-model:modelValue="getSelectedUser.debts"
+            :error-message="debtsError ? 'Negative Werte sind nicht erlaubt' : ''"
+        />
       </div>
 
       <div class="col-xs-12">
