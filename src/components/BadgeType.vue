@@ -13,6 +13,9 @@
       <InjuredIcon />
       <span>{{ badgeText }}</span>
     </template>
+    <template v-if="badgeNoIcon">
+      <span v-html="badgeText" />
+    </template>
     <template v-else>
       <i :class="genIconNameOnType(badgeType)"></i>
       <span v-html="badgeText" />
@@ -44,6 +47,10 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  badgeNoIcon: {
+    type: Boolean,
+    default: false
+  }
 })
 
 const genIconNameOnType = (type: string) => {

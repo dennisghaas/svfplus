@@ -16,6 +16,7 @@
             ? 'router-link-exact-active'
             : ''
         "
+                @click="routeLeave()"
             >
               <i
                   v-if="item.properties[0].hasIcon"
@@ -42,6 +43,12 @@ import {navigation} from '@/config.ts'
 import store from "@/store";
 import ProfilePanel from "@/components/ProfilePanel.vue";
 import {useRouter} from "vue-router";
+
+const routeLeave = () => {
+  setTimeout(() => {
+    window.scrollTo(0, 0);
+  }, 0);
+}
 
 const router = useRouter();
 

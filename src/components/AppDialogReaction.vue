@@ -58,6 +58,7 @@
         :badge-type="'info'"
         :badge-text="'Wir freuen uns auf deine Laufeinheit 👀'"
         :badge-centered="true"
+        :badge-alt="true"
         :additional-class="'event'"
     />
   </div>

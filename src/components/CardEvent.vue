@@ -125,6 +125,7 @@
           :badge-text="countdown"
           :badge-centered="true"
           :badge-alt="true"
+          :badge-no-icon="true"
           :additional-class="'event'"
         />
 

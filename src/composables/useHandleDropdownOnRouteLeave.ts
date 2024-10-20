@@ -5,6 +5,10 @@ export function useHandleDropdownOnRouteLeave() {
     if (store.state.menuOpen) {
       store.menuOpen(false)
       store.updateOverflowHidden(false)
+
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+      }, 0);
     }
   }
 

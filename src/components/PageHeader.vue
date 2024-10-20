@@ -62,6 +62,10 @@ const showDropdown = ref(store.state.menuOpen)
 const toggleDropdown = () => {
   store.updateOverflowHidden(true)
   store.menuOpen(!store.state.menuOpen)
+
+  if(!store.state.menuOpen) {
+    store.updateOverflowHidden(false)
+  }
 }
 
 watch(
