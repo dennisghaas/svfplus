@@ -64,13 +64,6 @@ const fetchUserDataOnLoad = async (token: string | null, router?: any) => {
     /* add data of user to store */
     store.setUserData(userData.value)
     store.getUserAccessRights(userData.value)
-
-    console.log('private', store.state.isPrivate)
-    console.log('corporal', store.state.isCorporal)
-    console.log('sergeant', store.state.isSergeant)
-    console.log('major', store.state.isMajor)
-    console.log('commander', store.state.isCommander)
-
   }
 
   store.loadData(true)
@@ -92,7 +85,7 @@ const handleLogout = (router: any) => {
   myValue.value = 'yes'
 
   /* reload page after log out */
-  router.go()
+  router.push('/login')
 }
 
 const handleRegister = async (router: any) => {

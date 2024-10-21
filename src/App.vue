@@ -28,15 +28,21 @@ import store from '@/store'
 import { onMounted } from 'vue'
 import { useAuth } from '@/composables/useAuth.ts'
 import { useRouter } from 'vue-router'
+import { useHandleUserAccess } from "@/composables/useHandleUserAccess.ts";
 import LayoutLoggenIn from '@/Layout/LayoutLoggenIn.vue'
 import LayoutRegisterSuccess from '@/Layout/LayoutRegisterSuccess.vue'
 
 const router = useRouter()
 const { fetchUserDataOnLoad } = useAuth()
+const {userAllowedToUseWebApp} = useHandleUserAccess()
 
 onMounted(() => {
   const token = localStorage.getItem('token') || null
   fetchUserDataOnLoad(token, router)
+})
+
+onMounted(async () => {
+  await userAllowedToUseWebApp(router);
 })
 </script>
 
