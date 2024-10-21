@@ -85,7 +85,7 @@ const handleLogout = (router: any) => {
   myValue.value = 'yes'
 
   /* reload page after log out */
-  router.push('/login')
+  router.go();
 }
 
 const handleRegister = async (router: any) => {
