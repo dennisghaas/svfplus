@@ -2,7 +2,7 @@
   <div class="register">
     <template v-if="fetchStorageRegisteredValue !== 'yes'">
       <ul
-        :class="[
+          :class="[
           'register__steps blanklist',
           { 'register__steps--step-1': stepOne },
           { 'register__steps--step-2': stepTwo },
@@ -28,34 +28,34 @@
           <div class="row">
             <div class="col-xs-12 col-md-6">
               <InputType
-                :id="'name'"
-                :label="'Name'"
-                :input-type="'text'"
-                :input-placeholder="'z.B. Dennis'"
-                v-model:model-value="name"
-                :error-message="nameError ? 'Feld darf nicht leer sein' : ''"
+                  :id="'name'"
+                  :label="'Name'"
+                  :input-type="'text'"
+                  :input-placeholder="'z.B. Dennis'"
+                  v-model:model-value="name"
+                  :error-message="nameError ? 'Feld darf nicht leer sein' : ''"
               />
             </div>
 
             <div class="col-xs-12 col-md-6">
               <InputType
-                :id="'surname'"
-                :label="'Nachname'"
-                :input-type="'text'"
-                :input-placeholder="'z.B. Haas'"
-                v-model:model-value="surname"
-                :error-message="surnameError ? 'Feld darf nicht leer sein' : ''"
+                  :id="'surname'"
+                  :label="'Nachname'"
+                  :input-type="'text'"
+                  :input-placeholder="'z.B. Haas'"
+                  v-model:model-value="surname"
+                  :error-message="surnameError ? 'Feld darf nicht leer sein' : ''"
               />
             </div>
 
             <div class="col-xs-12 col-md-6">
               <InputType
-                :id="'username'"
-                :label="'Benutzername'"
-                :input-type="'text'"
-                :input-placeholder="'z.B. dennis'"
-                v-model:model-value="username"
-                :error-message="
+                  :id="'username'"
+                  :label="'Benutzername'"
+                  :input-type="'text'"
+                  :input-placeholder="'z.B. dennis'"
+                  v-model:model-value="username"
+                  :error-message="
                   usernameError
                     ? 'Feld darf nicht leer sein, Benutzername existiert bereits oder Name wurde vom Admin blockiert'
                     : ''
@@ -65,12 +65,12 @@
 
             <div class="col-xs-12 col-md-6">
               <InputType
-                :id="'email'"
-                :label="'E-Mail Adresse'"
-                :input-type="'email'"
-                :input-placeholder="'mail@mail.de'"
-                v-model:model-value="email"
-                :error-message="
+                  :id="'email'"
+                  :label="'E-Mail Adresse'"
+                  :input-type="'email'"
+                  :input-placeholder="'mail@mail.de'"
+                  v-model:model-value="email"
+                  :error-message="
                   emailError
                     ? 'E-Mail ist nicht valide, existiert nicht oder wurde vom Admin blockiert'
                     : ''
@@ -80,29 +80,29 @@
 
             <div class="col-xs-12">
               <InputType
-                :id="'password'"
-                :label="'Passwort'"
-                :input-type="'password'"
-                :input-placeholder="'Passwort'"
-                v-model:model-value="password"
+                  :id="'password'"
+                  :label="'Passwort'"
+                  :input-type="'password'"
+                  :input-placeholder="'Passwort'"
+                  v-model:model-value="password"
               />
             </div>
 
             <div class="col-xs-12">
               <ValidatePasswordInfo
-                v-show="password.length > 0"
-                :password="password"
+                  v-show="password.length > 0"
+                  :password="password"
               />
             </div>
 
             <div class="col-xs-12">
               <InputType
-                :id="'repeat-password'"
-                :label="'Passwort wiederholen'"
-                :input-type="'password'"
-                :input-placeholder="'Passwort'"
-                v-model:model-value="repeatPassword"
-                :error-message="
+                  :id="'repeat-password'"
+                  :label="'Passwort wiederholen'"
+                  :input-type="'password'"
+                  :input-placeholder="'Passwort'"
+                  v-model:model-value="repeatPassword"
+                  :error-message="
                   passwordError ? 'Passwörter stimmen nicht überein' : ''
                 "
               />
@@ -111,10 +111,10 @@
         </div>
 
         <ButtonType
-          :type-button="true"
-          :btn-class="'w-100'"
-          :btn-text="'Weiter'"
-          @click="
+            :type-button="true"
+            :btn-class="'w-100'"
+            :btn-text="'Weiter'"
+            @click="
             navigateInsideForm(
               'stepTwo',
               name,
@@ -131,46 +131,60 @@
       <!-- Optional -->
       <div v-if="stepTwo" class="register__item">
         <div class="register__item-body">
-          <ul class="blanklist">
-            <InputType
-              :id="'position'"
-              :label="'Position (Optional)'"
-              :input-type="'text'"
-              :input-placeholder="'z.B. Stürmer'"
-              v-model:model-value="position"
-            />
-            <InputType
-              :id="'jerseyNumber'"
-              :label="'Spielernummer (Optional)'"
-              :input-type="'number'"
-              :input-placeholder="'z.B. Stürmer'"
-              :min-val="1"
-              :max-val="99"
-              pattern="[0-9]*"
-              v-model.number="jerseyNumber"
-              :error-message="
+          <div class="row">
+            <div class="col-xs-12">
+              <InputType
+                  :id="'position'"
+                  :label="'Position (Optional)'"
+                  :input-type="'text'"
+                  :input-placeholder="'z.B. Stürmer'"
+                  v-model:model-value="position"
+              />
+            </div>
+            <div class="col-xs-12">
+              <InputType
+                  :id="'jerseyNumber'"
+                  :label="'Spielernummer (Optional)'"
+                  :input-type="'number'"
+                  :input-placeholder="'z.B. 0 für Default'"
+                  :min-val="1"
+                  :max-val="99"
+                  pattern="[0-9]*"
+                  v-model.number="jerseyNumber"
+                  :error-message="
                 jerseyNumberError
                   ? 'Spielernummer muss zwischen 1-99 liegen. Wenn du keine Nummer zugewiesen bekommen hast, trage die 0 ein'
                   : ''
               "
-            />
-            <InputType
-              :id="'birthday'"
-              :label="'Geburtstag (Optional)'"
-              :input-type="'date'"
-              :input-placeholder="''"
-              v-model:model-value="birthday"
-            />
-          </ul>
+              />
+            </div>
+            <div class="col-xs-12">
+              <InputType
+                  :id="'birthday'"
+                  :label="'Geburtstag (Optional)'"
+                  :input-type="'date'"
+                  :input-placeholder="''"
+                  v-model:model-value="birthday"
+              />
+
+              <BadgeType
+                  v-if="formattedDate === '1955-01-01'"
+                  :badge-centered="true"
+                  :badge-alt="true"
+                  :badge-type="'info'"
+                  :badge-text="'Wenn du das Datum so lässt wird auf deinem Profil k.A. ausgegeben'"
+              />
+            </div>
+          </div>
         </div>
 
         <ButtonWrapper>
           <template #buttons>
             <ButtonType
-              :type-button="true"
-              :btn-class="'w-100'"
-              :btn-text="'Weiter'"
-              @click="
+                :type-button="true"
+                :btn-class="'w-100'"
+                :btn-text="'Weiter'"
+                @click="
                 navigateInsideForm(
                   'stepThree',
                   name,
@@ -185,10 +199,10 @@
             />
 
             <ButtonType
-              :type-button="true"
-              :btn-class="'btn-secondary w-100'"
-              :btn-text="'Schritt zurück'"
-              @click="
+                :type-button="true"
+                :btn-class="'btn-secondary w-100'"
+                :btn-text="'Schritt zurück'"
+                @click="
                 navigateInsideForm(
                   'stepOne',
                   name,
@@ -209,16 +223,16 @@
       <div v-if="stepThree" class="register__item">
         <div class="register__item-body">
           <ProfilePanel
-            :user-name="`${name} ${surname}`"
-            :user-initials="initials"
-            :bg-color="bgColor"
-            :is-image="!bgColor.includes('--')"
+              :user-name="`${name} ${surname}`"
+              :user-initials="initials"
+              :bg-color="bgColor"
+              :is-image="!bgColor.includes('--')"
           />
 
           <ColorPicker
-            :id="1"
-            v-model:selectedColor="getImageColor"
-            @update:selected-color="updateSelectedColor"
+              :id="1"
+              v-model:selectedColor="getImageColor"
+              @update:selected-color="updateSelectedColor"
           />
           <!-- id for default init -->
         </div>
@@ -226,16 +240,16 @@
         <ButtonWrapper>
           <template #buttons>
             <ButtonType
-              :btn-class="'w-100'"
-              :btn-text="'Registrierung abschließen'"
-              :type-button="true"
-              @click="navigateInsideForm('handleRegister')"
+                :btn-class="'w-100'"
+                :btn-text="'Registrierung abschließen'"
+                :type-button="true"
+                @click="navigateInsideForm('handleRegister')"
             />
             <ButtonType
-              :btn-class="'btn-secondary w-100'"
-              :btn-text="'Schritt zurück'"
-              :type-button="true"
-              @click="
+                :btn-class="'btn-secondary w-100'"
+                :btn-text="'Schritt zurück'"
+                :type-button="true"
+                @click="
                 navigateInsideForm(
                   'stepTwo',
                   name,
@@ -254,24 +268,24 @@
     </template>
     <template v-else>
       <BadgeType
-        :badge-type="'info'"
-        :badge-text="'Du hast dich bereits registriert. Habe ein wenig Geduld.'"
-        :badge-centered="true"
+          :badge-type="'info'"
+          :badge-text="'Du hast dich bereits registriert. Habe ein wenig Geduld.'"
+          :badge-centered="true"
       />
     </template>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import { useLocalStorage } from '@/composables/useLocalStorage'
-import { useAuth } from '@/composables/useAuth.ts'
-import { validateMail } from '@/helpers/validateMail.ts'
-import { validatePassword } from '@/helpers/validatePassword.ts'
-import { getInitials } from '@/helpers/getInitials.ts'
-import { useUser } from '@/composables/useUser.ts'
-import { BlockList, UserData } from '@/interface'
+import {ref, onMounted, computed} from 'vue'
+import {useRouter} from 'vue-router'
+import {useLocalStorage} from '@/composables/useLocalStorage'
+import {useAuth} from '@/composables/useAuth.ts'
+import {validateMail} from '@/helpers/validateMail.ts'
+import {validatePassword} from '@/helpers/validatePassword.ts'
+import {getInitials} from '@/helpers/getInitials.ts'
+import {useUser} from '@/composables/useUser.ts'
+import {BlockList, UserData} from '@/interface'
 import ButtonType from '@/components/ButtonType.vue'
 import BadgeType from '@/components/BadgeType.vue'
 import ButtonWrapper from '@/components/ButtonWrapper.vue'
@@ -300,9 +314,9 @@ const {
   handleRegister,
 } = useAuth()
 
-const { fetchAllUsers, fetchBlockList, completeUserData, blockList } = useUser()
+const {fetchAllUsers, fetchBlockList, completeUserData, blockList} = useUser()
 const router = useRouter()
-const { loadValue } = useLocalStorage('alreadyRegistered', 'no')
+const {loadValue} = useLocalStorage('alreadyRegistered', 'no')
 const fetchStorageRegisteredValue = ref('')
 
 const getAllUsers = ref<UserData[]>([])
@@ -318,32 +332,41 @@ const jerseyNumberError = ref(false)
 const liveCompareWithAPI = (
     email: string | undefined,
     username: string | undefined,
-    data: Array<{ email: string; username: string }>,
+    data: Array<{ email: string; username: string }>
 ) => {
-  // Early exit if email or username is undefined
   if (!email || !username) {
     return; // Exit the function early if either is undefined
   }
 
-  let forbiddenEmail = false
-  let forbiddenUsername = false
+  let forbiddenEmail = false;
+  let forbiddenUsername = false;
 
   for (const user of data) {
     if (user.email === email) {
-      forbiddenEmail = true
-      emailError.value = forbiddenEmail
+      forbiddenEmail = true;
+      emailError.value = true;
     }
 
     if (user.username === username) {
-      forbiddenUsername = true
-      usernameError.value = forbiddenUsername
+      forbiddenUsername = true;
+      usernameError.value = true;
     }
 
-    if (forbiddenEmail && forbiddenUsername) {
-      break
+    // Break early if both are forbidden
+    if (forbiddenEmail || forbiddenUsername) {
+      break;
     }
   }
-}
+
+  // Return true if any errors found
+  return forbiddenEmail || forbiddenUsername;
+};
+
+const formattedDate = computed(() => {
+  return birthday.value
+      ? new Date(birthday.value).toISOString().split('T')[0]
+      : '';
+});
 
 const navigateInsideForm = (
     nextStep: string,
@@ -363,13 +386,13 @@ const navigateInsideForm = (
     emailError.value = !email || !validateMail(email ?? '');
     passwordError.value = !password || !repeatPassword || !validatePassword(password, repeatPassword);
 
+    liveCompareWithAPI(email, username, getAllUsers.value)
+    liveCompareWithAPI(email, username, getAllBlockedUsers.value)
+
     // Check for errors and exit if any exist
     if (nameError.value || surnameError.value || usernameError.value || emailError.value || passwordError.value) {
       return; // Exit early if there is an error
     }
-
-    liveCompareWithAPI(email, username, getAllUsers.value)
-    liveCompareWithAPI(email, username, getAllBlockedUsers.value)
 
     // Proceed to the next step
     stepOne.value = false;
@@ -380,18 +403,19 @@ const navigateInsideForm = (
     initials.value = `${getInitials(name ?? '')}${getInitials(surname ?? '')}`;
 
   } else if (nextStep === 'stepThree') {
-    // Validate jersey number
-    if (jerseyNumber === 0 || !jerseyNumber || jerseyNumber < 1 || jerseyNumber > 99) {
-      jerseyNumberError.value = true;
-      return; // Exit early if jersey number is invalid
+    if (jerseyNumber === null || jerseyNumber === undefined || !Number.isInteger(jerseyNumber) || jerseyNumber < 0 || jerseyNumber > 99) {
+      jerseyNumberError.value = true; // Trigger error if jerseyNumber is invalid
+      return; // Exit early and prevent moving to the next step
     } else {
-      jerseyNumberError.value = false;
+      jerseyNumberError.value = false; // No error if jerseyNumber is valid
     }
 
-    // Proceed to the next step
-    stepOne.value = false;
-    stepTwo.value = false;
-    stepThree.value = true;
+// Only proceed to the next step if there's no error
+    if (!jerseyNumberError.value) {
+      stepOne.value = false;
+      stepTwo.value = false;
+      stepThree.value = true;
+    }
 
   } else if (nextStep === 'handleRegister') {
     handleRegister(router);

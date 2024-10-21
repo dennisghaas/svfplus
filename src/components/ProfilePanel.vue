@@ -1,8 +1,8 @@
 <template>
   <component
-    :is="link ? 'router-link' : 'div'"
-    v-bind="link ? { to: link } : {}"
-    :class="[
+      :is="link ? 'router-link' : 'div'"
+      v-bind="link ? { to: link } : {}"
+      :class="[
       'profile-panel',
       { 'profile-panel--reverse': displayReverse },
       { 'profile-panel--link': link },
@@ -11,12 +11,12 @@
     ]"
   >
     <div
-      :class="[
+        :class="[
         'profile-panel__generic-image',
         { 'profile-panel__generic-image-has-border': addBorder },
         { 'profile-panel__custom-image': isImage },
       ]"
-      :style="
+        :style="
         !isImage
           ? { '--profile-generic-image-bg': `var(${bgColor})` }
           : { '--profile-custom-image-bg': `url(${bgColor}` }
@@ -24,7 +24,8 @@
     >
       {{ userInitials }}
     </div>
-    <span v-if="userName" class="profile-panel__name">
+    <span v-if="userName"
+          :class="['profile-panel__name', {'profile-panel__name--small' : displayMedium}, {'profile-panel__name--small' : displaySmall}]">
       {{ userName }}
     </span>
   </component>
@@ -67,7 +68,7 @@ defineProps({
   isImage: {
     type: Boolean,
     default: false,
-  },
+  }
 })
 </script>
 
@@ -128,6 +129,10 @@ defineProps({
 
   &__name {
     font-size: $font-size-18;
+
+    &--small {
+      font-size: $font-size-16;
+    }
   }
 }
 </style>

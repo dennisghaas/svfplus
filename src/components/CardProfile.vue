@@ -19,7 +19,7 @@
 
     <template #cardHeaderRight>
       <LinkType
-        v-if="store.state.isMajor || isCurrentUsersProfile"
+        v-if="store.state.isSergeant || isCurrentUsersProfile"
         :btn-class="'text-color-white'"
         :btn-text="isMobile ? '' : 'Bearbeiten'"
         :btn-icon="'icon-edit'"
@@ -62,7 +62,10 @@
 
         <div class="card-body-profile--item">
           <span class="typo-label"> Spielernummer </span>
-          <span>
+          <span v-if="handleJerseyNumber(jerseyNumber) === 0">
+            k.A.
+          </span>
+          <span v-else>
             {{ handleJerseyNumber(jerseyNumber) }}
           </span>
         </div>
@@ -84,7 +87,7 @@
           </span>
         </div>
 
-        <div v-if="store.state.isMajor || isCurrentUsersProfile" class="card-body-profile--item">
+        <div v-if="store.state.isSergeant || isCurrentUsersProfile" class="card-body-profile--item">
           <span class="typo-label"> Offener betrag mannschaftskasse </span>
           <span v-if="role.includes('Trainer')"> Befreit </span>
           <span v-else> {{ debts.toFixed(2) }}&nbsp;€ </span>

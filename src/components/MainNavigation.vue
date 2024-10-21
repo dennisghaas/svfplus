@@ -8,7 +8,7 @@
         <!-- handleRouteLeave() just for mobile -->
         <router-link
             :to="item.linkUrl"
-            @click="isMobile ? handleRouteLeave() : ''"
+            @click="!isDesktop ? handleRouteLeave() : ''"
             :class="
           item.linkName === 'Profil' &&
           router.currentRoute.value.path === `/team/${store.state.userData.id}`
@@ -56,7 +56,7 @@ import ProfilePanel from '@/components/ProfilePanel.vue'
 const { handleLogout } = useAuth()
 const { handleRouteLeave } = useHandleDropdownOnRouteLeave()
 
-const { isMobile } = useBreakpoint()
+const { isDesktop } = useBreakpoint()
 const router = useRouter()
 
 const onLogout = () => {

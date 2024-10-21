@@ -30,74 +30,76 @@
         </div>
       </div>
 
-      <div class="col-lg-6 col-xs-12">
-        <InputType
-            :id="'name'"
-            :label="'Name'"
-            :input-type="'text'"
-            :input-placeholder="'Name'"
-            v-model:modelValue="getSelectedUser.name"
-            :error-message="nameError ? 'Dieses Feld darf nicht leer sein' : ''"
-        />
-      </div>
+      <template v-if="store.state.isMajor || isCurrentUsersProfile">
+        <div class="col-lg-6 col-xs-12">
+          <InputType
+              :id="'name'"
+              :label="'Name'"
+              :input-type="'text'"
+              :input-placeholder="'Name'"
+              v-model:modelValue="getSelectedUser.name"
+              :error-message="nameError ? 'Dieses Feld darf nicht leer sein' : ''"
+          />
+        </div>
 
-      <div class="col-lg-6 col-xs-12">
-        <InputType
-            :id="'surname'"
-            :label="'Nachname'"
-            :input-type="'text'"
-            :input-placeholder="'Nachname'"
-            v-model:modelValue="getSelectedUser.surname"
-            :error-message="
+        <div class="col-lg-6 col-xs-12">
+          <InputType
+              :id="'surname'"
+              :label="'Nachname'"
+              :input-type="'text'"
+              :input-placeholder="'Nachname'"
+              v-model:modelValue="getSelectedUser.surname"
+              :error-message="
             surNameError ? 'Dieses Feld darf nicht leer sein' : ''
           "
-        />
-      </div>
-
-      <div class="col-lg-6 col-xs-12">
-        <InputType
-            :id="'position'"
-            :label="'Position'"
-            :input-type="'text'"
-            :input-placeholder="'Position'"
-            v-model:modelValue="getSelectedUser.position"
-        />
-      </div>
-
-      <div class="col-lg-6 col-xs-12">
-        <InputType
-            :id="'jerseyNumber'"
-            :label="'Spielernummer'"
-            :input-type="'number'"
-            :min-val="1"
-            :max-val="99"
-            :input-placeholder="'Spielernummer'"
-            pattern="[0-9]*"
-            v-model:modelValue="getSelectedUser.jerseyNumber"
-            :error-message="
-            jerseyNumberError ? 'Es sind nur Zahlen zwischen 1-99 erlaubt' : ''
-          "
-        />
-      </div>
-
-      <div class="col-xs-12">
-        <InputType
-            :id="'birthday'"
-            :label="'Geburtstag'"
-            :input-type="'date'"
-            v-model:modelValue="formattedDate"
-            @update:model-value="updateUsersBirthday"
-        />
-      </div>
-
-      <div class="col-xs-12">
-        <template v-if="formattedDate === '1955-01-01'">
-          <BadgeType
-              :badge-type="'info'"
-              :badge-text="'Bei diesem Datum wird nur <q>k.A.</q> auf deinem Profil ausgegeben'"
           />
-        </template>
-      </div>
+        </div>
+
+        <div class="col-lg-6 col-xs-12">
+          <InputType
+              :id="'position'"
+              :label="'Position'"
+              :input-type="'text'"
+              :input-placeholder="'Position'"
+              v-model:modelValue="getSelectedUser.position"
+          />
+        </div>
+
+        <div class="col-lg-6 col-xs-12">
+          <InputType
+              :id="'jerseyNumber'"
+              :label="'Spielernummer'"
+              :input-type="'number'"
+              :min-val="1"
+              :max-val="99"
+              :input-placeholder="'Spielernummer'"
+              pattern="[0-9]*"
+              v-model:modelValue="getSelectedUser.jerseyNumber"
+              :error-message="
+            jerseyNumberError ? 'Es sind nur Zahlen zwischen 1-99 erlaubt. Wenn dir keine Spielernummer zugeteilt wurde, kannst du die <q>0</q> auswählen. Auf deinem Profil wird dann <q>k.A.</q> ausgegeben.' : ''
+          "
+          />
+        </div>
+
+        <div class="col-xs-12">
+          <InputType
+              :id="'birthday'"
+              :label="'Geburtstag'"
+              :input-type="'date'"
+              v-model:modelValue="formattedDate"
+              @update:model-value="updateUsersBirthday"
+          />
+        </div>
+
+        <div class="col-xs-12">
+          <template v-if="formattedDate === '1955-01-01'">
+            <BadgeType
+                :badge-type="'info'"
+                :badge-text="'Bei diesem Datum wird nur <q>k.A.</q> auf deinem Profil ausgegeben'"
+            />
+          </template>
+        </div>
+      </template>
 
       <div v-if="store.state.isSergeant" class="col-xs-12">
         <InputType
@@ -127,11 +129,12 @@
             :label="'Trainingsanzug bekommen?'"
             :id="'user-got-suit'"
             :value="getSelectedUser.gotSuit"
+            :no-border="store.state.isSergeant && !isCurrentUsersProfile"
             @update:model-value="updateGotSuit"
         />
       </div>
 
-      <div class="col-xs-12">
+      <div v-if="isCurrentUsersProfile || store.state.isMajor" class="col-xs-12">
         <InjuredDropdown
             :is-injured="getSelectedUser.isInjured"
             :users-name="getSelectedUser.name"
@@ -376,11 +379,7 @@ const handleUserAction = () => {
   /* error validation */
   nameError.value = !getSelectedUser.value.name
   surNameError.value = !getSelectedUser.value.surname
-  jerseyNumberError.value = !(
-      getSelectedUser.value.jerseyNumber !== null &&
-      getSelectedUser.value.jerseyNumber >= 1 &&
-      getSelectedUser.value.jerseyNumber <= 99
-  )
+  jerseyNumberError.value = !(getSelectedUser.value.jerseyNumber !== null && getSelectedUser.value.jerseyNumber && getSelectedUser.value.jerseyNumber >= 0 && getSelectedUser.value.jerseyNumber <= 99)
   debtsError.value = !/^\d+([.,]\d{1,2})?$/.test(String(getSelectedUser.value.debts));
   promotionError.value =
       getSelectedUser.value.role === '[]' || !getSelectedUser.value.role

@@ -31,6 +31,7 @@
               :user-initials="user.userImage.initials"
               :user-name="user.name + ' ' + user.surname"
               :is-image="!user.userImage.bgColor.includes('--')"
+              :display-medium="isMobile"
               :add-border="true"
             />
 
@@ -101,19 +102,21 @@
               :bg-color="user.userImage.bgColor"
               :user-initials="user.userImage.initials"
               :user-name="user.name + ' ' + user.surname"
+              :display-medium="isMobile"
+              :add-border="true"
             />
 
             <ButtonWrapper :align-as-row="true">
               <template #buttons>
                 <ButtonType
                   :type-button="true"
-                  :btn-text="'Nutzer aktivieren'"
+                  :btn-text="isMobile ? 'Aktivieren' : 'Nutzer aktivieren'"
                   :btn-class="'btn-light btn-light--success'"
                   @click="handleUserAction(user, 'accept')"
                 />
                 <ButtonType
                   :type-button="true"
-                  :btn-text="'Nutzer blockieren'"
+                  :btn-text="isMobile ? 'Blockieren' : 'Nutzer blockieren'"
                   :btn-class="'btn-light btn-light--error'"
                   @click="handleBlockUser(user.id, user.email, user.username)"
                 />
@@ -169,7 +172,7 @@
               <template #buttons>
                 <ButtonType
                   :type-button="true"
-                  :btn-text="'Blockierung aufheben'"
+                  :btn-text="isMobile ? 'Aufheben' : 'Blockierung aufheben'"
                   :btn-class="'btn-light btn-light--error'"
                   @click="unblockUserByID(user.id, router)"
                 />
@@ -191,6 +194,7 @@
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUser } from '@/composables/useUser.ts'
+import {useBreakpoint} from "@/composables/useBreakpoint.ts";
 import { UserData } from '@/interface'
 import store from '@/store'
 import ProfilePanel from '@/components/ProfilePanel.vue'
@@ -199,6 +203,7 @@ import ButtonWrapper from '@/components/ButtonWrapper.vue'
 import SectionType from '@/components/SectionType.vue'
 import BadgeType from '@/components/BadgeType.vue'
 
+const {isMobile} = useBreakpoint()
 const router = useRouter()
 
 const {
@@ -274,9 +279,13 @@ onMounted(async () => {
     }
 
     &--alt {
+      width: 100%;
+      overflow-y: scroll;
+
       li {
         display: flex;
         flex-direction: row;
+        min-width: $sm;
 
         .count {
           margin-right: rem(20px);

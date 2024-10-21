@@ -7,6 +7,13 @@ $breakpoints: (
   xxl: 1600px,
 );
 
+$xs: map-get($breakpoints, xs);
+$sm: map-get($breakpoints, sm);
+$md: map-get($breakpoints, md);
+$lg: map-get($breakpoints, lg);
+$xl: map-get($breakpoints, xl);
+$xxl: map-get($breakpoints, xxl);
+
 // Mixin to handle media queries
 @mixin media-breakpoint-up($breakpoint) {
   @media (min-width: map-get($breakpoints, $breakpoint)) {

@@ -12,6 +12,7 @@
   align-items: center;
   justify-content: center;
   gap: rem(10px);
+  white-space: nowrap;
 
   @include media-breakpoint-up(lg) {
     &:not([disabled]) {
