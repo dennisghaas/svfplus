@@ -278,6 +278,7 @@ const filteredUserData = computed(() => {
           (user) =>
               user.username !== 'admin' &&
               user.accessRights !== 'svf_commander' &&
+              user.userIsActivated &&
               !props.playerWithNoAccess.includes(user.id.toString()) &&
               selectEventResponses.value?.some(
                   (response) =>
@@ -302,6 +303,7 @@ const filteredUserData = computed(() => {
           (user) =>
               user.username !== 'admin' &&
               user.accessRights !== 'svf_commander' &&
+              user.userIsActivated &&
               !props.playerWithNoAccess.includes(user.id.toString()) &&
               selectEventResponses.value?.some(
                   (response) =>
@@ -326,6 +328,7 @@ const filteredUserData = computed(() => {
           (user) =>
               user.username !== 'admin' &&
               user.accessRights !== 'svf_commander' &&
+              user.userIsActivated &&
               !props.playerWithNoAccess.includes(user.id.toString()) &&
               selectEventResponses.value?.some(
                   (response) =>
@@ -350,6 +353,7 @@ const filteredUserData = computed(() => {
           (user) =>
               user.username !== 'admin' &&
               user.accessRights !== 'svf_commander' &&
+              user.userIsActivated &&
               !props.playerWithNoAccess.includes(user.id.toString()) &&
               !selectEventResponses.value?.some(
                   (response) => response.userId === user.id,
@@ -365,6 +369,7 @@ const filteredUserData = computed(() => {
           (user) =>
               user.username !== 'admin' &&
               user.accessRights !== 'svf_commander' &&
+              user.userIsActivated &&
               props.playerWithNoAccess.includes(user.id.toString()),
       )
 
