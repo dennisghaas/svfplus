@@ -54,6 +54,7 @@ const fetchUserDataOnLoad = async (token: string | null, router?: any) => {
         token,
       )
       store.login(true)
+
     } catch (error: any) {
       console.error('Fehler beim Abrufen der Benutzerdaten:', error)
       responseText.value =
@@ -64,6 +65,11 @@ const fetchUserDataOnLoad = async (token: string | null, router?: any) => {
     /* add data of user to store */
     store.setUserData(userData.value)
     store.getUserAccessRights(userData.value)
+
+    /* show tutorial based on user info */
+    if(store.state.userData.watchedTutorial) {
+     store.updatedWatchedTutorial(true);
+    }
   }
 
   store.loadData(true)

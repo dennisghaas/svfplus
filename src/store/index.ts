@@ -15,7 +15,8 @@ const state = reactive({
   isCorporal: false,
   isSergeant: false,
   isMajor: false,
-  isCommander: false
+  isCommander: false,
+  watchedTutorial: false
 })
 
 const setUserData = (data: any) => {
@@ -108,6 +109,10 @@ const getUserAccessRights = (user: any) => {
   }
 }
 
+const updatedWatchedTutorial = (watched: boolean) => {
+  state.watchedTutorial = watched
+}
+
 export default {
   state: readonly(state),
   setUserData,
@@ -123,5 +128,6 @@ export default {
   updateLoadingResponse,
   updateLoadingResponseText,
   updateIsRegisterSuccess,
-  getUserAccessRights
+  getUserAccessRights,
+  updatedWatchedTutorial
 }

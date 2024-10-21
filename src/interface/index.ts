@@ -24,6 +24,7 @@ export interface UserData {
   userIsActivated: boolean;
   userImage: userImage;
   username: string;
+  tutorial: boolean;
 }
 
 interface EventDescription {
