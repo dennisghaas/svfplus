@@ -61,12 +61,11 @@ defineProps({
 </script>
 
 <style scoped lang="scss">
-$border-radius-dots: rem(4px);
-
 .bottom-navigation {
+  --border-radius-dots: #{rem(4px)};
   height: $bottomNavigationHeight;
   position: fixed;
-  padding: rem(20px) 0;
+  padding: rem(20px) 0 calc(#{rem(20px)} + $iphoneControlBottomHeight / 2) 0;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -96,15 +95,15 @@ $border-radius-dots: rem(4px);
 
           &::before {
             content: '';
-            width: $border-radius-dots;
-            height: $border-radius-dots;
+            width: var(--border-radius-dots);
+            height: var(--border-radius-dots);
             display: block;
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            bottom: calc(-#{$border-radius-dots} * 2);
+            bottom: calc(var(--border-radius-dots) * -2);
             background: var(--primary);
-            border-radius: $border-radius-dots;
+            border-radius: var(--border-radius-dots);
           }
         }
       }
