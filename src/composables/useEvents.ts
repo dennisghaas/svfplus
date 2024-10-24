@@ -158,24 +158,29 @@ export const useEvents = () => {
     };
   };
 
+  const shiftToPreviousDay = (dateTime: string) => {
+    const date = new Date(dateTime);
+    date.setDate(date.getDate() - 1);
+    return date.toISOString();
+  };
+
   const createEvent = async () => {
     try {
       await fetchStandingOrder();
 
-      // Create and send payload function
       const createAndSendPayload = async (
-        date?: string | null,
-        genericDeadline?: string | null,
-        isStandingOrder?: boolean,
+          date?: string | null,
+          genericDeadline?: string | null,
+          isStandingOrder?: boolean,
       ) => {
         const payload = payLoad(date, genericDeadline, isStandingOrder);
-        console.log(payload)
+        console.log(payload);
 
         try {
           const response = await fetchDataFromApi(
-            '/events/create',
-            'POST',
-            payload,
+              '/events/create',
+              'POST',
+              payload,
           );
 
           if (!response || !response.id) {
@@ -190,8 +195,8 @@ export const useEvents = () => {
           return response.id;
         } catch (error) {
           const apiError: ApiError = error as ApiError;
-
           console.error('Fehler bei der API-Anfrage:', apiError.message);
+
           if (apiError.status) {
             console.error('Statuscode:', apiError.status);
           }
@@ -200,37 +205,38 @@ export const useEvents = () => {
           }
 
           eventCreatedSuccessful.value = false;
-
           throw apiError;
         }
       };
 
       if (
-        eventType.value === 'Training' &&
-        trainingStandingOrderObject.value.length >= 1
+          eventType.value === 'Training' &&
+          trainingStandingOrderObject.value.length >= 1
       ) {
         const eventIDs: number[] = [];
         console.log(
-          'Standing order dates (trainingStandingOrderObject):',
-          trainingStandingOrderObject.value,
+            'Standing order dates (trainingStandingOrderObject):',
+            trainingStandingOrderObject.value,
         );
 
         for (const date of trainingStandingOrderObject.value) {
           const eventDate = combineDateAndTime(date, beginAt.value);
           const deadlineTime = subtractHours(meetAt.value, 1);
-          const genericDeadline = combineDateAndTime(date, deadlineTime);
+          const genericDeadline = shiftToPreviousDay(
+              combineDateAndTime(date, deadlineTime),
+          );
           console.log(
-            'Creating event for date:',
-            eventDate,
-            'with deadline:',
-            genericDeadline,
+              'Creating event for date:',
+              eventDate,
+              'with deadline (previous day):',
+              genericDeadline,
           );
 
           try {
             const eventID = await createAndSendPayload(
-              eventDate,
-              genericDeadline,
-              true,
+                eventDate,
+                genericDeadline,
+                true,
             );
             eventIDs.push(eventID);
             console.log('Created Event ID:', eventID);
@@ -246,7 +252,6 @@ export const useEvents = () => {
         }
       } else {
         await createAndSendPayload();
-        // Discard changes from previous event
         discardEventChanges();
       }
     } catch (error) {
