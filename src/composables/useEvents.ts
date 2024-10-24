@@ -222,15 +222,9 @@ export const useEvents = () => {
         for (const date of trainingStandingOrderObject.value) {
           const eventDate = combineDateAndTime(date, beginAt.value);
           const deadlineTime = subtractHours(meetAt.value, 1);
-          const genericDeadline = shiftToPreviousDay(
-              combineDateAndTime(date, deadlineTime),
-          );
-          console.log(
-              'Creating event for date:',
-              eventDate,
-              'with deadline (previous day):',
-              genericDeadline,
-          );
+          const genericDeadline = deadlineTime
+              ? shiftToPreviousDay(combineDateAndTime(date, deadlineTime)!)
+              : null;
 
           try {
             const eventID = await createAndSendPayload(
