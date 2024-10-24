@@ -1,10 +1,10 @@
 <template>
   <div class="edit-mode-dialog">
     <button
-      class="edit-mode-dialog__close"
-      type="button"
-      title="Bearbeitungsmodus schließen"
-      @click="handleClose()"
+        class="edit-mode-dialog__close"
+        type="button"
+        title="Bearbeitungsmodus schließen"
+        @click="handleClose()"
     >
       <i class="icon-close"></i>
       <span class="d-none"> Bearbeitungsmodus schließen </span>
@@ -19,71 +19,71 @@
     <div class="edit-mode-dialog__content">
       <template v-if="!showAreYouSure">
         <AppButton
-          :label="'Bearbeiten'"
-          :additional-class="'bg-blue-light text-color-blue-dark-gray'"
-          :icon="'icon-edit'"
-          :show-label="true"
-          @click="handleEdit()"
+            :label="'Bearbeiten'"
+            :additional-class="'bg-blue-light text-color-blue-dark-gray'"
+            :icon="'icon-edit'"
+            :show-label="true"
+            @click="handleEdit()"
         />
         <!-- Edit will trigger the fullwidth content width dialog (tbc) -->
 
         <AppButton
-          :label="'Löschen'"
-          :additional-class="'bg-primary text-color-white'"
-          :icon="'icon-trash'"
-          :show-label="true"
-          @click="handleEventDeletion()"
+            :label="'Löschen'"
+            :additional-class="'bg-primary text-color-white'"
+            :icon="'icon-trash'"
+            :show-label="true"
+            @click="handleEventDeletion()"
         />
       </template>
       <template v-else>
         <template v-if="isTraining && !isTrainingAreYouSure">
           <AppButton
-            :label="'Dieses Training'"
-            :additional-class="'bg-primary text-color-white'"
-            :icon="'icon-single'"
-            :show-label="true"
-            @click="deleteThisEvent()"
+              :label="'Dieses Training'"
+              :additional-class="'bg-primary text-color-white'"
+              :icon="'icon-single'"
+              :show-label="true"
+              @click="deleteThisEvent()"
           />
 
           <AppButton
-            :label="'Dauerauftrag'"
-            :additional-class="'bg-primary text-color-white'"
-            :icon="'icon-multiple'"
-            :show-label="true"
-            @click="deleteStandingOrder()"
+              :label="'Dauerauftrag'"
+              :additional-class="'bg-primary text-color-white'"
+              :icon="'icon-multiple'"
+              :show-label="true"
+              @click="deleteStandingOrder()"
           />
         </template>
         <template v-else-if="isTraining && isTrainingAreYouSure">
           <AppButton
-            :label="'Nope'"
-            :additional-class="'bg-success-light text-color-success-dark'"
-            :icon="'icon-close'"
-            :show-label="true"
-            @click="handleMisclicked()"
+              :label="'Nope'"
+              :additional-class="'bg-success-light text-color-success-dark'"
+              :icon="'icon-close'"
+              :show-label="true"
+              @click="handleMisclicked()"
           />
           <AppButton
-            :label="'Jup'"
-            :additional-class="'bg-primary text-color-white'"
-            :icon="'icon-trash'"
-            :show-label="true"
-            @click="removeStandingOrderFromApi(router)"
+              :label="'Jup'"
+              :additional-class="'bg-primary text-color-white'"
+              :icon="'icon-trash'"
+              :show-label="true"
+              @click="removeStandingOrderFromApi(router)"
           />
         </template>
         <template v-else>
           <AppButton
-            :label="'Nope'"
-            :additional-class="'bg-success-light text-color-success-dark'"
-            :icon="'icon-close'"
-            :show-label="true"
-            @click="handleMisclicked()"
+              :label="'Nope'"
+              :additional-class="'bg-success-light text-color-success-dark'"
+              :icon="'icon-close'"
+              :show-label="true"
+              @click="handleMisclicked()"
           />
 
           <AppButton
-            :label="'Jup'"
-            :additional-class="'bg-primary text-color-white'"
-            :icon="'icon-trash'"
-            :show-label="true"
-            @click="deleteEventById(eventId, router, eventType)"
+              :label="'Jup'"
+              :additional-class="'bg-primary text-color-white'"
+              :icon="'icon-trash'"
+              :show-label="true"
+              @click="deleteEventById(eventId, router, eventType)"
           />
         </template>
       </template>
@@ -91,20 +91,20 @@
   </div>
 
   <AppDialog
-    :headline="'Event bearbeiten'"
-    :open="dialogOpen"
-    @update:open="closeAppDialog()"
+      :headline="'Event bearbeiten'"
+      :open="dialogOpen"
+      @update:open="closeAppDialog()"
   >
     <template #DialogBody>
-      <AppDialogEvent :event-i-d="eventId" :event-type="eventType" />
+      <AppDialogEvent :event-i-d="eventId" :event-type="eventType"/>
     </template>
   </AppDialog>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useEvents } from '@/composables/useEvents.ts'
-import { useRouter } from 'vue-router'
+import {ref, onMounted} from 'vue'
+import {useEvents} from '@/composables/useEvents.ts'
+import {useRouter} from 'vue-router'
 import store from '@/store'
 import AppButton from '@/components/AppButton.vue'
 import AppDialog from '@/components/AppDialog.vue'
@@ -140,8 +140,8 @@ const isTraining = ref(props.eventType === 'Training')
 const handleEventDeletion = () => {
   showAreYouSure.value = true
   dialogHeadline.value = isTraining.value
-    ? 'Event oder Dauerauftrag löschen?'
-    : 'Event wirklich löschen?'
+      ? 'Event oder Dauerauftrag löschen?'
+      : 'Event wirklich löschen?'
 }
 
 const handleMisclicked = () => {
@@ -160,19 +160,24 @@ const deleteStandingOrder = () => {
 }
 
 const removeStandingOrderFromApi = async (router: any) => {
-  const thisStandingOrderID = selectedEvent.value[0].standingOrderID
-  const thisStandingOrderArray =
-    standingOrderArray.value[thisStandingOrderID - 1] // index-based numbering
-  const thisStandingOrderEvents = thisStandingOrderArray.eventIDs
+  const thisStandingOrderID = selectedEvent.value[0].standingOrderID;
+  const thisStandingOrderArray = standingOrderArray.value.filter(
+      (standingOrder) => standingOrder.id === thisStandingOrderID,
+  )[0];
 
-  await deleteStandingOrderById(thisStandingOrderID)
+  if (!thisStandingOrderArray) {
+    throw new Error('Standing order not found');
+  }
+  const thisStandingOrderEvents = thisStandingOrderArray.eventIDs;
+  await deleteStandingOrderById(thisStandingOrderID);
+
   await deleteEventById(
-    props.eventId,
-    router,
-    props.eventType,
-    thisStandingOrderEvents,
-  )
-}
+      props.eventId,
+      router,
+      props.eventType,
+      thisStandingOrderEvents,
+  );
+};
 
 const dialogOpen = ref(false)
 const handleEdit = () => {
