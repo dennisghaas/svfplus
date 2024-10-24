@@ -6,7 +6,7 @@
           type="button"
           title="Zur Veranstaltung zusagen"
           :class="{ active: response?.response === 'Zusagen' }"
-          @click="toggleReactionModel('Zusagen')"
+          @click="!isAllowedToClickOnControl ? toggleReactionModel('Zusagen') : ''"
         >
           <i class="icon-thumb-up"></i>
           <strong v-if="getCountForEventResponse('Zusagen') !== 0">
@@ -20,7 +20,7 @@
           type="button"
           title="Zur Veranstaltung absagen"
           :class="{ active: response?.response === 'Absagen' }"
-          @click="toggleReactionModel('Absagen')"
+          @click="!isAllowedToClickOnControl ? toggleReactionModel('Absagen') : ''"
         >
           <i class="icon-thumb-down"></i>
           <strong v-if="getCountForEventResponse('Absagen') !== 0">
@@ -34,7 +34,7 @@
           type="button"
           title="Ich bin mir unsicher"
           :class="{ active: response?.response === 'Unsicher' }"
-          @click="toggleReactionModel('Unsicher')"
+          @click="!isAllowedToClickOnControl ? toggleReactionModel('Unsicher') : ''"
         >
           <i class="icon-question-mark"></i>
           <strong v-if="getCountForEventResponse('Unsicher') !== 0">
@@ -106,6 +106,10 @@ const props = defineProps({
     type: Number,
     default: null,
   },
+  isAllowedToClickOnControl: {
+    type: Boolean,
+    default: true
+  }
 })
 
 const getEventResponse = ref<EventResponse[]>([])
