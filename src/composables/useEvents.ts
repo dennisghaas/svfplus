@@ -320,21 +320,21 @@ export const useEvents = () => {
           await fetchEventsByID(id);
           await fetchStandingOrderResponse();
 
-          // Get the standing order ID and eventIDs array from the response
-          const standingOrderEventIDs = standingOrderArray.value[0].eventIDs;
-          const standingOrder = standingOrderArray.value[0].id;
+          const foundStandingOrder = standingOrderArray.value.find(order => order.eventIDs.includes(id));
+          console.log(foundStandingOrder);
 
-          // Find the specific event ID from the eventIDs array
-          const eventID = standingOrderEventIDs.find(
-            (eventId) => eventId === id,
-          );
+          const standingOrderEventIDs = foundStandingOrder?.eventIDs
+          console.log(standingOrderEventIDs);
+
+          const standingOrder = foundStandingOrder?.id
+          console.log(standingOrder)
 
           // If eventID is found, call the API to delete the event from the standing order
-          if (eventID) {
+          if (id) {
             try {
               // Delete the event from the standing order
               const deleteFromStandingOrderResponse = await fetchDataFromApi(
-                `/standing-orders/${standingOrder}/event/${eventID}`,
+                `/standing-orders/${standingOrder}/event/${id}`,
                 'DELETE',
               );
               const deleteEventResponse = await fetchDataFromApi(
@@ -343,7 +343,7 @@ export const useEvents = () => {
               );
 
               /* delete response for this event */
-              await deleteEventResponseByID(eventID);
+              await deleteEventResponseByID(id);
 
               /* reload page */
               router.go();

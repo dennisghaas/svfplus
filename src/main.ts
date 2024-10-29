@@ -9,8 +9,3 @@ export const device = createDeviceDetector()
 
 app.use(router)
 app.use(device).mount('#app')
-
-const loadingScreen = document.getElementById('loading-screen');
-if (loadingScreen) {
-    loadingScreen.style.display = 'none';
-}
