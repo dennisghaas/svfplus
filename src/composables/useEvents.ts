@@ -1,10 +1,10 @@
 import { ref, onMounted } from 'vue';
-import { fetchDataFromApi } from '../helpers/fetchDataFromApi.ts';
-import { combineDateAndTime } from '../helpers/combineDateAndTime.ts';
-import { subtractHours } from '../helpers/substractHours.ts';
-import { extractDateAndTime } from '../helpers/extractDateAndTime.ts';
-import { useEventResponse } from './useEventResponse.ts';
-import store from '../store';
+import { fetchDataFromApi } from '@/helpers/fetchDataFromApi.ts';
+import { combineDateAndTime } from '@/helpers/combineDateAndTime.ts';
+import { subtractHours } from '@/helpers/substractHours.ts';
+import { extractDateAndTime } from '@/helpers/extractDateAndTime.ts';
+import { useEventResponse } from '@/composables/useEventResponse.ts';
+import store from '@/store';
 import { ApiError } from '@/interface';
 import { Event, StandingOrder } from '@/interface';
 

@@ -1,5 +1,5 @@
 import { reactive, readonly } from 'vue'
-import { steps } from '../config.ts'
+import { steps } from '@/config'
 
 const state = reactive({
   userData: null as any,

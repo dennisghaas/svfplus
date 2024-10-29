@@ -1,4 +1,4 @@
-import { VITE_APP_API } from '../config.ts'
+import { VITE_APP_API } from '@/config'
 const API_URL = `${VITE_APP_API}/api`
 
 export const fetchDataFromApi = async (

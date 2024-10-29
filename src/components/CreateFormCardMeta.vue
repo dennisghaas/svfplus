@@ -56,7 +56,7 @@ import { useHandleNextCreateForm } from '@/composables/useHandleNextCreateForm.t
 import { validatePostalCode } from '@/helpers/validatePostalCode.ts'
 import { validateFussballDeLink } from '@/helpers/validateFussballDeLink.ts'
 import { validateStreet } from '@/helpers/validateStreet.ts'
-import { accessibleEventTypes } from '@/config.ts'
+import { accessibleEventTypes } from '@/config'
 import CreateFormNextButton from '@/components/CreateFormNextButton.vue'
 import SelectType from '@/components/SelectType.vue'
 import CreateFormCardMetaTraining from '@/components/CreateFormCardMetaTraining.vue'

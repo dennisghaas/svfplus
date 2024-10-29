@@ -1,5 +1,5 @@
 import { ref, onMounted, onUnmounted, computed } from 'vue'
-import { breakpoints } from '../config.ts'
+import { breakpoints } from '@/config'
 
 export function useBreakpoint() {
   // Ref für die Breakpoints-Status

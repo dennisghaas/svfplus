@@ -78,7 +78,7 @@
 import { onMounted, ref, computed, Ref } from 'vue'
 import { useUser } from '@/composables/useUser.ts'
 import store from '@/store'
-import { accessibleRoles } from '@/config.ts'
+import { accessibleRoles } from '@/config'
 import { UserData } from '@/interface'
 import CardMember from '@/components/CardMember.vue'
 import RoleDots from '@/components/RoleDots.vue'

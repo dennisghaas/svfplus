@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { accessibleRoles } from '@/config.ts'
+import { accessibleRoles } from '@/config'
 import BadgeType from '@/components/BadgeType.vue'
 
 const props = defineProps({

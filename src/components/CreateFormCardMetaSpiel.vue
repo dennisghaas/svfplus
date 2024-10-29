@@ -77,7 +77,7 @@
 
 <script setup lang="ts">
 import { useEvents } from '@/composables/useEvents.ts';
-import { venueOptions } from '@/config.ts';
+import { venueOptions } from '@/config';
 import InputType from '@/components/InputType.vue';
 import SelectTypeUser from '@/components/SelectTypeUser.vue';
 import RadioType from '@/components/RadioType.vue';

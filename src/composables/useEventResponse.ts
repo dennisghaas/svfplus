@@ -1,6 +1,6 @@
 import { ref } from 'vue'
-import { fetchDataFromApi } from '../helpers/fetchDataFromApi.ts'
-import store from '../store'
+import { fetchDataFromApi } from '@/helpers/fetchDataFromApi.ts'
+import store from '@/store'
 import { Reaction, EventResponse } from '@/interface'
 
 const userResponses = ref<Map<number, Reaction | null>>(new Map())

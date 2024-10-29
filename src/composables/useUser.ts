@@ -1,7 +1,7 @@
 import {ref} from 'vue'
-import {fetchDataFromApi} from '../helpers/fetchDataFromApi.ts'
-import {BlockList, UserData} from '../interface'
-import store from '../store'
+import {fetchDataFromApi} from '@/helpers/fetchDataFromApi.ts'
+import {BlockList, UserData} from '@/interface'
+import store from '@/store'
 
 const id = ref(null)
 const accessRights = ref('')

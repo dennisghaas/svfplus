@@ -31,7 +31,7 @@
 import { ref, watch, onMounted } from 'vue'
 import { useStandingOrder } from '@/composables/useStandingOrder.ts'
 import { useEvents } from '@/composables/useEvents.ts'
-import { accessibleWeekday } from '@/config.ts'
+import { accessibleWeekday } from '@/config'
 import SelectType from '@/components/SelectType.vue'
 import InputType from '@/components/InputType.vue'
 

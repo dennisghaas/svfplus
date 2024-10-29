@@ -1,4 +1,4 @@
-import { breakpoints } from '../config.ts';
+import { breakpoints } from '@/config';
 
 export function textTruncate(text: string, maxLengthMobile: number = 50, maxLengthDesktop: number = 100) {
     // Use matchMedia to dynamically check breakpoints

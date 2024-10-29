@@ -50,7 +50,7 @@ import { useHandleDropdownOnRouteLeave } from '@/composables/useHandleDropdownOn
 import { useBreakpoint } from '@/composables/useBreakpoint.ts'
 
 import store from '@/store'
-import { navigation } from '@/config.ts'
+import { navigation } from '@/config'
 import ProfilePanel from '@/components/ProfilePanel.vue'
 
 const { handleLogout } = useAuth()

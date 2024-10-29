@@ -1,7 +1,7 @@
 import { ref } from 'vue'
-import { formatDate } from '../helpers/formatDate.ts'
-import { formatMonth } from '../helpers/formatMonth.ts'
-import { BirthdayEntry } from '../interface'
+import { formatDate } from '@/helpers/formatDate.ts'
+import { formatMonth } from '@/helpers/formatMonth.ts'
+import { BirthdayEntry } from '@/interface'
 
 export const thisUserID = ref<number[]>([])
 export const nextBirthdays = ref<BirthdayEntry[]>([])

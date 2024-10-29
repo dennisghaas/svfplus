@@ -69,7 +69,7 @@ import {ref, onMounted, computed} from 'vue'
 import {validateSentence} from '@/helpers/validateSentence.ts'
 import {useEventResponse} from '@/composables/useEventResponse.ts'
 import {useRouter} from 'vue-router'
-import {exceptions} from "@/config.ts";
+import {exceptions} from "@/config";
 import store from "@/store";
 import {EventResponse} from "@/interface"
 import InputType from '@/components/InputType.vue'

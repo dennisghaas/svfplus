@@ -1,4 +1,4 @@
-import {Navigation, RadioItem} from './interface'
+import {Navigation, RadioItem} from '@/interface'
 
 export const VITE_APP_API = import.meta.env.VITE_APP_API
 
@@ -83,6 +83,22 @@ export const navigation: Navigation[] = [
         ]
     },
     {
+        linkName: 'Aufstellung',
+        linkUrl: '/lineup',
+        openNewTab: false,
+        showInMobileBar: false,
+        properties: [
+            {
+                hasIcon: true,
+                isProfile: false,
+                iconName: 'icon-lineup',
+            },
+        ],
+        accessibleRouteFrom: [
+            'svf_major', 'svf_commander'
+        ]
+    },
+    {
         linkName: 'Einstellungen',
         linkUrl: '/einstellungen',
         openNewTab: false,
@@ -97,7 +113,7 @@ export const navigation: Navigation[] = [
         accessibleRouteFrom: [
             'svf_major', 'svf_commander'
         ]
-    },
+    }
 ]
 
 export const breakpoints = {

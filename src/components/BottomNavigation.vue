@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import {navigation} from '@/config.ts'
+import {navigation} from '@/config'
 import store from "@/store";
 import ProfilePanel from "@/components/ProfilePanel.vue";
 import {useRouter} from "vue-router";

@@ -242,7 +242,7 @@ import {UserData} from '@/interface'
 import ProfilePanel from '@/components/ProfilePanel.vue'
 import ButtonCircle from '@/components/ButtonCircle.vue'
 import BadgeType from '@/components/BadgeType.vue'
-import store from "../store";
+import store from "@/store";
 
 const {fetchAllUsers, completeUserData} = useUser()
 const {fetchEventResponse, selectEventResponses} = useEventResponse()

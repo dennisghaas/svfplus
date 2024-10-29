@@ -1,7 +1,7 @@
 import { ref } from 'vue'
-import store from '../store'
-import { fetchDataFromApi } from '../helpers/fetchDataFromApi'
-import { useLocalStorage } from './useLocalStorage'
+import store from '@/store'
+import { fetchDataFromApi } from '@/helpers/fetchDataFromApi'
+import { useLocalStorage } from '@/composables/useLocalStorage'
 
 // Reaktive Variablen
 const userData = ref(null)

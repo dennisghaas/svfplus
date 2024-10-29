@@ -1,4 +1,4 @@
-import {exceptions} from "@/config.ts";
+import {exceptions} from "@/config";
 export function validateSentence(sentence: string) {
   const sentenceLowerCase = sentence.toLowerCase()
 
