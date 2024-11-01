@@ -11,9 +11,9 @@
   <!-- Just Mobile -->
   <BottomNavigation
     v-if="isMobile || isTablet"
-    :hide-bottom-navigation="store.state.menuOpen"
+    :hide-bottom-navigation="store.state.menuOpen || removePadding"
   />
-  <main class="pageMain">
+  <main :class="['pageMain', {'pageMain--no-padding' : removePadding}]">
     <div class="container">
       <slot name="pageMainContent"></slot>
     </div>
@@ -31,14 +31,13 @@ import LoadingResponse from '@/components/LoadingResponse.vue'
 
 /* to detect device width */
 const { isMobile, isTablet, isDesktop } = useBreakpoint()
-console.log(
-  'mobile?:',
-  isMobile.value,
-  'tablet?',
-  isTablet.value,
-  'desktop?',
-  isDesktop.value,
-)
+
+defineProps({
+  removePadding: {
+    type: Boolean,
+    default: false
+  }
+})
 </script>
 
 <style scoped lang="scss">
@@ -62,6 +61,15 @@ console.log(
 
   @include media-breakpoint-up(xl) {
     width: 80%;
+  }
+
+  &--no-padding {
+    min-height: 100vh;
+    padding-bottom: 0;
+
+    @include media-breakpoint-up(lg) {
+      padding-top: 0;
+    }
   }
 }
 </style>

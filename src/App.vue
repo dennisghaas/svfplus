@@ -2,7 +2,7 @@
   <template v-if="!store.state.loadData"></template>
   <template v-else>
     <template v-if="store.state.isLoggedIn && !store.state.isRegisterSuccess">
-      <LayoutLoggenIn v-if="store.state.watchedTutorial">
+      <LayoutLoggenIn v-if="store.state.watchedTutorial" :remove-padding="isLineupRoute">
         <template #pageMainContent>
           <RouterView />
         </template>
@@ -28,17 +28,20 @@
 
 <script lang="ts" setup>
 import store from '@/store'
-import { onMounted } from 'vue'
+import { onMounted, computed } from 'vue'
 import { useAuth } from '@/composables/useAuth.ts'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useHandleUserAccess } from "@/composables/useHandleUserAccess.ts";
 import LayoutLoggenIn from '@/Layout/LayoutLoggenIn.vue'
 import LayoutRegisterSuccess from '@/Layout/LayoutRegisterSuccess.vue'
 import LayoutTutorial from "@/Layout/LayoutTutorial.vue";
 
 const router = useRouter()
+const route = useRoute()
 const { fetchUserDataOnLoad } = useAuth()
 const {userAllowedToUseWebApp} = useHandleUserAccess()
+
+const isLineupRoute = computed(() => route.path === '/lineup');
 
 onMounted(() => {
   const token = localStorage.getItem('token') || null

@@ -13,77 +13,99 @@ export const formation_4141: Positions[] = [
         player: '',
         x: 'center',
         y: 'gk',
-        id: null
+        id: 0,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'riv',
         player: '',
         x: 'center center-right',
         y: 'cb',
-        id: null
+        id: 1,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'liv',
         player: '',
         x: 'center center-left',
         y: 'cb',
-        id: null
+        id: 2,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'rv',
         player: '',
         x: 'right',
         y: 'fb',
-        id: null
+        id: 3,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'lv',
         player: '',
         x: 'left',
         y: 'fb',
-        id: null
+        id: 4,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'zdm',
         player: '',
         x: 'center',
         y: 'cdm',
-        id: null
+        id: 5,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'rzm',
         player: '',
         x: 'center center-right',
         y: 'cm',
-        id: null
+        id: 6,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'lzm',
         player: '',
         x: 'center center-left',
         y: 'cm',
-        id: null
+        id: 7,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'rm',
         player: '',
         x: 'right',
         y: 'winger',
-        id: null
+        id: 8,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'lm',
         player: '',
         x: 'left',
         y: 'winger',
-        id: null
+        id: 9,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'st',
         player: '',
         x: 'center',
         y: 'st',
-        id: null
+        id: 10,
+        userId: null,
+        isSelected: false
     }
 ]
 
@@ -93,77 +115,99 @@ export const formation_442: Positions[] = [
         player: '',
         x: 'center',
         y: 'gk',
-        id: null
+        id: 0,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'riv',
         player: '',
         x: 'center center-right',
         y: 'cb',
-        id: null
+        id: 1,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'liv',
         player: '',
         x: 'center center-left',
         y: 'cb',
-        id: null
+        id: 2,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'rv',
         player: '',
         x: 'right',
         y: 'fb',
-        id: null
+        id: 3,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'lv',
         player: '',
         x: 'left',
         y: 'fb',
-        id: null
+        id: 4,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'rzm',
         player: '',
         x: 'center center-right',
         y: 'cm',
-        id: null
+        id: 5,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'lzm',
         player: '',
         x: 'center center-left',
         y: 'cm',
-        id: null
+        id: 6,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'rm',
         player: '',
         x: 'right',
         y: 'winger',
-        id: null
+        id: 7,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'lm',
         player: '',
         x: 'left',
         y: 'winger',
-        id: null
+        id: 8,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'st',
         player: '',
         x: 'center center-right',
         y: 'st',
-        id: null
+        id: 9,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'st',
         player: '',
         x: 'center center-left',
         y: 'st',
-        id: null
+        id: 10,
+        userId: null,
+        isSelected: false
     },
 ]
 
@@ -173,76 +217,98 @@ export const formation_443_2: Positions[] = [
         player: '',
         x: 'center',
         y: 'gk',
-        id: null
+        id: 0,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'riv',
         player: '',
         x: 'center center-right',
         y: 'cb',
-        id: null
+        id: 1,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'liv',
         player: '',
         x: 'center center-left',
         y: 'cb',
-        id: null
+        id: 2,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'rv',
         player: '',
         x: 'right',
         y: 'fb',
-        id: null
+        id: 3,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'lv',
         player: '',
         x: 'left',
         y: 'fb',
-        id: null
+        id: 4,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'zdm',
         player: '',
         x: 'center',
         y: 'cdm',
-        id: null
+        id: 5,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'rzm',
         player: '',
         x: 'center center-right',
         y: 'cm',
-        id: null
+        id: 6,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'lzm',
         player: '',
         x: 'center center-left',
         y: 'cm',
-        id: null
+        id: 7,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'rf',
         player: '',
         x: 'right',
         y: 'winger winger-top',
-        id: null
+        id: 8,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'lf',
         player: '',
         x: 'left',
         y: 'winger winger-top',
-        id: null
+        id: 9,
+        userId: null,
+        isSelected: false
     },
     {
         pos: 'st',
         player: '',
         x: 'center center-right',
         y: 'st',
-        id: null
+        id: 10,
+        userId: null,
+        isSelected: false
     }
 ]

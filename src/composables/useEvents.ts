@@ -66,6 +66,24 @@ export const useEvents = () => {
     }
   };
 
+  const fetchGames = async () => {
+    try {
+      const response = await fetchDataFromApi('/events', 'GET');
+
+      // Filtert nur Events vom Typ 'Spiel' und deren Datum ab heute
+      const today = new Date();
+      const filteredEvents = response
+          .filter(event => event.eventType === 'Spiel' && new Date(event.eventDate) >= today)
+          .sort((a, b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime())
+          .slice(0, 3);
+
+      events.value = filteredEvents;
+
+    } catch (error) {
+      console.error('Fehler beim Abrufen der Events:', error);
+    }
+  };
+
   const fetchEventsByID = async (id?: number, ids?: number[]) => {
     try {
       if (id && !ids) {
@@ -559,6 +577,7 @@ export const useEvents = () => {
     editEventByID,
     fetchEventsByID,
     deleteStandingOrderById,
+    fetchGames,
     events,
     eventDate,
     title,

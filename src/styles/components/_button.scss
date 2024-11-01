@@ -24,6 +24,7 @@
 
   &[disabled] {
     background: var(--border-color);
+    border-color: var(--border-color);
     cursor: not-allowed;
   }
 

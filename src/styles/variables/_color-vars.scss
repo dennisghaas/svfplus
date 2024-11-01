@@ -34,6 +34,8 @@ $success-light: #78e08f;
 $success-light-50: #{color.change($success-light, $alpha: 0.5)};
 $success-mint: #10ac84;
 $success-dark: #436f00;
+$success-very-dark: #0D2518;
+$success-very-dark-50: #{color.change($success-very-dark, $alpha: 0.5)};
 
 // OTHERS
 $purple: #9b59b6;

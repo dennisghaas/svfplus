@@ -20,10 +20,7 @@ const routes: RouteRecordRaw[] = [
   { path: '/termine', component: EventsView },
   { path: '/geburtstage', component: BirthdayView },
   { path: '/team', component: TeamView },
-  {
-    path: '/team/:id',
-    component: UserView,
-  },
+  { path: '/team/:id', component: UserView },
   { path: '/dein-profil', component: ProfileView },
   { path: '/erstellen', component: CreateView },
   { path: '/einstellungen', component: Settings },

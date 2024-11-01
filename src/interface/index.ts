@@ -123,3 +123,18 @@ export interface answer {
   text: string;
   index: number;
 }
+
+interface PositionsSub {
+  userID: number | null;
+  player: string;
+}
+
+export interface Positions {
+  pos: string;
+  player: string;
+  name: string;
+  id: number | null;
+  userId: number | null;
+  subs: PositionsSub[]
+  isSelected: boolean;
+}
