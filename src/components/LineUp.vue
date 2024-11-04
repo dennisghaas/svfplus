@@ -56,14 +56,18 @@
   <div v-else-if="activeStep === 1" class="lineup__steps">
 
     <template v-if="!errorNotEnoughPlayers">
-      <LineUpField :filtered-user="filteredUser"/>
+      <LineUpField
+          :filtered-user="filteredUser"
+          :get-event-responses="responses"
+      />
 
       <ButtonWrapper>
         <template #buttons>
           <ButtonType
-            :btn-class="'btn-secondary w-100'"
-            :btn-text="'Aufstellung bearbeiten'"
-            :type-button="true"
+              :btn-class="'btn-secondary w-100'"
+              :btn-text="'Zurück'"
+              :type-button="true"
+              @click="changeStepToPrev()"
           />
 
           <ButtonType
@@ -152,7 +156,7 @@ const useEventForLineUp = async (eventID: number) => {
   /* fetch all users */
   await fetchAllUsers();
 
-  /* throw error if less than 11 players accept the event */
+  /* throw error if less than 11 players accept or unsure this event */
   errorNotEnoughPlayers.value = selectEventResponses.value.length < 11;
 };
 

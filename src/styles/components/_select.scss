@@ -30,4 +30,20 @@ fieldset {
     right: rem(40px);
     color: var(--gray-dark);
   }
+
+  &--dark {
+    .select {
+      background: var(--success-very-dark);
+      color: var(--white);
+
+      &:focus-visible {
+        border-color: var(--success-light);
+        box-shadow: 0 0 6px var(--success-light-50);
+      }
+    }
+
+    [class*='icon-'] {
+      color: var(--white);
+    }
+  }
 }

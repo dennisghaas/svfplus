@@ -57,14 +57,14 @@ export const useEventResponse = () => {
         }
     }
 
-    const fetchEventResponse = async (eventID: number, fetchOnlyAcceptResponses?: boolean) => {
+    const fetchEventResponse = async (eventID: number, fetchAcceptAndUnsureResponses?: boolean) => {
         try {
             const response = await fetchDataFromApi(
                 `/event-responses/events/${eventID}/responses`,
                 'GET',
             )
 
-            if (!fetchOnlyAcceptResponses) {
+            if (!fetchAcceptAndUnsureResponses) {
                 selectEventResponses.value = response
             } else {
                 selectEventResponses.value = response.filter(

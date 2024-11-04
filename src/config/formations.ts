@@ -15,7 +15,8 @@ export const formation_4141: Positions[] = [
         y: 'gk',
         id: 0,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'riv',
@@ -24,7 +25,8 @@ export const formation_4141: Positions[] = [
         y: 'cb',
         id: 1,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'liv',
@@ -33,7 +35,8 @@ export const formation_4141: Positions[] = [
         y: 'cb',
         id: 2,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'rv',
@@ -42,7 +45,8 @@ export const formation_4141: Positions[] = [
         y: 'fb',
         id: 3,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'lv',
@@ -51,7 +55,8 @@ export const formation_4141: Positions[] = [
         y: 'fb',
         id: 4,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'zdm',
@@ -60,7 +65,8 @@ export const formation_4141: Positions[] = [
         y: 'cdm',
         id: 5,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'rzm',
@@ -69,7 +75,8 @@ export const formation_4141: Positions[] = [
         y: 'cm',
         id: 6,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'lzm',
@@ -78,7 +85,8 @@ export const formation_4141: Positions[] = [
         y: 'cm',
         id: 7,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'rm',
@@ -87,7 +95,8 @@ export const formation_4141: Positions[] = [
         y: 'winger',
         id: 8,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'lm',
@@ -96,7 +105,8 @@ export const formation_4141: Positions[] = [
         y: 'winger',
         id: 9,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'st',
@@ -105,7 +115,8 @@ export const formation_4141: Positions[] = [
         y: 'st',
         id: 10,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     }
 ]
 
@@ -117,7 +128,8 @@ export const formation_442: Positions[] = [
         y: 'gk',
         id: 0,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'riv',
@@ -126,7 +138,8 @@ export const formation_442: Positions[] = [
         y: 'cb',
         id: 1,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'liv',
@@ -135,7 +148,8 @@ export const formation_442: Positions[] = [
         y: 'cb',
         id: 2,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'rv',
@@ -144,7 +158,8 @@ export const formation_442: Positions[] = [
         y: 'fb',
         id: 3,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'lv',
@@ -153,7 +168,8 @@ export const formation_442: Positions[] = [
         y: 'fb',
         id: 4,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'rzm',
@@ -162,7 +178,8 @@ export const formation_442: Positions[] = [
         y: 'cm',
         id: 5,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'lzm',
@@ -171,7 +188,8 @@ export const formation_442: Positions[] = [
         y: 'cm',
         id: 6,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'rm',
@@ -180,7 +198,8 @@ export const formation_442: Positions[] = [
         y: 'winger',
         id: 7,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'lm',
@@ -189,7 +208,8 @@ export const formation_442: Positions[] = [
         y: 'winger',
         id: 8,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'st',
@@ -198,7 +218,8 @@ export const formation_442: Positions[] = [
         y: 'st',
         id: 9,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'st',
@@ -207,7 +228,8 @@ export const formation_442: Positions[] = [
         y: 'st',
         id: 10,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
 ]
 
@@ -219,7 +241,8 @@ export const formation_443_2: Positions[] = [
         y: 'gk',
         id: 0,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'riv',
@@ -228,7 +251,8 @@ export const formation_443_2: Positions[] = [
         y: 'cb',
         id: 1,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'liv',
@@ -237,7 +261,8 @@ export const formation_443_2: Positions[] = [
         y: 'cb',
         id: 2,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'rv',
@@ -246,7 +271,8 @@ export const formation_443_2: Positions[] = [
         y: 'fb',
         id: 3,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'lv',
@@ -255,7 +281,8 @@ export const formation_443_2: Positions[] = [
         y: 'fb',
         id: 4,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'zdm',
@@ -264,7 +291,8 @@ export const formation_443_2: Positions[] = [
         y: 'cdm',
         id: 5,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'rzm',
@@ -273,7 +301,8 @@ export const formation_443_2: Positions[] = [
         y: 'cm',
         id: 6,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'lzm',
@@ -282,7 +311,8 @@ export const formation_443_2: Positions[] = [
         y: 'cm',
         id: 7,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'rf',
@@ -291,7 +321,8 @@ export const formation_443_2: Positions[] = [
         y: 'winger winger-top',
         id: 8,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'lf',
@@ -300,15 +331,17 @@ export const formation_443_2: Positions[] = [
         y: 'winger winger-top',
         id: 9,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     },
     {
         pos: 'st',
         player: '',
-        x: 'center center-right',
+        x: 'center',
         y: 'st',
         id: 10,
         userId: null,
-        isSelected: false
+        isSelected: false,
+        user: []
     }
 ]

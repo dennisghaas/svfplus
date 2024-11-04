@@ -8,7 +8,7 @@
       </template>
     </label>
 
-    <div class="select-wrapper">
+    <div :class="['select-wrapper', { 'select-wrapper--dark' : themeDark }]">
       <select
           class="select"
           :name="selectName"
@@ -82,6 +82,10 @@ const props = defineProps({
   dynamicProperty: {
     type: String,
     default: ''
+  },
+  themeDark: {
+    type: Boolean,
+    default: false
   }
 });
 

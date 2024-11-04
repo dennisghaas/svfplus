@@ -1,5 +1,5 @@
-import {ref, computed} from "vue";
-import {Positions, UserData} from "@/interface";
+import {ref, computed, onMounted} from "vue";
+import {EventResponse, Positions, UserData} from "@/interface";
 
 const lineUpFormation = ref<Positions[]>([])
 const lineUpUser = ref<UserData[]>([]);
@@ -13,6 +13,9 @@ const filteredLineUpFormation = computed(() => {
 const filteredLineUpUser = computed(() => {
     return lineUpUser.value.filter(user => !renderSubPlayers.value.includes(user.id))
 })
+const showControls = ref<boolean[]>([]);
+const eventResponses = ref(<EventResponse[]>([]))
+const showSub = ref(false)
 
 /* view refs */
 const viewSelectedPlayer = ref(false)
@@ -23,9 +26,9 @@ export const useLineUp = () => {
     const handleUserSelection = (handler: string) => {
         if (handler === 'viewSelectedPlayer') {
             viewSelectedPlayer.value = true
-        } else if(handler === 'viewSelectedPosition') {
+        } else if (handler === 'viewSelectedPosition') {
             viewSelectedPosition.value = true
-        } else if(handler === 'viewSwapPlayer') {
+        } else if (handler === 'viewSwapPlayer') {
             viewSwapPlayer.value = true
         } else {
             viewSelectedPlayer.value = false
@@ -33,6 +36,10 @@ export const useLineUp = () => {
             viewSwapPlayer.value = false
         }
     }
+
+    const handleShowControls = (index: number) => {
+        showControls.value = showControls.value.map((value, i) => i === index);
+    };
 
     const lineUpPlayer = (user: UserData[]) => {
         selectedUserData.value = [user];
@@ -42,40 +49,41 @@ export const useLineUp = () => {
         selectedPosition.value = pos
     }
 
+    const pushIntoPosition = (position: any, selectedUser: UserData) => {
+        position.userId = selectedUser.id;
+        position.player = `${selectedUser.name} ${selectedUser.surname}`;
+        position.isSelected = true;
+        position.user = selectedUser;
+
+        // Add the selected player's ID to renderSubPlayers
+        renderSubPlayers.value.push(selectedUser.id);
+
+        // Clear selected user data
+        selectedUserData.value = [];
+
+        /* hide show sub if its open*/
+        if (showSub.value) {
+            showSub.value = false
+        }
+    };
+
     const saveNewPos = (selectedUser: UserData[], selectedPosition: Object) => {
         const position = lineUpFormation.value.find(pos => pos.id === selectedPosition.id);
         if (position) {
-            position.userId = selectedUser.id;
-            position.player = `${selectedUser.name} ${selectedUser.surname}`;
-            position.isSelected = true
-
-            /* push selected player by id into renderSubPlayers */
-            renderSubPlayers.value.push(selectedUser.id);
-
-            /* remove current selected user from ref */
-            selectedUserData.value = []
+            pushIntoPosition(position, selectedUser);
         }
     }
 
-    const saveSwappingPlayers = (selectedUser: UserData[]) => {
+    const saveSwappingPlayers = (selectedUser: UserData) => {
         const swappedPlayerId = selectedPosition.value.userId;
         const swappedPlayerPosId = selectedPosition.value.id;
 
-        // Remove the swapped player by ID
+        // Remove the swapped player by ID from renderSubPlayers
         renderSubPlayers.value = renderSubPlayers.value.filter(id => id !== swappedPlayerId);
 
-        // Update lineUpFormation with the new player's details
         const position = lineUpFormation.value.find(pos => pos.id === swappedPlayerPosId);
-        if(position) {
-            position.userId = selectedUser.id;
-            position.player = `${selectedUser.name} ${selectedUser.surname}`;
-            position.isSelected = true;
-
-            // Add the new player's ID to renderSubPlayers
-            renderSubPlayers.value.push(selectedUser.id);
-
-            // Clear selected user data
-            selectedUserData.value = [];
+        if (position) {
+            pushIntoPosition(position, selectedUser);
         }
     };
 
@@ -87,15 +95,31 @@ export const useLineUp = () => {
             const posUserId = position.userId;
             position.isSelected = false
             position.player = ''
+            position.user = []
 
             /* remove user from line up */
             renderSubPlayers.value.pop(posUserId)
 
             /* set back user id in pos object back to null */
             position.userId = null
+
+            /* hide controls */
+            showControls.value = showControls.value.map(() => false);
+
+            /* open sub if user deletes person from line up*/
+            if (!showSub.value) {
+                showSub.value = true
+            }
         }
     }
 
+    const handleShowSub = () => {
+        showSub.value = !showSub.value
+    }
+
+    onMounted(() => {
+        showControls.value = Array(lineUpFormation.value.length).fill(false);
+    })
 
     return {
         lineUpFormation,
@@ -109,11 +133,16 @@ export const useLineUp = () => {
         viewSwapPlayer,
         viewSelectedPosition,
         filteredLineUpUser,
+        showControls,
+        eventResponses,
+        showSub,
         handleUserSelection,
         lineUpPlayer,
         saveNewPos,
         removePlayerFromLineUp,
         lineUpPlayerSelectedPosition,
-        saveSwappingPlayers
+        saveSwappingPlayers,
+        handleShowControls,
+        handleShowSub
     }
 }

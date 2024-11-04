@@ -135,6 +135,7 @@ export interface Positions {
   name: string;
   id: number | null;
   userId: number | null;
-  subs: PositionsSub[]
+  subs: PositionsSub[];
   isSelected: boolean;
+  user: UserData;
 }

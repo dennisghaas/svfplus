@@ -7,7 +7,7 @@
       { 'profile-panel--reverse': displayReverse },
       { 'profile-panel--link': link },
       { 'profile-panel--medium' : displayMedium },
-      { 'profile-panel--small': displaySmall },
+      { 'profile-panel--small': displaySmall }
     ]"
   >
     <div
@@ -15,14 +15,19 @@
         'profile-panel__generic-image',
         { 'profile-panel__generic-image-has-border': addBorder },
         { 'profile-panel__custom-image': isImage },
+        { 'profile-panel__is-add-button' : isAddButton }
       ]"
-        :style="
-        !isImage
-          ? { '--profile-generic-image-bg': `var(${bgColor})` }
-          : { '--profile-custom-image-bg': `url(${bgColor}` }
-      "
+        :style="{
+          '--profile-generic-image-bg': !isImage ? `var(${bgColor})` : null,
+          '--profile-custom-image-bg': isImage ? `url(${bgColor})` : null
+      }"
     >
-      {{ userInitials }}
+      <template v-if="!isAddButton">
+        {{ userInitials }}
+      </template>
+      <template v-else>
+        <i class="icon-injured"></i>
+      </template>
     </div>
     <span v-if="userName"
           :class="['profile-panel__name', {'profile-panel__name--small' : displayMedium}, {'profile-panel__name--small' : displaySmall}]">
@@ -68,6 +73,10 @@ defineProps({
   isImage: {
     type: Boolean,
     default: false,
+  },
+  isAddButton: {
+    type: Boolean,
+    default: false
   }
 })
 </script>
@@ -124,6 +133,12 @@ defineProps({
     &.profile-panel__custom-image {
       background-image: var(--profile-custom-image-bg);
       color: var(--black);
+    }
+  }
+
+  &__is-add-button {
+    [class*="icon-"] {
+      font-size: $font-size-12;
     }
   }
 
