@@ -1,55 +1,19 @@
 <template>
   <!-- Enter View -->
   <div v-if="activeStep === 0" class="lineup__steps">
-    <div v-if="events && events.length > 0" class="lineup__card">
-      <h3>
-        Wähle ein Spiel aus
-      </h3>
-      <div class="body-text-b2">
-        <p>
-          Du kannst aus einem der kommenden Spiele wählen um dir nur die Spieler anzeigen zu lassen, die zu dem
-          ausgewähltem Spiel zugesagt haben.
-        </p>
-      </div>
+    <LineUpCard
+        v-if="events && events.length > 0"
+        :headline="'Wähle ein Spiel aus'"
+        :content="'Du kannst aus einem der kommenden Spiele wählen um dir nur die Spieler anzeigen zu lassen, die zu dem ausgewähltem Spiel zugesagt, oder unsicher reagiert haben.'"
+        :events="events"
+        :show-events="true"
+        @use-event-for-line-up="useEventForLineUp"
+    />
 
-      <div v-for="game in events" class="lineup__card__game-quick-link">
-        <div class="lineup__card__game-quick-link-content">
-          <h4>
-            {{ game.venue }}
-          </h4>
-          <div class="body-text-b3 text-color-white-75">
-            <p>
-              {{ game.eventDescription.subtitle }}
-            </p>
-          </div>
-        </div>
-        <button class="lineup__card__game-quick-link-button" type="button" @click="useEventForLineUp(game.id)">
-          <i class="icon-chevron-right"></i>
-          <span class="d-none">
-          Öffne irgendwas
-        </span>
-        </button>
-      </div>
-    </div>
-    <div class="lineup__card">
-      <h3>
-        Aufstellung laden (tbc)
-      </h3>
-
-      <div class="body-text-b2">
-        <p>
-          Falls jemand abgesagt hat oder du noch etwas anpassen musst, lade bereits erstellte und gespeicherte
-          Aufstellungen.
-        </p>
-      </div>
-
-      <SelectType/>
-      <ButtonType
-          :btn-class="'w-100'"
-          :btn-text="'Aufstellung anzeigen'"
-          :type-button="true"
-      />
-    </div>
+    <LineUpCard
+      :headline="'Aufstellung laden (tbc)'"
+      :content="'Falls jemand abgesagt hat oder du noch etwas anpassen musst, lade bereits erstellte und gespeicherte Aufstellungen.'"
+    />
   </div>
 
   <!-- LineUp View -->
@@ -59,25 +23,9 @@
       <LineUpField
           :filtered-user="filteredUser"
           :get-event-responses="responses"
+          @prev-step="changeStepToPrev()"
+          @next-step="changeStep()"
       />
-
-      <ButtonWrapper>
-        <template #buttons>
-          <ButtonType
-              :btn-class="'btn-secondary w-100'"
-              :btn-text="'Zurück'"
-              :type-button="true"
-              @click="changeStepToPrev()"
-          />
-
-          <ButtonType
-              :btn-class="'w-100'"
-              :btn-text="'Weiter'"
-              :type-button="true"
-              @click="changeStep()"
-          />
-        </template>
-      </ButtonWrapper>
 
     </template>
 
@@ -115,12 +63,11 @@ import {useEventResponse} from "@/composables/useEventResponse.ts";
 import {onMounted} from "vue";
 
 import LineUpField from "@/components/LineUpField.vue";
-import SelectType from "@/components/SelectType.vue";
 import ButtonType from "@/components/ButtonType.vue";
 import BadgeType from "@/components/BadgeType.vue";
 import {EventResponse} from "@/interface";
 import {useUser} from "@/composables/useUser.ts";
-import ButtonWrapper from "@/components/ButtonWrapper.vue";
+import LineUpCard from "@/components/LineUpCard.vue";
 
 const {fetchGames, events} = useEvents()
 const {fetchAllUsers, completeUserData} = useUser();
@@ -171,39 +118,4 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-.lineup__card {
-  background: var(--white);
-  padding: rem(20px);
-  border-radius: rem(10px);
-  margin-bottom: rem(20px);
-
-  [class*="body-text-"] {
-    margin-bottom: 1rem;
-  }
-
-  &__game-quick-link {
-    position: relative;
-    padding: rem(10px) rem(20px);
-    color: var(--white);
-    background: var(--blue-soft-gray);
-    border-radius: rem(10px);
-    margin-top: 1rem;
-
-    [class*="body-text-"] {
-      margin-bottom: 0;
-    }
-
-    &-button {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      padding-right: rem(20px);
-    }
-  }
-}
 </style>

@@ -50,33 +50,6 @@
       </ul>
     </div>
 
-    <div class="field__sub">
-      <button
-          :class="[
-              'field__sub-headline', { 'field__sub-headline--open' : showSub }]"
-          @click="handleShowSub()">
-        <span>Bank</span>
-        <i class="icon-chevron-down"></i>
-      </button>
-      <div v-if="showSub" class="field__sub-content">
-        <ul class="blanklist">
-          <template v-for="player in lineUpUser" :key="player.id">
-            <li v-if="!renderSubPlayers.includes(player.id)">
-              <button type="button" @click="handleLineUpPlayer(player)">
-                <ProfilePanel
-                    :add-border="true"
-                    :display-medium="true"
-                    :user-initials="player.userImage.initials"
-                    :bg-color="player.userImage.bgColor"
-                    :is-image="!player.userImage.bgColor.includes('--')"
-                />
-              </button>
-            </li>
-          </template>
-        </ul>
-      </div>
-    </div>
-
     <ContentImage
         :img-class="'ratio ratio-9-16 field__image'"
         :img-alt="'field'"
@@ -84,6 +57,48 @@
     />
 
   </div>
+
+  <div class="field__sub">
+    <LineUpCard
+        :headline="'Bank'"
+        :show-slot="true"
+    >
+      <template #slotContent>
+        <ul class="blanklist field__sub-wrapper">
+          <template v-for="player in lineUpUser" :key="player.id">
+            <li v-if="!renderSubPlayers.includes(player.id)" class="field__sub-item">
+              <span>{{ player.name }} <strong>{{ player.surname }}</strong></span>
+              <ButtonType
+                  :btn-class="'btn-small w-auto'"
+                  :btn-text="'Aufstellen'"
+                  :type-button="true"
+                  @click="handleLineUpPlayer(player)"
+              />
+            </li>
+          </template>
+        </ul>
+      </template>
+    </LineUpCard>
+  </div>
+
+  <ButtonWrapper>
+    <template #buttons>
+      <ButtonType
+          :btn-text="'Zurück'"
+          :btn-class="'btn-secondary w-100'"
+          :type-button="true"
+          @click="handlePrevStep"
+      />
+
+      <ButtonType
+          :btn-text="'Weiter'"
+          :btn-class="'w-100'"
+          :disabled="renderSubPlayers.length < 11"
+          :type-button="true"
+          @click="handleNextStep"
+      />
+    </template>
+  </ButtonWrapper>
 
   <AppDialog
       :open="dialogOpen"
@@ -101,7 +116,7 @@
 </template>
 
 <script lang="ts" setup>
-import {onMounted, watch, ref, computed} from "vue";
+import {onMounted, watch, ref} from "vue";
 import {useLineUp} from "@/composables/useLineUp.ts";
 import store from "@/store";
 import {formation_4141, formation_442, formation_443_2, formationNav} from "@/config/formations.ts";
@@ -111,6 +126,9 @@ import AppDialog from "@/components/AppDialog.vue";
 import LineUpDialog from "@/components/LineUpDialog.vue";
 import ContentImage from "@/components/ContentImage.vue";
 import ProfilePanel from "@/components/ProfilePanel.vue";
+import LineUpCard from "@/components/LineUpCard.vue";
+import ButtonType from "@/components/ButtonType.vue";
+import ButtonWrapper from "@/components/ButtonWrapper.vue";
 
 const {
   lineUpUser,
@@ -124,13 +142,11 @@ const {
   selectedPosition,
   showControls,
   eventResponses,
-  showSub,
   lineUpPlayer,
   lineUpPlayerSelectedPosition,
   removePlayerFromLineUp,
   handleUserSelection,
-  handleShowControls,
-  handleShowSub
+  handleShowControls
 } = useLineUp();
 
 const props = defineProps({
@@ -205,12 +221,22 @@ const closeAppDialog = () => {
   store.updateOverflowHidden(false)
 }
 
-const emit = defineEmits(['closeDialog'])
+const emit = defineEmits(['closeDialog', 'nextStep', 'prevStep'])
 const handleClose = () => {
   emit('closeDialog')
 
   /* remove dialog view handler */
   handleUserSelection()
+}
+
+const handleNextStep = () => {
+  if(renderSubPlayers.value.length >= 11) {
+    emit('nextStep')
+  }
+}
+
+const handlePrevStep = () => {
+  emit('prevStep')
 }
 
 const openDialog = (handleUserSelectionView: string) => {
@@ -267,7 +293,7 @@ onMounted(() => {
     position: relative;
     z-index: 1;
     height: 100%;
-    padding: 0 #{$gutter-width * 2} #{$gutter-width * 2};
+    padding: 0 #{$gutter-width * 2} rem(40px);
   }
 
   &__image {
@@ -345,12 +371,12 @@ onMounted(() => {
       &__info {
         text-align: center;
         text-transform: uppercase;
-        font-size: 10px;
+        font-size: $font-size-10;
         font-weight: 500;
         background: var(--black);
-        border-radius: 5px;
-        padding: 3px;
-        bottom: -10px;
+        border-radius: rem(5px);
+        padding: rem(3px);
+        bottom: rem(-10px);
         position: absolute;
         width: 100%;
         color: var(--primary);
@@ -416,57 +442,36 @@ onMounted(() => {
   }
 
   &__sub {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    z-index: 1;
-    width: 100%;
+    margin-top: rem(20px);
 
-    &-headline {
-      color: var(--white);
-      background: var(--success-very-dark);
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      padding: 20px;
-      max-width: max-content;
-      border-radius: 0 10px 0 0;
-      gap: 10px;
-      position: relative;
+    &-wrapper {
 
-      &.field__sub-headline--open {
-        [class*="icon-"] {
-          transform: rotate(-180deg);
-        }
-      }
-
-      &::before {
-        content: '';
-        height: 1px;
-        width: calc(100% - 40px);
-        position: absolute;
-        left: 20px;
-        bottom: 0;
-        background: var(--white-50);
-        z-index: 1;
-      }
-
-      [class*="icon-"] {
-        font-size: $font-size-14;
-      }
     }
 
-    &-content {
-      padding: rem(20px);
-      background: var(--success-very-dark);
+    &-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--black-75);
+      padding: rem(10px) 0;
+      border-bottom: 1px solid var(--gray-soft);
 
-      ul {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: rem(10px)
+      &:first-child {
+        padding-top: 0;
+      }
+
+      &:last-child {
+        padding-bottom: 0;
+        border-bottom: 0 none;
+      }
+
+      .btn {
+        width: auto;
+      }
+
+      span {
+        width: 100%;
+        display: block;
       }
     }
   }

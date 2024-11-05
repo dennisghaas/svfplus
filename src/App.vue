@@ -2,7 +2,7 @@
   <template v-if="!store.state.loadData"></template>
   <template v-else>
     <template v-if="store.state.isLoggedIn && !store.state.isRegisterSuccess">
-      <LayoutLoggenIn v-if="store.state.watchedTutorial" :remove-padding="isLineupRoute">
+      <LayoutLoggenIn v-if="store.state.watchedTutorial" :hide-bottom-navigation="isLineupRoute">
         <template #pageMainContent>
           <RouterView />
         </template>

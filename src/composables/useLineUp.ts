@@ -15,7 +15,6 @@ const filteredLineUpUser = computed(() => {
 })
 const showControls = ref<boolean[]>([]);
 const eventResponses = ref(<EventResponse[]>([]))
-const showSub = ref(false)
 
 /* view refs */
 const viewSelectedPlayer = ref(false)
@@ -60,11 +59,6 @@ export const useLineUp = () => {
 
         // Clear selected user data
         selectedUserData.value = [];
-
-        /* hide show sub if its open*/
-        if (showSub.value) {
-            showSub.value = false
-        }
     };
 
     const saveNewPos = (selectedUser: UserData[], selectedPosition: Object) => {
@@ -105,16 +99,7 @@ export const useLineUp = () => {
 
             /* hide controls */
             showControls.value = showControls.value.map(() => false);
-
-            /* open sub if user deletes person from line up*/
-            if (!showSub.value) {
-                showSub.value = true
-            }
         }
-    }
-
-    const handleShowSub = () => {
-        showSub.value = !showSub.value
     }
 
     onMounted(() => {
@@ -135,14 +120,12 @@ export const useLineUp = () => {
         filteredLineUpUser,
         showControls,
         eventResponses,
-        showSub,
         handleUserSelection,
         lineUpPlayer,
         saveNewPos,
         removePlayerFromLineUp,
         lineUpPlayerSelectedPosition,
         saveSwappingPlayers,
-        handleShowControls,
-        handleShowSub
+        handleShowControls
     }
 }

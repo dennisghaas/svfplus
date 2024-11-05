@@ -1,20 +1,16 @@
 <template>
-  <SectionType :class="'mt-0'">
-    <template #sectionContent>
-      <LineUpSteps
-          v-if="!hideStepNavigation"
-          :steps="steps"
-          :active-step="activeStep"
-          @change-step="handleChangeStep"
-      />
+  <LineUpSteps
+      v-if="!hideStepNavigation"
+      :steps="steps"
+      :active-step="activeStep"
+      @change-step="handleChangeStep"
+  />
 
-      <LineUp
-          :active-step="activeStep"
-          @count-up-step="handleCountUpStep"
-          @changeStepToPrev="handleChangeStepToPrev"
-      />
-    </template>
-  </SectionType>
+  <LineUp
+      :active-step="activeStep"
+      @count-up-step="handleCountUpStep"
+      @changeStepToPrev="handleChangeStepToPrev"
+  />
 </template>
 
 <script lang="ts" setup>

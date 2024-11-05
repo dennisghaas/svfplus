@@ -11,9 +11,9 @@
   <!-- Just Mobile -->
   <BottomNavigation
     v-if="isMobile || isTablet"
-    :hide-bottom-navigation="store.state.menuOpen || removePadding"
+    :hide-bottom-navigation="store.state.menuOpen || removePadding || hideBottomNavigation"
   />
-  <main :class="['pageMain', {'pageMain--no-padding' : removePadding}]">
+  <main :class="['pageMain', {'pageMain--no-padding' : removePadding}, {'pageMain--no-bottom-nav' : hideBottomNavigation}]">
     <div class="container">
       <slot name="pageMainContent"></slot>
     </div>
@@ -34,6 +34,10 @@ const { isMobile, isTablet, isDesktop } = useBreakpoint()
 
 defineProps({
   removePadding: {
+    type: Boolean,
+    default: false
+  },
+  hideBottomNavigation: {
     type: Boolean,
     default: false
   }
@@ -61,6 +65,15 @@ defineProps({
 
   @include media-breakpoint-up(xl) {
     width: 80%;
+  }
+
+  &--no-bottom-nav {
+    min-height: 100vh;
+    padding-bottom: rem(40px);
+
+    @include media-breakpoint-up(lg) {
+      padding-top: 0;
+    }
   }
 
   &--no-padding {
