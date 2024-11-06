@@ -206,7 +206,7 @@ watch(
         eventResponses.value = newEventResponses as EventResponse[];
       }
     },
-    { immediate: true }
+    {immediate: true}
 );
 
 const getResponse = (playerId: number | null) => {
@@ -237,7 +237,7 @@ const handleClose = () => {
 }
 
 const handleNextStep = () => {
-  if(renderSubPlayers.value.length >= 11) {
+  if (renderSubPlayers.value.length >= 11) {
     emit('nextStep')
   }
 }

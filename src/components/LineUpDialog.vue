@@ -55,11 +55,11 @@
     />
 
     <ButtonType
-      :btn-text="'Spieler tauschen'"
-      :type-button="true"
-      :btn-class="'w-100'"
-      :disabled="throwError"
-      @click="handleClose(selectedUserData,true)"
+        :btn-text="'Spieler tauschen'"
+        :type-button="true"
+        :btn-class="'w-100'"
+        :disabled="throwError"
+        @click="handleClose(selectedUserData,true)"
     />
   </template>
 </template>

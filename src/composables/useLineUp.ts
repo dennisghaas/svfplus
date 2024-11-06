@@ -76,7 +76,7 @@ export const useLineUp = () => {
     };
 
     const saveSwappingPlayers = (selectedUser: UserData) => {
-        if(selectedPosition.value) {
+        if (selectedPosition.value) {
             const swappedPlayerId = selectedPosition.value.userId;
             const swappedPlayerPosId = selectedPosition.value.id;
 
