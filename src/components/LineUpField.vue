@@ -11,7 +11,7 @@
           @update:selection="updateSelectedFormation"
       />
       <ul class="field__lineup blanklist">
-        <li v-for="(pos, index) in lineUpFormation" :key="pos.id"
+        <li v-for="(pos, index) in lineUpFormation" :key="index"
             :class="['field__lineup_pos', pos.y, pos.x]">
 
           <button
@@ -19,9 +19,9 @@
               type="button"
               @click="!pos.isSelected ? handleLineUpSelectedPosition(pos) : handleShowControls(index)">
             <ProfilePanel
-                :bg-color="pos.isSelected ? pos.user.userImage.bgColor : '--primary'"
-                :user-initials="pos.isSelected ? pos.user.userImage.initials : ''"
-                :is-image="pos.isSelected ? !pos.user.userImage.bgColor.includes('--') : false"
+                :bg-color="pos.isSelected ? pos.user?.userImage?.bgColor : '--primary'"
+                :user-initials="pos.isSelected ? pos.user?.userImage?.initials : ''"
+                :is-image="pos.isSelected ? !(pos.user?.userImage?.bgColor?.includes('--')) : false"
                 :add-border="true"
                 :is-add-button="!pos.isSelected"
             />
@@ -38,7 +38,7 @@
 
           <div v-if="showControls[index]" :class="['field__lineup_pos__controls', controlAlignment(pos.x)]">
             <button class="field__lineup_pos__controls-delete" type="button"
-                    @click="removePlayerFromLineUp(pos.id, index)">
+                    @click="removePlayerFromLineUp(pos.id)">
               <i class="icon-close"></i>
             </button>
 
@@ -174,7 +174,7 @@ const updateSelectedFormation = (selectedValue: string) => {
   renderSubPlayers.value = []
 
   /* remove as well stored user */
-  selectedUserData.value = []
+  selectedUserData.value = null
 
   /* set back all data to default */
   lineUpFormation.value.forEach(pos => {
@@ -196,13 +196,20 @@ const controlAlignment = (xValue: string) => {
 watch(
     () => [props.filteredUser, props.getEventResponses],
     ([newFilteredUser, newEventResponses]) => {
-      lineUpUser.value = newFilteredUser;
-      eventResponses.value = newEventResponses
+      if (Array.isArray(newFilteredUser) && newFilteredUser.every(item => 'id' in item)) {
+        // Ensure newFilteredUser matches UserData structure
+        lineUpUser.value = newFilteredUser as UserData[];
+      }
+
+      if (Array.isArray(newEventResponses) && newEventResponses.every(item => 'userId' in item)) {
+        // Ensure newEventResponses matches EventResponse structure
+        eventResponses.value = newEventResponses as EventResponse[];
+      }
     },
-    {immediate: true}
+    { immediate: true }
 );
 
-const getResponse = (playerId: number) => {
+const getResponse = (playerId: number | null) => {
   const response = eventResponses.value.find(response =>
       response.userId === playerId && ['Zusagen', 'Unsicher'].includes(response.response)
   );
@@ -246,17 +253,17 @@ const openDialog = (handleUserSelectionView: string) => {
   handleUserSelection(handleUserSelectionView)
 }
 
-const handleLineUpPlayer = (user: UserData[]) => {
+const handleLineUpPlayer = (user: UserData) => {
   lineUpPlayer(user)
   openDialog('viewSelectedPlayer')
 }
 
-const handleLineUpSelectedPosition = (pos: Positions[]) => {
+const handleLineUpSelectedPosition = (pos: Positions) => {
   lineUpPlayerSelectedPosition(pos)
   openDialog('viewSelectedPosition')
 }
 
-const handleSwapPlayer = (pos: Positions[]) => {
+const handleSwapPlayer = (pos: Positions) => {
   lineUpPlayerSelectedPosition(pos)
   openDialog('viewSwapPlayer')
 }

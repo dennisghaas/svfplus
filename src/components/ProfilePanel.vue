@@ -3,24 +3,21 @@
       :is="link ? 'router-link' : 'div'"
       v-bind="link ? { to: link } : {}"
       :class="[
-      'profile-panel',
-      { 'profile-panel--reverse': displayReverse },
-      { 'profile-panel--link': link },
-      { 'profile-panel--medium' : displayMedium },
-      { 'profile-panel--small': displaySmall }
-    ]"
+        'profile-panel',
+        { 'profile-panel--reverse': displayReverse },
+        { 'profile-panel--link': link },
+        { 'profile-panel--medium': displayMedium },
+        { 'profile-panel--small': displaySmall }
+      ]"
   >
     <div
         :class="[
-        'profile-panel__generic-image',
-        { 'profile-panel__generic-image-has-border': addBorder },
-        { 'profile-panel__custom-image': isImage },
-        { 'profile-panel__is-add-button' : isAddButton }
-      ]"
-        :style="{
-          '--profile-generic-image-bg': !isImage ? `var(${bgColor})` : null,
-          '--profile-custom-image-bg': isImage ? `url(${bgColor})` : null
-      }"
+          'profile-panel__generic-image',
+          { 'profile-panel__generic-image-has-border': addBorder },
+          { 'profile-panel__custom-image': isImage },
+          { 'profile-panel__is-add-button': isAddButton }
+        ]"
+        :style="computedStyle"
     >
       <template v-if="!isAddButton">
         {{ userInitials }}
@@ -30,14 +27,16 @@
       </template>
     </div>
     <span v-if="userName"
-          :class="['profile-panel__name', {'profile-panel__name--small' : displayMedium}, {'profile-panel__name--small' : displaySmall}]">
+          :class="['profile-panel__name', { 'profile-panel__name--small': displayMedium || displaySmall }]">
       {{ userName }}
     </span>
   </component>
 </template>
 
 <script setup lang="ts">
-defineProps({
+import {computed} from "vue";
+
+const props = defineProps({
   userInitials: {
     type: String,
     default: '',
@@ -79,6 +78,13 @@ defineProps({
     default: false
   }
 })
+
+const computedStyle = computed(() => {
+  return {
+    '--profile-generic-image-bg': !props.isImage ? `var(${props.bgColor})` : undefined,
+    '--profile-custom-image-bg': props.isImage ? `url(${props.bgColor})` : undefined,
+  };
+});
 </script>
 
 <style scoped lang="scss">

@@ -2,13 +2,12 @@
   <fieldset>
     <label class="typo-label" :for="selectID">
       {{ selectTitle }}
-
       <template v-if="targetValue && countFilteredOptions >= 0 && !hideCount">
         „{{ targetValue }}“ ({{ countFilteredOptions }})
       </template>
     </label>
 
-    <div :class="['select-wrapper', { 'select-wrapper--dark' : themeDark }]">
+    <div :class="['select-wrapper', { 'select-wrapper--dark': themeDark }]">
       <select
           class="select"
           :name="selectName"
@@ -22,15 +21,13 @@
         >
           {{ selectPlaceholder }}
         </option>
-        <template v-for="option in selectOption" :key="option.id"> <!-- Assuming option has an id property -->
-          <template v-if="!dynamicProperty">
-            <option :value="option">{{ option }}</option>
-          </template>
-          <template v-else>
-            <option :value="option[dynamicProperty]">
-              {{ option[dynamicProperty] }}
-            </option>
-          </template>
+        <template v-for="option in selectOption" :key="typeof option === 'string' ? option : option.id">
+          <option v-if="!dynamicProperty" :value="option">
+            {{ isOption(option) ? option[dynamicProperty] : option }}
+          </option>
+          <option v-else :value="isOption(option) ? option[dynamicProperty] : option">
+            {{ isOption(option) ? option[dynamicProperty] : option }}
+          </option>
         </template>
       </select>
 
@@ -41,6 +38,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import {Option} from "@/interface";
 
 const props = defineProps({
   selectID: {
@@ -52,7 +50,7 @@ const props = defineProps({
     default: '',
   },
   selectOption: {
-    type: Array,
+    type: Array as () => (Option | string)[],
     default: () => [],
   },
   selectPlaceholder: {
@@ -94,28 +92,28 @@ const targetValue = ref('');
 
 const emitSelection = (event: Event) => {
   const target = event.target as HTMLSelectElement;
-  const selectedValue = target.value; // This is the value from the selected option
+  const selectedValue = target.value;
 
   let emitValue;
 
   if (!props.dynamicProperty) {
-    // If dynamicProperty is not set, emit the selected option directly
-    emitValue = selectedValue; // This will be the plain string value
+    emitValue = selectedValue;
   } else {
-    // If dynamicProperty is set, find the selected option
-    const selectedOption = props.selectOption.find(option => option[props.dynamicProperty] === selectedValue);
+    const selectedOption = props.selectOption.find((option: string | Option) => {
+      return isOption(option) ? option[props.dynamicProperty] === selectedValue : false;
+    });
 
-    // Check if the selectedOption is found
-    if (selectedOption) {
-      emitValue = selectedOption; // Emit the whole object
-    } else {
-      // If not found, emit a fallback value or the string itself
-      emitValue = selectedValue; // This will emit the selected value if nothing matches
-    }
+    emitValue = selectedOption ? selectedOption : selectedValue;
   }
 
   emit('update:selection', emitValue);
 };
+
+
+function isOption(option: string | Option): option is Option {
+  return typeof option !== 'string';
+}
+
 </script>
 
 <style scoped lang="scss">

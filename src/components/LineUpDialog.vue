@@ -13,11 +13,11 @@
     />
 
     <ButtonType
-        :btn-text="`${selectedUser?.name} aufstellen`"
+        :btn-text="`${selectedUserData?.name === undefined ? 'Spieler' : selectedUserData?.name} als ${selectedPosition?.pos?.toUpperCase()} aufstellen`"
         :type-button="true"
         :btn-class="'w-100'"
         :disabled="throwError"
-        @click="handleClose(selectedUser, false, selectedPosition)"
+        @click="handleClose(selectedUserData, false, selectedPosition)"
     />
   </template>
   <template v-else-if="!viewSelectedPlayer && viewSelectedPosition && !viewSwapPlayer">
@@ -34,7 +34,7 @@
     />
 
     <ButtonType
-        :btn-text="`${selectedUserData?.name === undefined ? 'Spieler' : selectedUserData?.name} als ${selectedPosition.pos.toUpperCase()} aufstellen`"
+        :btn-text="`${selectedUserData?.name === undefined ? 'Spieler' : selectedUserData?.name} als ${selectedPosition?.pos.toUpperCase()} aufstellen`"
         :type-button="true"
         :btn-class="'w-100'"
         :disabled="throwError"
@@ -68,23 +68,28 @@
 import {ref} from "vue";
 import {useLineUp} from "@/composables/useLineUp.ts";
 import SelectType from "@/components/SelectType.vue";
-import {UserData} from "@/interface";
+import {Positions, UserData} from "@/interface";
 import ButtonType from "@/components/ButtonType.vue";
 
 const emit = defineEmits(['closeDialog'])
 const throwError = ref(true)
 
-const handleClose = (selectedUser: UserData[], isSwapping?: boolean, selectedPosition?: Object) => {
-  emit('closeDialog')
+const handleClose = (selectedUser: UserData | null, isSwapping?: boolean, selectedPosition?: Positions | null) => {
+  emit('closeDialog');
+
+  if (selectedUser === null) {
+    console.error('Selected user is null');
+    return;
+  }
 
   if (!throwError.value) {
-    if(!isSwapping) {
-      saveNewPos(selectedUser, selectedPosition)
+    if (!isSwapping) {
+      saveNewPos(selectedUser, selectedPosition);
     } else {
-      saveSwappingPlayers(selectedUser)
+      saveSwappingPlayers(selectedUser);
     }
   }
-}
+};
 
 const {
   selectedUser,
@@ -99,19 +104,28 @@ const {
   saveNewPos
 } = useLineUp()
 
-const updateSelectedPosition = (selectedValue: Object) => {
-  selectedPosition.value = selectedValue
-
-  /* error handling */
-  throwError.value = selectedValue === 'Neue Position...';
+const updateSelectedPosition = (selectedValue: Positions | string) => {
+  if (typeof selectedValue === 'string') {
+    throwError.value = selectedValue === 'Neue Position...';
+    selectedPosition.value = null;
+  } else {
+    selectedPosition.value = selectedValue;
+    throwError.value = false;
+  }
 }
 
-const updateSelectedPlayer = (selectedValue: Object) => {
-  selectedUserData.value = selectedValue
+
+const updateSelectedPlayer = (selectedValue: Positions | string) => {
+  if (typeof selectedValue !== 'string' && selectedValue.user) {
+    selectedUserData.value = selectedValue.user;
+  } else {
+    selectedUserData.value = null;
+  }
 
   /* error handling */
   throwError.value = selectedValue === 'Spieler auswählen...';
 }
+
 </script>
 
 <style lang="scss" scoped>

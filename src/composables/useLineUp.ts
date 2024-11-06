@@ -3,15 +3,20 @@ import {EventResponse, Positions, UserData} from "@/interface";
 
 const lineUpFormation = ref<Positions[]>([])
 const lineUpUser = ref<UserData[]>([]);
-const selectedUserData = ref<UserData[]>([])
-const selectedUser = computed(() => selectedUserData.value[0] || null);
-const selectedPosition = ref<Positions[]>([])
-const renderSubPlayers = ref([])
+const selectedUserData = ref<UserData | null>(null);
+const selectedUser = computed(() => selectedUserData.value || null);
+const selectedPosition = ref<Positions | null>(null);
+const renderSubPlayers = ref<number[]>([]);
 const filteredLineUpFormation = computed(() => {
-    return lineUpFormation.value.filter(pos => !pos.isSelected);
+    return lineUpFormation.value
+        .filter(pos => !pos.isSelected)
+        .map(pos => ({
+            pos: pos.pos,
+            name: pos.name
+        }));
 });
 const filteredLineUpUser = computed(() => {
-    return lineUpUser.value.filter(user => !renderSubPlayers.value.includes(user.id))
+    return lineUpUser.value.filter(user => !renderSubPlayers.value.includes(user.id));
 })
 const showControls = ref<boolean[]>([]);
 const eventResponses = ref(<EventResponse[]>([]))
@@ -22,7 +27,7 @@ const viewSwapPlayer = ref(false)
 const viewSelectedPosition = ref(false)
 
 export const useLineUp = () => {
-    const handleUserSelection = (handler: string) => {
+    const handleUserSelection = (handler?: string) => {
         if (handler === 'viewSelectedPlayer') {
             viewSelectedPlayer.value = true
         } else if (handler === 'viewSelectedPosition') {
@@ -37,14 +42,14 @@ export const useLineUp = () => {
     }
 
     const handleShowControls = (index: number) => {
-        showControls.value = showControls.value.map((value, i) => i === index);
+        showControls.value = showControls.value.map((_, i) => i === index);
     };
 
-    const lineUpPlayer = (user: UserData[]) => {
-        selectedUserData.value = [user];
+    const lineUpPlayer = (user: UserData) => {
+        selectedUserData.value = user;
     }
 
-    const lineUpPlayerSelectedPosition = (pos: Positions[]) => {
+    const lineUpPlayerSelectedPosition = (pos: Positions) => {
         selectedPosition.value = pos
     }
 
@@ -58,30 +63,34 @@ export const useLineUp = () => {
         renderSubPlayers.value.push(selectedUser.id);
 
         // Clear selected user data
-        selectedUserData.value = [];
+        selectedUserData.value = null;
     };
 
-    const saveNewPos = (selectedUser: UserData[], selectedPosition: Object) => {
-        const position = lineUpFormation.value.find(pos => pos.id === selectedPosition.id);
-        if (position) {
-            pushIntoPosition(position, selectedUser);
+    const saveNewPos = (selectedUser: UserData, selectedPosition: Positions | null | undefined) => {
+        if (selectedPosition) {
+            const position = lineUpFormation.value.find(pos => pos.id === selectedPosition.id);
+            if (position) {
+                pushIntoPosition(position, selectedUser);
+            }
         }
-    }
+    };
 
     const saveSwappingPlayers = (selectedUser: UserData) => {
-        const swappedPlayerId = selectedPosition.value.userId;
-        const swappedPlayerPosId = selectedPosition.value.id;
+        if(selectedPosition.value) {
+            const swappedPlayerId = selectedPosition.value.userId;
+            const swappedPlayerPosId = selectedPosition.value.id;
 
-        // Remove the swapped player by ID from renderSubPlayers
-        renderSubPlayers.value = renderSubPlayers.value.filter(id => id !== swappedPlayerId);
+            // Remove the swapped player by ID from renderSubPlayers
+            renderSubPlayers.value = renderSubPlayers.value.filter(id => id !== swappedPlayerId);
 
-        const position = lineUpFormation.value.find(pos => pos.id === swappedPlayerPosId);
-        if (position) {
-            pushIntoPosition(position, selectedUser);
+            const position = lineUpFormation.value.find(pos => pos.id === swappedPlayerPosId);
+            if (position) {
+                pushIntoPosition(position, selectedUser);
+            }
         }
     };
 
-    const removePlayerFromLineUp = (posId: number) => {
+    const removePlayerFromLineUp = (posId: number | null) => {
         /* get positions array of selected postion */
         const position = lineUpFormation.value.find(pos => pos.id === posId);
         if (position) {
@@ -89,10 +98,10 @@ export const useLineUp = () => {
             const posUserId = position.userId;
             position.isSelected = false
             position.player = ''
-            position.user = []
+            position.user = null
 
             /* remove user from line up */
-            renderSubPlayers.value.pop(posUserId)
+            renderSubPlayers.value = renderSubPlayers.value.filter(id => id !== posUserId);
 
             /* set back user id in pos object back to null */
             position.userId = null

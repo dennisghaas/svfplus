@@ -124,18 +124,25 @@ export interface answer {
   index: number;
 }
 
-interface PositionsSub {
-  userID: number | null;
-  player: string;
-}
-
 export interface Positions {
   pos: string;
-  player: string;
   name: string;
+  player: string;
+  x: string;
+  y: string;
   id: number | null;
   userId: number | null;
-  subs: PositionsSub[];
   isSelected: boolean;
-  user: UserData;
+  user: UserData | null;
+}
+
+export interface Option {
+  id?: number | null;
+  name: string;
+  [key: string]: any;
+}
+
+export interface LineUpSteps {
+  name: string;
+  active: boolean
 }

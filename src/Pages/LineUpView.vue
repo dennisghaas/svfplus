@@ -17,9 +17,7 @@
 import {onMounted, ref, reactive} from "vue";
 import store from "@/store";
 import LineUp from "@/components/LineUp.vue";
-import SectionType from "@/components/SectionType.vue";
 import LineUpSteps from "@/components/LineUpSteps.vue";
-import LinkType from "@/components/LinkType.vue";
 
 const hideStepNavigation = ref(false)
 

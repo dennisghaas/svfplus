@@ -19,9 +19,11 @@
 </template>
 
 <script setup lang="ts">
+import {LineUpSteps} from '@/interface'
+
 defineProps({
   steps: {
-    type: Array,
+    type: Array as () => LineUpSteps[],
     default: () => []
   },
   activeStep: {

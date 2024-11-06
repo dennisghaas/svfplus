@@ -73,8 +73,14 @@ export const useEvents = () => {
       // Filtert nur Events vom Typ 'Spiel' und deren Datum ab heute
       const today = new Date();
       const filteredEvents = response
-          .filter(event => event.eventType === 'Spiel' && new Date(event.eventDate) >= today)
-          .sort((a, b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime())
+          .filter((event: Event) =>
+              event.eventType === 'Spiel' &&
+              event.eventDate !== null &&  // Null-Werte ausschließen
+              new Date(event.eventDate) >= today
+          )
+          .sort((a: Event, b: Event) =>
+              new Date(a.eventDate!).getTime() - new Date(b.eventDate!).getTime()
+          )
           .slice(0, 3);
 
       events.value = filteredEvents;
