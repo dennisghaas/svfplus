@@ -206,7 +206,7 @@ import { useEvents } from '@/composables/useEvents.ts';
 import { validateStreet } from '@/helpers/validateStreet.ts';
 import { validatePostalCode } from '@/helpers/validatePostalCode.ts';
 import { extractDateAndTime } from '@/helpers/extractDateAndTime.ts';
-import { useRouter } from 'vue-router';
+import { useRouter, Router } from 'vue-router';
 import { validateFussballDeLink } from '@/helpers/validateFussballDeLink.ts';
 import ButtonType from '@/components/ButtonType.vue';
 import InputType from '@/components/InputType.vue';
@@ -326,7 +326,7 @@ watch([deadlineToStartDay, deadlineToStartTime], ([newDate, newTime]) => {
 });
 
 /* save form*/
-const saveForm = (eventID: number, eventType: string, router: any) => {
+const saveForm = (eventID: number, eventType: string, router: Router) => {
   editEventByID(eventID, eventType, router);
 };
 
@@ -340,7 +340,7 @@ const beginAtError = ref(false);
 const deadlineError = ref(false);
 const linkExternError = ref(false);
 
-const validateForm = (eventID: number, eventType: string, router: any) => {
+const validateForm = (eventID: number, eventType: string, router: Router) => {
   // Set unchanged data
   venue.value = selectedEvent.value[0].venue;
   standingOrderID.value = selectedEvent.value[0].standingOrderID;

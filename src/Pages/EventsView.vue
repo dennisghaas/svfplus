@@ -210,7 +210,7 @@ const isWeekBeforeToday = (weekDate: string) => {
   return weekEndDate < today;
 };
 
-const isCurrentWeek = (week: any) => {
+const isCurrentWeek = (week: string[]) => {
   return week.includes(todayDate);
 };
 

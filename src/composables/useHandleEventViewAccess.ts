@@ -1,7 +1,9 @@
+import { Router, RouteLocationNormalized } from 'vue-router';
+
 export const useHandleEventViewAccess = () => {
   const addQueryParams = (
-    route: any,
-    router: any,
+    route: RouteLocationNormalized,
+    router: Router,
     params: Record<string, string>
   ) => {
     router.push({

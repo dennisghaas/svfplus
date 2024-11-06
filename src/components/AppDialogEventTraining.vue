@@ -64,7 +64,7 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
 import { useEvents } from '@/composables/useEvents.ts';
-import { useRouter } from 'vue-router';
+import { useRouter, Router } from 'vue-router';
 import CheckboxType from '@/components/CheckboxType.vue';
 import InputType from '@/components/InputType.vue';
 import AppDialogEventDesc from '@/components/AppDialogEventDesc.vue';
@@ -154,7 +154,7 @@ const updateEndAt = (newEndAt: string) => {
 const getCurrentStandingOrderIDs = (
   eventID: number,
   eventType: string,
-  router: any
+  router: Router
 ) => {
   const currentStandingOrder = selectedEvent.value[0].standingOrderID;
   const currentStandingOrderIndex =
@@ -181,7 +181,7 @@ const deadlineError = ref(false);
 const validateForm = async (
   eventID: number,
   eventType: string,
-  router: any,
+  router: Router,
   currentStandingOrderEvents: any
 ) => {
   venue.value = selectedEvent.value[0]?.venue;
@@ -217,7 +217,7 @@ const validateForm = async (
 const saveForm = (
   eventID: number,
   eventType: string,
-  router: any,
+  router: Router,
   currentStandingOrderEvents: any,
   standingOrderDates: any
 ) => {

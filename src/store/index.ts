@@ -1,5 +1,6 @@
 import { reactive, readonly } from 'vue';
 import { steps } from '@/config';
+import { UserData } from '@/interface';
 
 const state = reactive({
   userData: null as any,
@@ -85,7 +86,7 @@ const updateIsRegisterSuccess = (status: boolean) => {
   state.isRegisterSuccess = status;
 };
 
-const getUserAccessRights = (user: any) => {
+const getUserAccessRights = (user: UserData) => {
   if (user.accessRights === 'svf_private') {
     state.isPrivate = true;
   } else if (user.accessRights === 'svf_corporal') {

@@ -1,4 +1,5 @@
 import store from '@/store';
+import { Router } from 'vue-router';
 
 const waitForUserData = (): Promise<any> => {
   return new Promise((resolve) => {
@@ -13,7 +14,7 @@ const waitForUserData = (): Promise<any> => {
   });
 };
 
-const userAllowedToUseWebApp = async (router: any) => {
+const userAllowedToUseWebApp = async (router: Router) => {
   try {
     const userData = await waitForUserData();
     if (!userData.userIsActivated) {

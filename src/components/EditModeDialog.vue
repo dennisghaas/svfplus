@@ -104,7 +104,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useEvents } from '@/composables/useEvents.ts';
-import { useRouter } from 'vue-router';
+import { useRouter, Router } from 'vue-router';
 import store from '@/store';
 import AppButton from '@/components/AppButton.vue';
 import AppDialog from '@/components/AppDialog.vue';
@@ -159,7 +159,7 @@ const deleteStandingOrder = () => {
   isTrainingAreYouSure.value = !isTrainingAreYouSure.value;
 };
 
-const removeStandingOrderFromApi = async (router: any) => {
+const removeStandingOrderFromApi = async (router: Router) => {
   const thisStandingOrderID = selectedEvent.value[0].standingOrderID;
   const thisStandingOrderArray = standingOrderArray.value.filter(
     (standingOrder) => standingOrder.id === thisStandingOrderID
