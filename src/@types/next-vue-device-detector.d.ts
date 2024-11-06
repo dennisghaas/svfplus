@@ -1,4 +1,4 @@
 declare module 'next-vue-device-detector' {
-  export function createDeviceDetector(): unknown;
-  export function useDevice(): unknown;
+  export function createDeviceDetector(): any;
+  export function useDevice(): any;
 }

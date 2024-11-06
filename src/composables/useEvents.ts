@@ -7,7 +7,6 @@ import { useEventResponse } from '@/composables/useEventResponse.ts';
 import store from '@/store';
 import { ApiError } from '@/interface';
 import { Event, StandingOrder } from '@/interface';
-import { Router } from 'vue-router';
 
 const events = ref<Event[]>([]);
 const selectedEvent = ref<Event[]>([]);
@@ -322,7 +321,7 @@ export const useEvents = () => {
 
   const deleteEventById = async (
     id: number,
-    router: Router,
+    router: any,
     eventType: string,
     ids?: number[]
   ) => {
@@ -451,7 +450,7 @@ export const useEvents = () => {
   const editEventByID = async (
     id?: number,
     eT?: string,
-    router?: Router,
+    router?: any,
     isStandingOrder?: boolean,
     ids?: number[],
     eventDates?: string[]

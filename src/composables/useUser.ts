@@ -1,8 +1,7 @@
 import { ref } from 'vue';
 import { fetchDataFromApi } from '@/helpers/fetchDataFromApi.ts';
-import { Router } from 'vue-router';
-import { BlockList, UserData } from '@/interface';
 import store from '@/store';
+import { BlockList, UserData } from '@/interface';
 
 const id = ref(null);
 const accessRights = ref('');
@@ -149,7 +148,7 @@ export const useUser = () => {
     });
   };
 
-  const updateUserByID = async (userID: number, router: Router) => {
+  const updateUserByID = async (userID: number, router: any) => {
     store.updateLoadingResponse(true);
     store.updateOverflowHidden(true);
 
@@ -250,7 +249,7 @@ export const useUser = () => {
     userID: number,
     email: string,
     username: string,
-    router: Router
+    router: any
   ) => {
     try {
       await fetchDataFromApi(`/block`, 'POST', {
@@ -274,7 +273,7 @@ export const useUser = () => {
     }
   };
 
-  const unblockUserByID = async (blockID: number, router: Router) => {
+  const unblockUserByID = async (blockID: number, router: any) => {
     try {
       await fetchDataFromApi(`/blocked-users/${blockID}`, 'DELETE');
       router.go();

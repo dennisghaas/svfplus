@@ -1,6 +1,5 @@
 import { ref } from 'vue';
 import { fetchDataFromApi } from '@/helpers/fetchDataFromApi.ts';
-import { Router } from 'vue-router';
 import store from '@/store';
 import { Reaction, EventResponse } from '@/interface';
 
@@ -12,7 +11,7 @@ export const useEventResponse = () => {
     reaction: string,
     eventID: number,
     reason: string,
-    router: Router,
+    router: any,
     isNotCurrentUser?: boolean,
     id?: number
   ) => {

@@ -2,7 +2,6 @@ import { ref } from 'vue';
 import { fetchDataFromApi } from '@/helpers/fetchDataFromApi';
 import { useLocalStorage } from '@/composables/useLocalStorage';
 import store from '@/store';
-import { Router } from 'vue-router';
 
 // Reaktive Variablen
 const userData = ref(null);
@@ -22,7 +21,7 @@ const initials = ref('');
 const bgColor = ref('--primary');
 const bgImage = ref(null);
 
-const handleLogin = async (router: Router) => {
+const handleLogin = async (router: any) => {
   try {
     const response = await fetchDataFromApi('/users/login', 'POST', {
       username: username.value,
@@ -45,7 +44,7 @@ const handleLogin = async (router: Router) => {
   }
 };
 
-const fetchUserDataOnLoad = async (token: string | null, router?: Router) => {
+const fetchUserDataOnLoad = async (token: string | null, router?: any) => {
   if (token) {
     try {
       userData.value = await fetchDataFromApi(
@@ -81,7 +80,7 @@ const fetchUserDataOnLoad = async (token: string | null, router?: Router) => {
   }
 };
 
-const handleLogout = (router: Router) => {
+const handleLogout = (router: any) => {
   const { value: myValue } = useLocalStorage('alreadyRegistered', 'no');
   localStorage.removeItem('token'); // Token aus Local Storage entfernen
   userData.value = null;
@@ -94,7 +93,7 @@ const handleLogout = (router: Router) => {
   router.go();
 };
 
-const handleRegister = async (router: Router) => {
+const handleRegister = async (router: any) => {
   const { value: myValue } = useLocalStorage('alreadyRegistered', 'no');
 
   try {
