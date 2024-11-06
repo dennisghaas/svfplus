@@ -75,54 +75,54 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, computed, Ref } from 'vue'
-import { useUser } from '@/composables/useUser.ts'
-import store from '@/store'
-import { accessibleRoles } from '@/config'
-import { UserData } from '@/interface'
-import CardMember from '@/components/CardMember.vue'
-import RoleDots from '@/components/RoleDots.vue'
-import SectionType from '@/components/SectionType.vue'
-import SelectType from '@/components/SelectType.vue'
-import ButtonType from '@/components/ButtonType.vue'
+import { onMounted, ref, computed, Ref } from 'vue';
+import { useUser } from '@/composables/useUser.ts';
+import store from '@/store';
+import { accessibleRoles } from '@/config';
+import { UserData } from '@/interface';
+import CardMember from '@/components/CardMember.vue';
+import RoleDots from '@/components/RoleDots.vue';
+import SectionType from '@/components/SectionType.vue';
+import SelectType from '@/components/SelectType.vue';
+import ButtonType from '@/components/ButtonType.vue';
 
-const { fetchAllUsers } = useUser()
-const { completeUserData } = useUser() as { completeUserData: Ref<UserData[]> }
-const updatedValue = ref('Alle')
-const countUpdatedValue = ref(0)
+const { fetchAllUsers } = useUser();
+const { completeUserData } = useUser() as { completeUserData: Ref<UserData[]> };
+const updatedValue = ref('Alle');
+const countUpdatedValue = ref(0);
 
 const filteredUsers = computed<UserData[]>(() => {
   if (!completeUserData.value) {
-    return [] // Ensure this is an empty array of type UserData[]
+    return []; // Ensure this is an empty array of type UserData[]
   }
 
   // Filter out users who are not activated
   const activatedUsers = completeUserData.value.filter(
-    (user) => user.userIsActivated && user.username !== 'admin',
-  ) as UserData[]
+    (user) => user.userIsActivated && user.username !== 'admin'
+  ) as UserData[];
 
   if (updatedValue.value === 'Alle') {
-    countUpdatedValue.value = activatedUsers.length
-    return activatedUsers // This should return UserData[] here
+    countUpdatedValue.value = activatedUsers.length;
+    return activatedUsers; // This should return UserData[] here
   }
 
   // Further filter based on role
   const filtered = activatedUsers.filter((user) =>
-    user.role.includes(updatedValue.value),
-  ) as UserData[]
-  countUpdatedValue.value = filtered.length
+    user.role.includes(updatedValue.value)
+  ) as UserData[];
+  countUpdatedValue.value = filtered.length;
 
-  return filtered // Ensure this returns UserData[] as well
-})
+  return filtered; // Ensure this returns UserData[] as well
+});
 
 const handleSelection = (selectedValue: string) => {
-  updatedValue.value = selectedValue
-}
+  updatedValue.value = selectedValue;
+};
 
 onMounted(() => {
-  fetchAllUsers()
-  store.pageHeadline('Team Übersicht')
-})
+  fetchAllUsers();
+  store.pageHeadline('Team Übersicht');
+});
 </script>
 
 <style scoped lang="scss">

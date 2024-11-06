@@ -11,17 +11,17 @@
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits(['toggleDropdown'])
+const emit = defineEmits(['toggleDropdown']);
 
 defineProps({
   active: {
     type: Boolean,
     default: false,
   },
-})
+});
 
 function handleClick() {
-  emit('toggleDropdown')
+  emit('toggleDropdown');
 }
 </script>
 

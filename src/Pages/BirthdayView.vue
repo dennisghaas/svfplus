@@ -10,13 +10,13 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import store from '@/store'
-import LinkType from '@/components/LinkType.vue'
+import { onMounted } from 'vue';
+import store from '@/store';
+import LinkType from '@/components/LinkType.vue';
 
 onMounted(() => {
-  store.pageHeadline('Geburtstage des Teams')
-})
+  store.pageHeadline('Geburtstage des Teams');
+});
 </script>
 
 <style scoped lang="scss"></style>

@@ -191,20 +191,20 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { useUser } from '@/composables/useUser.ts'
-import {useBreakpoint} from "@/composables/useBreakpoint.ts";
-import { UserData } from '@/interface'
-import store from '@/store'
-import ProfilePanel from '@/components/ProfilePanel.vue'
-import ButtonType from '@/components/ButtonType.vue'
-import ButtonWrapper from '@/components/ButtonWrapper.vue'
-import SectionType from '@/components/SectionType.vue'
-import BadgeType from '@/components/BadgeType.vue'
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useUser } from '@/composables/useUser.ts';
+import { useBreakpoint } from '@/composables/useBreakpoint.ts';
+import { UserData } from '@/interface';
+import store from '@/store';
+import ProfilePanel from '@/components/ProfilePanel.vue';
+import ButtonType from '@/components/ButtonType.vue';
+import ButtonWrapper from '@/components/ButtonWrapper.vue';
+import SectionType from '@/components/SectionType.vue';
+import BadgeType from '@/components/BadgeType.vue';
 
-const {isMobile} = useBreakpoint()
-const router = useRouter()
+const { isMobile } = useBreakpoint();
+const router = useRouter();
 
 const {
   updateUserByID,
@@ -213,42 +213,42 @@ const {
   unblockUserByID,
   fetchBlockList,
   blockList,
-} = useUser()
-const { fetchAllUsers, completeUserData } = useUser()
+} = useUser();
+const { fetchAllUsers, completeUserData } = useUser();
 
-const usersInPipeline = ref<UserData[]>([])
-const rejectedUsers = ref<UserData[]>([])
+const usersInPipeline = ref<UserData[]>([]);
+const rejectedUsers = ref<UserData[]>([]);
 
 const handleUserAction = (user: UserData, action: string) => {
   const updates = {
     userIsActivated: action === 'accept',
     gotRejected: action === 'decline',
-  }
-  setUserFields(user, updates)
-  updateUserByID(user.id, router)
-}
+  };
+  setUserFields(user, updates);
+  updateUserByID(user.id, router);
+};
 
 const handleBlockUser = (userID: number, email: string, username: string) => {
-  blockUserByID(userID, email, username, router)
-}
+  blockUserByID(userID, email, username, router);
+};
 
 onMounted(async () => {
-  store.pageHeadline('Einstellungen')
-  await fetchAllUsers()
-  await fetchBlockList()
+  store.pageHeadline('Einstellungen');
+  await fetchAllUsers();
+  await fetchBlockList();
 
   usersInPipeline.value = completeUserData.value.filter(
-    (user) => !user.userIsActivated && !user.gotRejected,
-  )
+    (user) => !user.userIsActivated && !user.gotRejected
+  );
   rejectedUsers.value = completeUserData.value.filter((user) => {
     const isBlocked = blockList.value.some(
       (blockedUser) =>
         blockedUser.email === user.email ||
-        blockedUser.username === user.username,
-    )
-    return !user.userIsActivated && user.gotRejected && !isBlocked
-  })
-})
+        blockedUser.username === user.username
+    );
+    return !user.userIsActivated && user.gotRejected && !isBlocked;
+  });
+});
 </script>
 
 <style scoped lang="scss">

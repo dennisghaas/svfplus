@@ -28,17 +28,17 @@
 </template>
 
 <script setup lang="ts">
-import { useEvents } from '@/composables/useEvents.ts'
-import InputType from '@/components/InputType.vue'
-import VoteOptions from '@/components/VoteOptions.vue'
-import CheckboxType from '@/components/CheckboxType.vue'
+import { useEvents } from '@/composables/useEvents.ts';
+import InputType from '@/components/InputType.vue';
+import VoteOptions from '@/components/VoteOptions.vue';
+import CheckboxType from '@/components/CheckboxType.vue';
 
-const { voteOptions, voteQuestion, voteMultipleSelection } = useEvents()
+const { voteOptions, voteQuestion, voteMultipleSelection } = useEvents();
 
 /* CHECKBOX: ENABLE OR DISABLE MULTIPLE ANSWER OPTION FOR QUESTIONS */
 const updateMultipleSelection = (multiAnswer: boolean) => {
-  voteMultipleSelection.value = multiAnswer
-}
+  voteMultipleSelection.value = multiAnswer;
+};
 
 defineProps({
   voteQuestionError: {
@@ -49,5 +49,5 @@ defineProps({
     type: Boolean,
     default: false,
   },
-})
+});
 </script>

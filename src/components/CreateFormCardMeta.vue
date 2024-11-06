@@ -50,66 +50,66 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { useEvents } from '@/composables/useEvents.ts'
-import { useHandleNextCreateForm } from '@/composables/useHandleNextCreateForm.ts'
-import { validatePostalCode } from '@/helpers/validatePostalCode.ts'
-import { validateFussballDeLink } from '@/helpers/validateFussballDeLink.ts'
-import { validateStreet } from '@/helpers/validateStreet.ts'
-import { accessibleEventTypes } from '@/config'
-import CreateFormNextButton from '@/components/CreateFormNextButton.vue'
-import SelectType from '@/components/SelectType.vue'
-import CreateFormCardMetaTraining from '@/components/CreateFormCardMetaTraining.vue'
-import CreateFormCardMetaSpiel from '@/components/CreateFormCardMetaSpiel.vue'
-import CreateFormCardMetaFeier from '@/components/CreateFormCardMetaFeier.vue'
-import CreateFormCardMetaAbstimmung from '@/components/CreateFormCardMetaAbstimmung.vue'
+import { ref, watch } from 'vue';
+import { useEvents } from '@/composables/useEvents.ts';
+import { useHandleNextCreateForm } from '@/composables/useHandleNextCreateForm.ts';
+import { validatePostalCode } from '@/helpers/validatePostalCode.ts';
+import { validateFussballDeLink } from '@/helpers/validateFussballDeLink.ts';
+import { validateStreet } from '@/helpers/validateStreet.ts';
+import { accessibleEventTypes } from '@/config';
+import CreateFormNextButton from '@/components/CreateFormNextButton.vue';
+import SelectType from '@/components/SelectType.vue';
+import CreateFormCardMetaTraining from '@/components/CreateFormCardMetaTraining.vue';
+import CreateFormCardMetaSpiel from '@/components/CreateFormCardMetaSpiel.vue';
+import CreateFormCardMetaFeier from '@/components/CreateFormCardMetaFeier.vue';
+import CreateFormCardMetaAbstimmung from '@/components/CreateFormCardMetaAbstimmung.vue';
 
-const formattedStartDate = ref(new Date())
-const formattedEndDate = ref(new Date())
+const formattedStartDate = ref(new Date());
+const formattedEndDate = ref(new Date());
 
 const handleStartDate = (startDate: Date) => {
-  formattedStartDate.value = startDate
-}
+  formattedStartDate.value = startDate;
+};
 
 const handleEndDate = (endDate: Date) => {
-  formattedEndDate.value = endDate
-}
+  formattedEndDate.value = endDate;
+};
 
 watch([formattedStartDate, formattedEndDate], () => {
   standingOrderError.value =
-    formattedStartDate.value.getTime() === formattedEndDate.value.getTime()
-})
+    formattedStartDate.value.getTime() === formattedEndDate.value.getTime();
+});
 
 /* HANDLE FORM VALIDATION */
-const { handleNextForm } = useHandleNextCreateForm()
+const { handleNextForm } = useHandleNextCreateForm();
 
-const venueStreetError = ref(false)
-const venuePostalCodeError = ref(false)
-const linkExternError = ref(false)
-const voteQuestionError = ref(false)
-const voteOptionsError = ref(false)
-const standingOrderError = ref(false)
+const venueStreetError = ref(false);
+const venuePostalCodeError = ref(false);
+const linkExternError = ref(false);
+const voteQuestionError = ref(false);
+const voteOptionsError = ref(false);
+const standingOrderError = ref(false);
 
 const validateForm = (nextID: string) => {
   if (eventType.value === 'Spiel') {
     if (venueStreet.value || venuePostalCode.value) {
       if (venueStreet.value && !venuePostalCode.value) {
-        venuePostalCodeError.value = true
+        venuePostalCodeError.value = true;
       } else if (venuePostalCode.value && !venueStreet.value) {
-        venueStreetError.value = true
+        venueStreetError.value = true;
       } else {
-        venueStreetError.value = !validateStreet(venueStreet.value)
-        venuePostalCodeError.value = !validatePostalCode(venuePostalCode.value)
+        venueStreetError.value = !validateStreet(venueStreet.value);
+        venuePostalCodeError.value = !validatePostalCode(venuePostalCode.value);
       }
     } else {
-      venueStreetError.value = false
-      venuePostalCodeError.value = false
+      venueStreetError.value = false;
+      venuePostalCodeError.value = false;
     }
 
     if (linkExtern.value) {
-      linkExternError.value = !validateFussballDeLink(linkExtern.value)
+      linkExternError.value = !validateFussballDeLink(linkExtern.value);
     } else {
-      linkExternError.value = false
+      linkExternError.value = false;
     }
 
     if (
@@ -117,48 +117,48 @@ const validateForm = (nextID: string) => {
       !venuePostalCodeError.value &&
       !linkExternError.value
     ) {
-      handleNextForm(nextID)
+      handleNextForm(nextID);
     }
   }
 
   if (eventType.value === 'Feier') {
-    venueStreetError.value = venueStreet.value.length <= 0
-    venuePostalCodeError.value = venuePostalCode.value.length <= 0
+    venueStreetError.value = venueStreet.value.length <= 0;
+    venuePostalCodeError.value = venuePostalCode.value.length <= 0;
 
     if (!venueStreetError.value && !venuePostalCodeError.value) {
-      handleNextForm(nextID)
+      handleNextForm(nextID);
     }
   }
 
   if (eventType.value === 'Abstimmung') {
-    voteQuestionError.value = voteQuestion.value.length <= 0
+    voteQuestionError.value = voteQuestion.value.length <= 0;
     voteOptionsError.value = voteOptions.value.some(
-      (answer) => answer.text.length <= 0,
-    )
+      (answer) => answer.text.length <= 0
+    );
 
     if (!voteQuestionError.value && !voteOptionsError.value) {
-      handleNextForm(nextID)
+      handleNextForm(nextID);
     }
   }
 
   if (eventType.value === 'Training') {
     standingOrderError.value =
-      formattedStartDate.value.getTime() === formattedEndDate.value.getTime()
+      formattedStartDate.value.getTime() === formattedEndDate.value.getTime();
 
     if (!standingOrderError.value) {
-      handleNextForm(nextID)
+      handleNextForm(nextID);
     }
   }
-}
+};
 
 /* SELECT EVENT */
-const updatedValue = ref('Training')
+const updatedValue = ref('Training');
 const handleSelection = (selectedValue: string) => {
-  updatedValue.value = selectedValue
+  updatedValue.value = selectedValue;
 
   /* Adjust ref for useEvents function */
-  eventType.value = selectedValue
-}
+  eventType.value = selectedValue;
+};
 
 /* POST DATA TO SERVER */
 const {
@@ -168,7 +168,7 @@ const {
   linkExtern,
   voteOptions,
   voteQuestion,
-} = useEvents()
+} = useEvents();
 </script>
 
 <style scoped lang="scss">

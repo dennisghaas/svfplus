@@ -12,7 +12,7 @@ export function formatMonth(month: string): string {
     Oktober: '10',
     November: '11',
     Dezember: '12',
-  }
+  };
 
-  return monthMap[month] || month
+  return monthMap[month] || month;
 }

@@ -21,9 +21,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import InputType from '@/components/InputType.vue'
-import { answer } from '@/interface'
+import { ref, onMounted } from 'vue';
+import InputType from '@/components/InputType.vue';
+import { answer } from '@/interface';
 
 const props = defineProps({
   answers: {
@@ -37,23 +37,23 @@ const props = defineProps({
     type: String,
     default: '',
   },
-})
+});
 
-const emit = defineEmits(['update:answers'])
-const lastIndex = ref(0)
-const showButton = ref(false)
+const emit = defineEmits(['update:answers']);
+const lastIndex = ref(0);
+const showButton = ref(false);
 
 const addNewQuestion = () => {
-  const newString = { text: '', index: (lastIndex.value += 1) }
-  emit('update:answers', [...props.answers, newString])
-}
+  const newString = { text: '', index: (lastIndex.value += 1) };
+  emit('update:answers', [...props.answers, newString]);
+};
 
 const handleFocus = (index: number) => {
-  showButton.value = index === props.answers.length - 1
+  showButton.value = index === props.answers.length - 1;
 
-  console.log('array', props.answers.length)
-  console.log('last index', lastIndex.value)
-  console.log('current index', index)
+  console.log('array', props.answers.length);
+  console.log('last index', lastIndex.value);
+  console.log('current index', index);
 
   /*if (props.answers.length > 2) {
     // Überprüfen, ob das zu entfernende Element leer ist und ob die ersten beiden Elemente leer sind
@@ -73,11 +73,11 @@ const handleFocus = (index: number) => {
       console.log('Entferne dieses Element nicht');
     }
   }*/
-}
+};
 
 onMounted(() => {
-  lastIndex.value = props.answers.length - 1
-})
+  lastIndex.value = props.answers.length - 1;
+});
 </script>
 
 <style scoped lang="scss">

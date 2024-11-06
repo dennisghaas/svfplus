@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { RadioItem } from '@/interface'
+import { RadioItem } from '@/interface';
 
 defineProps({
   name: {
@@ -42,14 +42,14 @@ defineProps({
     type: Number,
     default: 0,
   },
-})
+});
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string | number): void
-}>()
+  (e: 'update:modelValue', value: string | number): void;
+}>();
 
 const onInput = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  emit('update:modelValue', target.value)
-}
+  const target = event.target as HTMLInputElement;
+  emit('update:modelValue', target.value);
+};
 </script>

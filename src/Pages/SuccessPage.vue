@@ -15,7 +15,8 @@
         </p>
 
         <p>
-          Sobald dein Account freigeschaltet ist, wird dich dein Trainer informieren.
+          Sobald dein Account freigeschaltet ist, wird dich dein Trainer
+          informieren.
         </p>
       </div>
 
@@ -29,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import BadgeType from '@/components/BadgeType.vue'
+import BadgeType from '@/components/BadgeType.vue';
 </script>
 
 <style scoped lang="scss">

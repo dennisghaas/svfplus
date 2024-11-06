@@ -1,6 +1,14 @@
 <template>
-  <fieldset :class="['checkbox', { 'checkbox--no-border': noBorder, 'checkbox--add-margin-btm' : marginBottom }]">
-    <input type="checkbox" :id="id" :checked="value" @change="onInput"/>
+  <fieldset
+    :class="[
+      'checkbox',
+      {
+        'checkbox--no-border': noBorder,
+        'checkbox--add-margin-btm': marginBottom,
+      },
+    ]"
+  >
+    <input type="checkbox" :id="id" :checked="value" @change="onInput" />
     <label class="checkbox-label" :for="id">
       {{ label }}
     </label>
@@ -27,18 +35,18 @@ defineProps({
   },
   marginBottom: {
     type: Boolean,
-    default: false
-  }
-})
+    default: false,
+  },
+});
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: boolean): void
-}>()
+  (e: 'update:modelValue', value: boolean): void;
+}>();
 
 const onInput = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  emit('update:modelValue', target.checked)
-}
+  const target = event.target as HTMLInputElement;
+  emit('update:modelValue', target.checked);
+};
 </script>
 
 <style lang="scss" scoped>

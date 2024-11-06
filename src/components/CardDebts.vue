@@ -17,7 +17,9 @@
           <span class="h1 font-weight-600 text-right">Befreit</span>
         </template>
         <template v-else>
-          <span class="h1 font-weight-600 text-right">{{ debts.toFixed(2) }}&nbsp;€</span>
+          <span class="h1 font-weight-600 text-right"
+            >{{ debts.toFixed(2) }}&nbsp;€</span
+          >
         </template>
       </div>
     </template>
@@ -25,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import CardFrame from '@/components/CardFrame.vue'
+import CardFrame from '@/components/CardFrame.vue';
 
 defineProps({
   debts: {
@@ -36,17 +38,17 @@ defineProps({
     type: String,
     default: () => [],
   },
-})
+});
 
 const genBG = (debts: number, role: string) => {
   /* touch this again not working properly */
   /* || !role.includes('Trainer') || !role.includes('Co-Trainer') */
   if (debts <= 0 || role.includes('Trainer') || role.includes('Co-Trainer')) {
-    return 'bg-success-mint'
+    return 'bg-success-mint';
   } else {
-    return 'bg-primary'
+    return 'bg-primary';
   }
-}
+};
 </script>
 
 <style scoped lang="scss">

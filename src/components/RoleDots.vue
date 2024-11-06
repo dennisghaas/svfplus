@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from 'vue';
 
 const props = defineProps({
   dot: {
@@ -14,14 +14,14 @@ const props = defineProps({
     type: String,
     default: '',
   },
-})
+});
 
-const newRole = ref('')
+const newRole = ref('');
 const resolveRole = () => {
-  newRole.value = props.dot.replace(/[\[\]'\\]/g, '')
-}
+  newRole.value = props.dot.replace(/[\[\]'\\]/g, '');
+};
 
-resolveRole()
+resolveRole();
 </script>
 
 <style scoped lang="scss">

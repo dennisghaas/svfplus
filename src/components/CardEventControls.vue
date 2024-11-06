@@ -6,11 +6,13 @@
           type="button"
           title="Zur Veranstaltung zusagen"
           :class="{ active: response?.response === 'Zusagen' }"
-          @click="!isAllowedToClickOnControl ? toggleReactionModel('Zusagen') : ''"
+          @click="
+            !isAllowedToClickOnControl ? toggleReactionModel('Zusagen') : ''
+          "
         >
           <i class="icon-thumb-up"></i>
           <strong v-if="getCountForEventResponse('Zusagen') !== 0">
-            {{getCountForEventResponse('Zusagen')}}
+            {{ getCountForEventResponse('Zusagen') }}
           </strong>
           <span class="d-none">Zur Veranstaltung zusagen</span>
         </button>
@@ -20,11 +22,13 @@
           type="button"
           title="Zur Veranstaltung absagen"
           :class="{ active: response?.response === 'Absagen' }"
-          @click="!isAllowedToClickOnControl ? toggleReactionModel('Absagen') : ''"
+          @click="
+            !isAllowedToClickOnControl ? toggleReactionModel('Absagen') : ''
+          "
         >
           <i class="icon-thumb-down"></i>
           <strong v-if="getCountForEventResponse('Absagen') !== 0">
-            {{getCountForEventResponse('Absagen')}}
+            {{ getCountForEventResponse('Absagen') }}
           </strong>
           <span class="d-none">Zur Veranstaltung absagen</span>
         </button>
@@ -34,11 +38,13 @@
           type="button"
           title="Ich bin mir unsicher"
           :class="{ active: response?.response === 'Unsicher' }"
-          @click="!isAllowedToClickOnControl ? toggleReactionModel('Unsicher') : ''"
+          @click="
+            !isAllowedToClickOnControl ? toggleReactionModel('Unsicher') : ''
+          "
         >
           <i class="icon-question-mark"></i>
           <strong v-if="getCountForEventResponse('Unsicher') !== 0">
-            {{getCountForEventResponse('Unsicher')}}
+            {{ getCountForEventResponse('Unsicher') }}
           </strong>
           <span class="d-none">Ich bin mir unsicher</span>
         </button>
@@ -78,20 +84,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
-import { useEventResponse } from '@/composables/useEventResponse.ts'
-import store from '@/store'
-import AppDialog from '@/components/AppDialog.vue'
-import AppDialogReaction from '@/components/AppDialogReaction.vue'
-import AppDialogEventOverview from '@/components/AppDialogEventOverview.vue'
-import {EventResponse} from "@/interface";
+import { ref, onMounted, computed } from 'vue';
+import { useEventResponse } from '@/composables/useEventResponse.ts';
+import store from '@/store';
+import AppDialog from '@/components/AppDialog.vue';
+import AppDialogReaction from '@/components/AppDialogReaction.vue';
+import AppDialogEventOverview from '@/components/AppDialogEventOverview.vue';
+import { EventResponse } from '@/interface';
 
-const dialogOpen = ref(false)
-const getReaction = ref('')
-const { fetchUserResponseToEvent, getResponseForEvent, fetchEventResponse, selectEventResponses } = useEventResponse()
-const response = computed(() => getResponseForEvent(props.eventID))
-const reactionDialog = ref(false)
-const overviewDialog = ref(false)
+const dialogOpen = ref(false);
+const getReaction = ref('');
+const {
+  fetchUserResponseToEvent,
+  getResponseForEvent,
+  fetchEventResponse,
+  selectEventResponses,
+} = useEventResponse();
+const response = computed(() => getResponseForEvent(props.eventID));
+const reactionDialog = ref(false);
+const overviewDialog = ref(false);
 
 const props = defineProps({
   notNominated: {
@@ -108,59 +119,61 @@ const props = defineProps({
   },
   isAllowedToClickOnControl: {
     type: Boolean,
-    default: true
-  }
-})
+    default: true,
+  },
+});
 
-const getEventResponse = ref<EventResponse[]>([])
+const getEventResponse = ref<EventResponse[]>([]);
 
 const getCountForEventResponse = (type: string) => {
-  if(getEventResponse.value) {
-    return getEventResponse.value.filter(response => response.response === type).length
+  if (getEventResponse.value) {
+    return getEventResponse.value.filter(
+      (response) => response.response === type
+    ).length;
   }
-}
+};
 
 const toggleReactionModel = (reaction: string) => {
-  reactionDialog.value = true
-  dialogOpen.value = true
-  getReaction.value = reaction
+  reactionDialog.value = true;
+  dialogOpen.value = true;
+  getReaction.value = reaction;
 
-  store.updateOverflowHidden(true)
-}
+  store.updateOverflowHidden(true);
+};
 
 const toggleOverviewModel = () => {
-  overviewDialog.value = true
-  dialogOpen.value = true
+  overviewDialog.value = true;
+  dialogOpen.value = true;
 
-  store.updateOverflowHidden(true)
-}
+  store.updateOverflowHidden(true);
+};
 
 const closeAppDialog = () => {
-  reactionDialog.value = false
-  overviewDialog.value = false
+  reactionDialog.value = false;
+  overviewDialog.value = false;
 
-  dialogOpen.value = false
+  dialogOpen.value = false;
 
   /* close edit modal dialog if app dialog is closed */
-  handleClose()
-}
+  handleClose();
+};
 
-const emit = defineEmits(['closeDialog'])
+const emit = defineEmits(['closeDialog']);
 const handleClose = () => {
-  emit('closeDialog')
-}
+  emit('closeDialog');
+};
 
 onMounted(() => {
-  fetchUserResponseToEvent(props.eventID)
-})
+  fetchUserResponseToEvent(props.eventID);
+});
 
 onMounted(async () => {
   await fetchEventResponse(props.eventID);
 
-  if(selectEventResponses.value) {
-    getEventResponse.value = selectEventResponses.value
+  if (selectEventResponses.value) {
+    getEventResponse.value = selectEventResponses.value;
   }
-})
+});
 </script>
 
 <style scoped lang="scss">

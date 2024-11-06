@@ -12,14 +12,14 @@
 </template>
 
 <script setup lang="ts">
-import { watch, reactive } from 'vue'
+import { watch, reactive } from 'vue';
 
 const props = defineProps({
   password: {
     type: String,
     default: '',
   },
-})
+});
 
 // Reactive list with an additional 'met' property to track if the condition is fulfilled
 const list = reactive([
@@ -43,25 +43,25 @@ const list = reactive([
     name: 'Enthält mindestens ein Sonderzeichen',
     met: false,
   },
-])
+]);
 
 // Function to validate the password and update the list
 const validateForm = (password: string) => {
   // Update each condition based on the current password value
-  list[0].met = password.length >= 8
-  list[1].met = /[a-z]/.test(password) // Contains a lowercase letter
-  list[2].met = /[A-Z]/.test(password) // Contains an uppercase letter
-  list[3].met = /\d/.test(password) // Contains a number
-  list[4].met = /[@$!%*?&]/.test(password) // Contains a special character
-}
+  list[0].met = password.length >= 8;
+  list[1].met = /[a-z]/.test(password); // Contains a lowercase letter
+  list[2].met = /[A-Z]/.test(password); // Contains an uppercase letter
+  list[3].met = /\d/.test(password); // Contains a number
+  list[4].met = /[@$!%*?&]/.test(password); // Contains a special character
+};
 
 // Watch for changes in the password and validate
 watch(
   () => props.password,
   (newVal) => {
-    validateForm(newVal)
-  },
-)
+    validateForm(newVal);
+  }
+);
 </script>
 
 <style scoped lang="scss">

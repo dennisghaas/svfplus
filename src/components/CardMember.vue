@@ -35,9 +35,7 @@
 
     <div v-if="user.isInjured" class="card-member--additional body-text-b3">
       <InjuredIcon />
-      <p>
-        Verletzt
-      </p>
+      <p>Verletzt</p>
     </div>
 
     <!--(Arrow zum Profil)-->
@@ -45,27 +43,27 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import RoleDots from '@/components/RoleDots.vue'
-import LinkType from '@/components/LinkType.vue'
-import InjuredIcon from '@/components/InjuredIcon.vue'
-import ProfilePanel from '@/components/ProfilePanel.vue'
-import { UserData } from '@/interface'
+import { computed } from 'vue';
+import RoleDots from '@/components/RoleDots.vue';
+import LinkType from '@/components/LinkType.vue';
+import InjuredIcon from '@/components/InjuredIcon.vue';
+import ProfilePanel from '@/components/ProfilePanel.vue';
+import { UserData } from '@/interface';
 
 const props = defineProps<{
-  user: UserData
-}>()
+  user: UserData;
+}>();
 
 const resolveRoleValue = computed(() => {
   try {
     return Array.isArray(props.user.role)
       ? props.user.role
-      : JSON.parse(props.user.role.toLowerCase())
+      : JSON.parse(props.user.role.toLowerCase());
   } catch (e) {
-    console.error('Fehler beim Parsen der Rolle:', e)
-    return []
+    console.error('Fehler beim Parsen der Rolle:', e);
+    return [];
   }
-})
+});
 </script>
 
 <style scoped lang="scss">

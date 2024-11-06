@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from 'vue';
 
 // Props for the tabs to be passed from the parent
 defineProps({
@@ -29,19 +29,19 @@ defineProps({
     type: Array as () => string[],
     required: true,
   },
-})
+});
 
 // Emits to send events to the parent
-const emit = defineEmits(['update:activeTab'])
+const emit = defineEmits(['update:activeTab']);
 
 // State to track the active tab
-const activeTab = ref(0)
+const activeTab = ref(0);
 
 // Function to change the active tab and emit the event
 const setActiveTab = (index: number) => {
-  activeTab.value = index
-  emit('update:activeTab', index) // Emit the active tab to the parent
-}
+  activeTab.value = index;
+  emit('update:activeTab', index); // Emit the active tab to the parent
+};
 </script>
 
 <style scoped lang="scss">

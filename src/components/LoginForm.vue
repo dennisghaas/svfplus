@@ -32,18 +32,18 @@
 </template>
 
 <script setup lang="ts">
-import { useAuth } from '@/composables/useAuth'
-import { useRouter } from 'vue-router'
-import InputType from '@/components/InputType.vue'
-import ButtonType from '@/components/ButtonType.vue'
-import BadgeType from '@/components/BadgeType.vue'
+import { useAuth } from '@/composables/useAuth';
+import { useRouter } from 'vue-router';
+import InputType from '@/components/InputType.vue';
+import ButtonType from '@/components/ButtonType.vue';
+import BadgeType from '@/components/BadgeType.vue';
 
-const router = useRouter()
-const { username, password, handleLogin, responseText } = useAuth()
+const router = useRouter();
+const { username, password, handleLogin, responseText } = useAuth();
 
 const onLogin = () => {
-  handleLogin(router)
-}
+  handleLogin(router);
+};
 </script>
 
 <style scoped></style>

@@ -18,8 +18,8 @@
 </template>
 
 <script setup lang="ts">
-import store from '@/store'
-const emit = defineEmits(['update:open'])
+import store from '@/store';
+const emit = defineEmits(['update:open']);
 
 defineProps({
   open: {
@@ -34,12 +34,12 @@ defineProps({
     type: Boolean,
     default: false,
   },
-})
+});
 
 const closeDialog = () => {
-  emit('update:open', false)
-  store.updateOverflowHidden(false)
-}
+  emit('update:open', false);
+  store.updateOverflowHidden(false);
+};
 </script>
 
 <style scoped lang="scss">
@@ -103,14 +103,16 @@ const closeDialog = () => {
     background: var(--white);
     z-index: 4;
 
-    h2, .h2 {
+    h2,
+    .h2 {
       padding-right: rem(35px);
     }
 
     @include media-breakpoint-up(lg) {
       padding: rem(40px) 0 rem(20px);
 
-      h2, .h2 {
+      h2,
+      .h2 {
         padding-right: 0;
       }
     }

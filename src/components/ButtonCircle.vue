@@ -40,17 +40,17 @@ const props = defineProps({
     type: String,
     default: '',
   },
-})
+});
 
-const emit = defineEmits(['click'])
+const emit = defineEmits(['click']);
 
 const generateTitle = () => {
   if (props.reaction !== 'Unsicher') {
-    return `Für ${props.username} ${props.reaction.toLowerCase()}`
+    return `Für ${props.username} ${props.reaction.toLowerCase()}`;
   } else {
-    return `${props.username} ist sich noch ${props.reaction.toLowerCase()}`
+    return `${props.username} ist sich noch ${props.reaction.toLowerCase()}`;
   }
-}
+};
 </script>
 
 <style scoped lang="scss">

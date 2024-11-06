@@ -47,13 +47,13 @@
 </template>
 
 <script setup lang="ts">
-import { useEvents } from '@/composables/useEvents.ts'
-import {useRouter} from "vue-router";
-import ButtonType from '@/components/ButtonType.vue'
-import ButtonWrapper from '@/components/ButtonWrapper.vue'
-import CreateFormNextButton from '@/components/CreateFormNextButton.vue'
-import BadgeType from '@/components/BadgeType.vue'
-import CardEvent from '@/components/CardEvent.vue'
+import { useEvents } from '@/composables/useEvents.ts';
+import { useRouter } from 'vue-router';
+import ButtonType from '@/components/ButtonType.vue';
+import ButtonWrapper from '@/components/ButtonWrapper.vue';
+import CreateFormNextButton from '@/components/CreateFormNextButton.vue';
+import BadgeType from '@/components/BadgeType.vue';
+import CardEvent from '@/components/CardEvent.vue';
 
 const router = useRouter();
 
@@ -75,19 +75,18 @@ const {
   voteOptions,
   createEvent,
   discardEventChanges,
-} = useEvents()
+} = useEvents();
 
 const handleCreateEvent = () => {
   /* possible place to validate the last time the users input */
-  createEvent()
-}
+  createEvent();
+};
 
 const discardEvent = () => {
   discardEventChanges();
 
   router.go(0);
-}
-
+};
 </script>
 
 <style scoped lang="scss">

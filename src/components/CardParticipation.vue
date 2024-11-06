@@ -17,9 +17,9 @@
       <div class="row">
         <div class="col-xs-12">
           <BadgeType
-              :badge-type="'info'"
-              :badge-text="'Diese Ansicht folgt'"
-              :badge-centered="true"
+            :badge-type="'info'"
+            :badge-text="'Diese Ansicht folgt'"
+            :badge-centered="true"
           />
         </div>
       </div>
@@ -28,9 +28,9 @@
 </template>
 
 <script setup lang="ts">
-import CardFrame from '@/components/CardFrame.vue'
-import { createGenetiveFromName } from '@/helpers/createGenetiveFromName.ts'
-import BadgeType from "@/components/BadgeType.vue";
+import CardFrame from '@/components/CardFrame.vue';
+import { createGenetiveFromName } from '@/helpers/createGenetiveFromName.ts';
+import BadgeType from '@/components/BadgeType.vue';
 
 defineProps({
   currentUserName: {
@@ -45,7 +45,7 @@ defineProps({
     type: String,
     default: '',
   },
-})
+});
 </script>
 
 <style scoped lang="scss"></style>

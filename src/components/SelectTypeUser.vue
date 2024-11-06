@@ -16,8 +16,12 @@
         </option>
         <template v-for="user in completeUserData" :key="user.id">
           <option
-              v-if="user.id !== 1 && user.name !== 'admin' && !selectedUsers.includes(`${user.id}`)"
-              :value="user.id"
+            v-if="
+              user.id !== 1 &&
+              user.name !== 'admin' &&
+              !selectedUsers.includes(`${user.id}`)
+            "
+            :value="user.id"
           >
             {{ user.name }}
           </option>
@@ -42,8 +46,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useUser } from '@/composables/useUser.ts'
+import { ref, onMounted } from 'vue';
+import { useUser } from '@/composables/useUser.ts';
 
 const props = defineProps({
   selectID: {
@@ -66,62 +70,62 @@ const props = defineProps({
     type: Array as () => string[],
     default: () => [],
   },
-})
+});
 
 const emit = defineEmits<{
-  (e: 'update:selection', value: string[]): void
-}>()
+  (e: 'update:selection', value: string[]): void;
+}>();
 
-const selectedUsers = ref<string[]>(props.selectedUsers)
+const selectedUsers = ref<string[]>(props.selectedUsers);
 
 // Funktion zum Verarbeiten der Auswahl
 const emitSelection = (event: Event) => {
-  const target = event.target as HTMLSelectElement
-  const selectedValue = target.value
+  const target = event.target as HTMLSelectElement;
+  const selectedValue = target.value;
 
   if (!selectedUsers.value.includes(selectedValue)) {
-    selectedUsers.value.push(selectedValue)
+    selectedUsers.value.push(selectedValue);
   }
 
   // Emit die gesamte Liste der ausgewählten IDs
-  emit('update:selection', selectedUsers.value)
-}
+  emit('update:selection', selectedUsers.value);
+};
 
 // Methode zur Umwandlung von ID in Namen
 const resolveIDToName = (id: number): string => {
-  const user = completeUserData.value?.find((user) => user.id === id)
-  return user ? user.name : 'Unknown'
-}
+  const user = completeUserData.value?.find((user) => user.id === id);
+  return user ? user.name : 'Unknown';
+};
 
 const removeUser = (id: number) => {
   selectedUsers.value = selectedUsers.value.filter(
-    (user) => parseInt(user) !== id,
-  )
-  emit('update:selection', selectedUsers.value)
-}
+    (user) => parseInt(user) !== id
+  );
+  emit('update:selection', selectedUsers.value);
+};
 
 const getInjuredPlayers = () => {
   if (completeUserData.value) {
     const injuredPlayers = completeUserData.value
       .filter((user) => user.isInjured)
-      .map((user) => `${user.id}`)
-    selectedUsers.value.push(...injuredPlayers)
-    emit('update:selection', selectedUsers.value)
+      .map((user) => `${user.id}`);
+    selectedUsers.value.push(...injuredPlayers);
+    emit('update:selection', selectedUsers.value);
   }
-}
+};
 
 // Fetch Daten und Fehlerbehandlung
-const { fetchAllUsers, completeUserData } = useUser()
+const { fetchAllUsers, completeUserData } = useUser();
 
 onMounted(() => {
   fetchAllUsers()
     .then(() => {
-      getInjuredPlayers()
+      getInjuredPlayers();
     })
     .catch((error) => {
-      console.error('Error fetching user data:', error)
-    })
-})
+      console.error('Error fetching user data:', error);
+    });
+});
 </script>
 
 <style scoped lang="scss">

@@ -42,9 +42,7 @@ export const useEvents = () => {
   const fetchEvents = async () => {
     store.updateLoadingResponse(true);
     store.updateOverflowHidden(true);
-    store.updateLoadingResponseText(
-        'Events werden geladen...',
-    );
+    store.updateLoadingResponseText('Events werden geladen...');
 
     try {
       const response = await fetchDataFromApi('/events', 'GET');
@@ -52,17 +50,13 @@ export const useEvents = () => {
 
       store.updateLoadingResponse(false);
       store.updateOverflowHidden(false);
-      store.updateLoadingResponseText(
-          '',
-      );
+      store.updateLoadingResponseText('');
     } catch (error) {
       console.error('Error fetching events:', error);
 
       store.updateLoadingResponse(false);
       store.updateOverflowHidden(false);
-      store.updateLoadingResponseText(
-          '',
-      );
+      store.updateLoadingResponseText('');
     }
   };
 
@@ -73,18 +67,19 @@ export const useEvents = () => {
       // Filtert nur Events vom Typ 'Spiel' und deren Datum ab heute
       const today = new Date();
       const filteredEvents = response
-          .filter((event: Event) =>
-              event.eventType === 'Spiel' &&
-              event.eventDate !== null &&  // Null-Werte ausschließen
-              new Date(event.eventDate) >= today
-          )
-          .sort((a: Event, b: Event) =>
-              new Date(a.eventDate!).getTime() - new Date(b.eventDate!).getTime()
-          )
-          .slice(0, 3);
+        .filter(
+          (event: Event) =>
+            event.eventType === 'Spiel' &&
+            event.eventDate !== null && // Null-Werte ausschließen
+            new Date(event.eventDate) >= today
+        )
+        .sort(
+          (a: Event, b: Event) =>
+            new Date(a.eventDate!).getTime() - new Date(b.eventDate!).getTime()
+        )
+        .slice(0, 3);
 
       events.value = filteredEvents;
-
     } catch (error) {
       console.error('Fehler beim Abrufen der Events:', error);
     }
@@ -101,7 +96,7 @@ export const useEvents = () => {
           for (const eventId of ids) {
             const response = await fetchDataFromApi(
               `/events/${eventId}`,
-              'GET',
+              'GET'
             );
             responses.push(response);
           }
@@ -153,9 +148,9 @@ export const useEvents = () => {
   const payLoad = (
     date?: string | null,
     genericDeadline?: string | null,
-    isStandingOrder?: boolean,
+    isStandingOrder?: boolean
   ) => {
-    console.log(store.state.userData.username)
+    console.log(store.state.userData.username);
     return {
       author: store.state.userData.username,
       eventDate: date || eventDate.value,
@@ -193,18 +188,18 @@ export const useEvents = () => {
       await fetchStandingOrder();
 
       const createAndSendPayload = async (
-          date?: string | null,
-          genericDeadline?: string | null,
-          isStandingOrder?: boolean,
+        date?: string | null,
+        genericDeadline?: string | null,
+        isStandingOrder?: boolean
       ) => {
         const payload = payLoad(date, genericDeadline, isStandingOrder);
         console.log(payload);
 
         try {
           const response = await fetchDataFromApi(
-              '/events/create',
-              'POST',
-              payload,
+            '/events/create',
+            'POST',
+            payload
           );
 
           if (!response || !response.id) {
@@ -234,27 +229,27 @@ export const useEvents = () => {
       };
 
       if (
-          eventType.value === 'Training' &&
-          trainingStandingOrderObject.value.length >= 1
+        eventType.value === 'Training' &&
+        trainingStandingOrderObject.value.length >= 1
       ) {
         const eventIDs: number[] = [];
         console.log(
-            'Standing order dates (trainingStandingOrderObject):',
-            trainingStandingOrderObject.value,
+          'Standing order dates (trainingStandingOrderObject):',
+          trainingStandingOrderObject.value
         );
 
         for (const date of trainingStandingOrderObject.value) {
           const eventDate = combineDateAndTime(date, beginAt.value);
           const deadlineTime = subtractHours(meetAt.value, 1);
           const genericDeadline = deadlineTime
-              ? shiftToPreviousDay(combineDateAndTime(date, deadlineTime)!)
-              : null;
+            ? shiftToPreviousDay(combineDateAndTime(date, deadlineTime)!)
+            : null;
 
           try {
             const eventID = await createAndSendPayload(
-                eventDate,
-                genericDeadline,
-                true,
+              eventDate,
+              genericDeadline,
+              true
             );
             eventIDs.push(eventID);
             console.log('Created Event ID:', eventID);
@@ -281,7 +276,7 @@ export const useEvents = () => {
     try {
       const response = await fetchDataFromApi(
         '/event-responses/overview/1',
-        'GET',
+        'GET'
       );
       return response;
     } catch (error) {
@@ -328,7 +323,7 @@ export const useEvents = () => {
     id: number,
     router: any,
     eventType: string,
-    ids?: number[],
+    ids?: number[]
   ) => {
     store.updateLoadingResponse(true);
     store.updateOverflowHidden(true);
@@ -336,7 +331,7 @@ export const useEvents = () => {
     try {
       if (id && !ids) {
         store.updateLoadingResponseText(
-          'Event wird gelöscht. Seite wird neu geladen...',
+          'Event wird gelöscht. Seite wird neu geladen...'
         );
 
         if (eventType === 'Training') {
@@ -344,14 +339,16 @@ export const useEvents = () => {
           await fetchEventsByID(id);
           await fetchStandingOrderResponse();
 
-          const foundStandingOrder = standingOrderArray.value.find(order => order.eventIDs.includes(id));
+          const foundStandingOrder = standingOrderArray.value.find((order) =>
+            order.eventIDs.includes(id)
+          );
           console.log(foundStandingOrder);
 
-          const standingOrderEventIDs = foundStandingOrder?.eventIDs
+          const standingOrderEventIDs = foundStandingOrder?.eventIDs;
           console.log(standingOrderEventIDs);
 
-          const standingOrder = foundStandingOrder?.id
-          console.log(standingOrder)
+          const standingOrder = foundStandingOrder?.id;
+          console.log(standingOrder);
 
           // If eventID is found, call the API to delete the event from the standing order
           if (id) {
@@ -359,11 +356,11 @@ export const useEvents = () => {
               // Delete the event from the standing order
               const deleteFromStandingOrderResponse = await fetchDataFromApi(
                 `/standing-orders/${standingOrder}/event/${id}`,
-                'DELETE',
+                'DELETE'
               );
               const deleteEventResponse = await fetchDataFromApi(
                 `/events/${id}`,
-                'DELETE',
+                'DELETE'
               );
 
               /* delete response for this event */
@@ -390,7 +387,7 @@ export const useEvents = () => {
         }
       } else if (ids && ids.length > 0) {
         store.updateLoadingResponseText(
-          'Events werden gelöscht. Seite wird neu geladen...',
+          'Events werden gelöscht. Seite wird neu geladen...'
         );
 
         const responses = [];
@@ -399,7 +396,7 @@ export const useEvents = () => {
         for (const eventId of ids) {
           const response = await fetchDataFromApi(
             `/events/${eventId}`,
-            'DELETE',
+            'DELETE'
           );
           responses.push(response);
           completedRequests += 1;
@@ -430,13 +427,13 @@ export const useEvents = () => {
     try {
       const response = await fetchDataFromApi(
         `/standing-orders/${id}`,
-        'DELETE',
+        'DELETE'
       );
       return response;
     } catch (error) {
       console.error(
         'Der Eintrag des Dauerauftrages konnte nicht gelöscht werden:',
-        error,
+        error
       );
     }
   };
@@ -456,19 +453,19 @@ export const useEvents = () => {
     router?: any,
     isStandingOrder?: boolean,
     ids?: number[],
-    eventDates?: string[],
+    eventDates?: string[]
   ) => {
     const isTraining = eT === 'Training';
     const genericDate = generateGenericDate(eventDate.value, beginAt.value);
     const genericDeadline = generateGenericDeadline(
       eventDate.value,
-      meetAt.value,
+      meetAt.value
     );
 
     const newPayload = (
       orderID?: number,
       orderDate?: any,
-      orderDeadline?: any,
+      orderDeadline?: any
     ) => {
       return {
         author: store.state.userData.username,
@@ -509,7 +506,7 @@ export const useEvents = () => {
       store.updateLoadingResponse(true);
       store.updateOverflowHidden(true);
       store.updateLoadingResponseText(
-        'Änderungen gespeichert. Seite wird neu geladen...',
+        'Änderungen gespeichert. Seite wird neu geladen...'
       );
 
       if (!isStandingOrder) {
@@ -517,7 +514,7 @@ export const useEvents = () => {
         const response = await fetchDataFromApi(
           `/events/${id}`,
           'PUT',
-          payload,
+          payload
         );
 
         // Ensure UI updates happen only once for non-standing order
@@ -544,7 +541,7 @@ export const useEvents = () => {
               const response = await fetchDataFromApi(
                 `/events/${eventID}`,
                 'PUT',
-                payload,
+                payload
               );
               responses.push(response);
             } catch (error) {
@@ -607,6 +604,6 @@ export const useEvents = () => {
     standingOrderID,
     eventCreatedSuccessful,
     standingOrderArray,
-    selectedEvent
+    selectedEvent,
   };
 };

@@ -29,11 +29,10 @@ defineProps({
     type: String,
     default: '',
   },
-})
+});
 </script>
 
 <style scoped lang="scss">
-
 .meta-data {
   display: flex;
   justify-content: center;
@@ -72,12 +71,10 @@ defineProps({
   }
 
   @include media-breakpoint-up(lg) {
-
   }
 
   &__author {
     text-transform: capitalize;
   }
 }
-
 </style>

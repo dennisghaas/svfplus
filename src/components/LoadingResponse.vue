@@ -16,8 +16,8 @@
 </template>
 
 <script setup lang="ts">
-import store from '@/store'
-import ContentImage from '@/components/ContentImage.vue'
+import store from '@/store';
+import ContentImage from '@/components/ContentImage.vue';
 </script>
 
 <style scoped lang="scss">

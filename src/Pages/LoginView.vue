@@ -15,8 +15,8 @@
 </template>
 
 <script setup lang="ts">
-import AuthForm from '@/components/AuthForm.vue'
-import ContentImage from '@/components/ContentImage.vue'
+import AuthForm from '@/components/AuthForm.vue';
+import ContentImage from '@/components/ContentImage.vue';
 </script>
 
 <style scoped lang="scss">

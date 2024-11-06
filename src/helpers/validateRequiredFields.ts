@@ -1,3 +1,3 @@
 export function validateRequiredFields(field: string) {
-  console.log(field)
+  console.log(field);
 }

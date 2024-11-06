@@ -25,47 +25,47 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch } from 'vue';
 
 const props = defineProps<{
-  id?: string
-  label?: string
-  modelValue?: string
-  placeholder?: string
-  rows?: number
-  cols?: number
-  errorMessage?: string
-}>()
+  id?: string;
+  label?: string;
+  modelValue?: string;
+  placeholder?: string;
+  rows?: number;
+  cols?: number;
+  errorMessage?: string;
+}>();
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string): void
-}>()
+  (e: 'update:modelValue', value: string): void;
+}>();
 
-const textarea = ref<HTMLTextAreaElement | null>(null)
+const textarea = ref<HTMLTextAreaElement | null>(null);
 
 const adjustTextareaHeight = () => {
   if (textarea.value) {
-    textarea.value.style.height = 'auto'
-    textarea.value.style.height = `${textarea.value.scrollHeight}px`
+    textarea.value.style.height = 'auto';
+    textarea.value.style.height = `${textarea.value.scrollHeight}px`;
   }
-}
+};
 
 const handleInput = (event: Event) => {
-  const target = event.target as HTMLTextAreaElement
-  emit('update:modelValue', target.value)
-  adjustTextareaHeight()
-}
+  const target = event.target as HTMLTextAreaElement;
+  emit('update:modelValue', target.value);
+  adjustTextareaHeight();
+};
 
 onMounted(() => {
-  adjustTextareaHeight()
-})
+  adjustTextareaHeight();
+});
 
 watch(
   () => props.modelValue,
   () => {
-    adjustTextareaHeight()
-  },
-)
+    adjustTextareaHeight();
+  }
+);
 </script>
 
 <style scoped lang="scss">

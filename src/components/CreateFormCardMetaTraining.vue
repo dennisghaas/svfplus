@@ -28,12 +28,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue'
-import { useStandingOrder } from '@/composables/useStandingOrder.ts'
-import { useEvents } from '@/composables/useEvents.ts'
-import { accessibleWeekday } from '@/config'
-import SelectType from '@/components/SelectType.vue'
-import InputType from '@/components/InputType.vue'
+import { ref, watch, onMounted } from 'vue';
+import { useStandingOrder } from '@/composables/useStandingOrder.ts';
+import { useEvents } from '@/composables/useEvents.ts';
+import { accessibleWeekday } from '@/config';
+import SelectType from '@/components/SelectType.vue';
+import InputType from '@/components/InputType.vue';
 
 /* STANDING ORDER FUNCTION */
 const {
@@ -43,41 +43,44 @@ const {
   formattedStartDate,
   formattedEndDate,
   calculateStandingOrderDates,
-} = useStandingOrder()
-const standingOrderDates = ref<string[]>([])
+} = useStandingOrder();
+const standingOrderDates = ref<string[]>([]);
 
-const { trainingStandingOrderObject } = useEvents()
+const { trainingStandingOrderObject } = useEvents();
 
 const generateStandingOrderDates = () => {
-  startDate.value = new Date(formattedStartDate.value)
-  endDate.value = new Date(formattedEndDate.value)
+  startDate.value = new Date(formattedStartDate.value);
+  endDate.value = new Date(formattedEndDate.value);
 
   try {
-    standingOrderDates.value = calculateStandingOrderDates()
+    standingOrderDates.value = calculateStandingOrderDates();
   } catch (error) {
-    console.error('Error during date calculation:', error)
+    console.error('Error during date calculation:', error);
   }
-}
+};
 
-const emit = defineEmits(['updateFormattedStartDate', 'updateFormattedEndDate'])
+const emit = defineEmits([
+  'updateFormattedStartDate',
+  'updateFormattedEndDate',
+]);
 
 watch(
   [formattedStartDate, formattedEndDate, targetDay],
   (newValues, oldValues) => {
     if (newValues !== oldValues) {
-      startDate.value = new Date(formattedStartDate.value)
-      endDate.value = new Date(formattedEndDate.value)
+      startDate.value = new Date(formattedStartDate.value);
+      endDate.value = new Date(formattedEndDate.value);
 
       if (startDate.value && endDate.value && targetDay.value !== null) {
-        generateStandingOrderDates()
-        trainingStandingOrderObject.value = standingOrderDates.value
+        generateStandingOrderDates();
+        trainingStandingOrderObject.value = standingOrderDates.value;
 
-        emit('updateFormattedStartDate', startDate.value)
-        emit('updateFormattedEndDate', endDate.value)
+        emit('updateFormattedStartDate', startDate.value);
+        emit('updateFormattedEndDate', endDate.value);
       }
     }
-  },
-)
+  }
+);
 
 const handleTargetDay = (weekday: string) => {
   const dayMap: { [key: string]: number } = {
@@ -88,21 +91,21 @@ const handleTargetDay = (weekday: string) => {
     Donnerstag: 4,
     Freitag: 5,
     Samstag: 6,
-  }
+  };
 
-  targetDay.value = dayMap[weekday] ?? 0
-}
+  targetDay.value = dayMap[weekday] ?? 0;
+};
 
 defineProps({
   errorInvalidDate: {
     type: Boolean,
     default: true,
   },
-})
+});
 
 onMounted(() => {
-  targetDay.value = 1
-})
+  targetDay.value = 1;
+});
 </script>
 
 <style scoped lang="scss"></style>

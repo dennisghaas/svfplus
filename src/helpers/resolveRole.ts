@@ -3,11 +3,11 @@ export function resolveRole(role: string): string {
   const rolesArray = role
     .replace(/[\[\]'"\\"\\]/g, '') // Remove square brackets, quotes (single/double), and backslashes
     .split(',')
-    .map((r) => r.trim())
+    .map((r) => r.trim());
 
   // If there's only one role, return it directly
   if (rolesArray.length === 1) {
-    return rolesArray[0]
+    return rolesArray[0];
   }
 
   // If there are multiple roles, join them with " und " before the last role
@@ -15,5 +15,5 @@ export function resolveRole(role: string): string {
     rolesArray.slice(0, -1).join(', ') +
     ' und ' +
     rolesArray[rolesArray.length - 1]
-  )
+  );
 }

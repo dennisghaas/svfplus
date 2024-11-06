@@ -1,16 +1,31 @@
 <template>
   <ul class="blanklist color-picker">
-    <template v-for="(color) in accessibleColors" :key="color.color">
-      <li :class="{'is-selected' : onReload ? selectedColor.color === color.color : userImageBgColor === color.color}">
+    <template v-for="color in accessibleColors" :key="color.color">
+      <li
+        :class="{
+          'is-selected': onReload
+            ? selectedColor.color === color.color
+            : userImageBgColor === color.color,
+        }"
+      >
         <button
-            type="button"
-            @click="handleColorPicker(color)"
-            :style="!color.image ? {'--color-picker': `var(${color.color})`} : {'--background-image-path': `url(${color.color})`}"
-            :title="`${color.name} als Profilhintergrundfarbe auswählen`">
-            <span
-              :class="['color-picker__picker-circle', { 'color-picker__picker-circle-image' : color.image }]">
-            </span>
-            <span>{{ color.name }}</span>
+          type="button"
+          @click="handleColorPicker(color)"
+          :style="
+            !color.image
+              ? { '--color-picker': `var(${color.color})` }
+              : { '--background-image-path': `url(${color.color})` }
+          "
+          :title="`${color.name} als Profilhintergrundfarbe auswählen`"
+        >
+          <span
+            :class="[
+              'color-picker__picker-circle',
+              { 'color-picker__picker-circle-image': color.image },
+            ]"
+          >
+          </span>
+          <span>{{ color.name }}</span>
         </button>
       </li>
     </template>
@@ -18,14 +33,14 @@
 </template>
 
 <script setup lang="ts">
-import {reactive, onMounted, ref} from 'vue';
-import {useUser} from "@/composables/useUser.ts";
-import {UserData} from "@/interface";
+import { reactive, onMounted, ref } from 'vue';
+import { useUser } from '@/composables/useUser.ts';
+import { UserData } from '@/interface';
 
-const {getUserByID, selectedUser} = useUser()
-const getSelectedUser = ref<UserData | null>(null)
-const userImageBgColor = ref('')
-const onReload = ref(false)
+const { getUserByID, selectedUser } = useUser();
+const getSelectedUser = ref<UserData | null>(null);
+const userImageBgColor = ref('');
+const onReload = ref(false);
 
 const props = defineProps({
   selectedColor: {
@@ -34,54 +49,58 @@ const props = defineProps({
   },
   id: {
     type: Number,
-    default: 0
-  }
+    default: 0,
+  },
 });
 
 const emit = defineEmits(['update:selectedColor']);
 const accessibleColors = reactive([
   {
     color: '--warning-light',
-    name: 'Gelb'
+    name: 'Gelb',
   },
   {
     color: '--blue-primary',
-    name: 'Blau'
+    name: 'Blau',
   },
   {
     color: '--primary',
-    name: 'Rot'
+    name: 'Rot',
   },
   {
     color: '--purple',
-    name: 'Lila'
+    name: 'Lila',
   },
   {
     color: '--blue-dark-gray',
-    name: 'Dunkelblau'
+    name: 'Dunkelblau',
   },
   {
     color: '--success-mint',
-    name: 'Minzgrün'
+    name: 'Minzgrün',
   },
   {
     name: 'Derbysieger',
     color: '/images/hsv.svg',
-    image: true
+    image: true,
   },
   {
     name: 'Kiezkicker',
     color: '/images/pauli.svg',
-    image: true
+    image: true,
   },
   {
     name: 'Norderstedt',
     color: '/images/sh.svg',
-    image: true
-  }
+    image: true,
+  },
 ]);
 
-const handleColorPicker = (color: { color: string; name: string; image?: boolean }) => {
+const handleColorPicker = (color: {
+  color: string;
+  name: string;
+  image?: boolean;
+}) => {
   onReload.value = true;
   emit('update:selectedColor', color); // Hier das ganze color Objekt übergeben
 };

@@ -1,48 +1,48 @@
-import { ref } from 'vue'
-import store from '@/store'
-import { fetchDataFromApi } from '@/helpers/fetchDataFromApi'
-import { useLocalStorage } from '@/composables/useLocalStorage'
+import { ref } from 'vue';
+import store from '@/store';
+import { fetchDataFromApi } from '@/helpers/fetchDataFromApi';
+import { useLocalStorage } from '@/composables/useLocalStorage';
 
 // Reaktive Variablen
-const userData = ref(null)
-const responseText = ref('')
-const showForgotPasswordForm = ref(false)
+const userData = ref(null);
+const responseText = ref('');
+const showForgotPasswordForm = ref(false);
 
-const name = ref('')
-const surname = ref('')
-const username = ref('')
-const email = ref('')
-const password = ref('')
-const repeatPassword = ref('')
-const position = ref('')
-const jerseyNumber = ref(0)
-const birthday = ref(new Date('1955-01-01'))
-const initials = ref('')
-const bgColor = ref('--primary')
-const bgImage = ref(null)
+const name = ref('');
+const surname = ref('');
+const username = ref('');
+const email = ref('');
+const password = ref('');
+const repeatPassword = ref('');
+const position = ref('');
+const jerseyNumber = ref(0);
+const birthday = ref(new Date('1955-01-01'));
+const initials = ref('');
+const bgColor = ref('--primary');
+const bgImage = ref(null);
 
 const handleLogin = async (router: any) => {
   try {
     const response = await fetchDataFromApi('/users/login', 'POST', {
       username: username.value,
       password: password.value,
-    })
+    });
 
-    const token = response.token
-    localStorage.setItem('token', token)
+    const token = response.token;
+    localStorage.setItem('token', token);
 
     // Abrufen der Benutzerdaten mit dem gespeicherten Token
-    await fetchUserDataOnLoad(token, router)
+    await fetchUserDataOnLoad(token, router);
 
-    console.log('Erfolgreich angemeldet:', response)
-    responseText.value = 'Erfolgreich angemeldet!'
+    console.log('Erfolgreich angemeldet:', response);
+    responseText.value = 'Erfolgreich angemeldet!';
 
-    router.push('/')
+    router.push('/');
   } catch (error: any) {
-    console.error('Fehler bei der Anmeldung:', error)
-    responseText.value = 'Fehler bei der Anmeldung: ' + error.message
+    console.error('Fehler bei der Anmeldung:', error);
+    responseText.value = 'Fehler bei der Anmeldung: ' + error.message;
   }
-}
+};
 
 const fetchUserDataOnLoad = async (token: string | null, router?: any) => {
   if (token) {
@@ -51,51 +51,50 @@ const fetchUserDataOnLoad = async (token: string | null, router?: any) => {
         '/users/me',
         'GET',
         undefined,
-        token,
-      )
-      store.login(true)
-
+        token
+      );
+      store.login(true);
     } catch (error: any) {
-      console.error('Fehler beim Abrufen der Benutzerdaten:', error)
+      console.error('Fehler beim Abrufen der Benutzerdaten:', error);
       responseText.value =
-        'Fehler beim Abrufen der Benutzerdaten: ' + error.message
-      store.login(false)
+        'Fehler beim Abrufen der Benutzerdaten: ' + error.message;
+      store.login(false);
     }
 
     /* add data of user to store */
-    store.setUserData(userData.value)
-    store.getUserAccessRights(userData.value)
+    store.setUserData(userData.value);
+    store.getUserAccessRights(userData.value);
 
     /* show tutorial based on user info */
-    if(store.state.userData.watchedTutorial) {
-     store.updatedWatchedTutorial(true);
+    if (store.state.userData.watchedTutorial) {
+      store.updatedWatchedTutorial(true);
     }
   }
 
-  store.loadData(true)
+  store.loadData(true);
 
   if (!store.state.isLoggedIn && !store.state.isRegisterSuccess) {
-    router.push('/login')
+    router.push('/login');
   } else if (!store.state.isLoggedIn && store.state.isRegisterSuccess) {
-    router.push('/success')
+    router.push('/success');
   }
-}
+};
 
 const handleLogout = (router: any) => {
-  const { value: myValue } = useLocalStorage('alreadyRegistered', 'no')
-  localStorage.removeItem('token') // Token aus Local Storage entfernen
-  userData.value = null
-  responseText.value = 'Erfolgreich abgemeldet!'
-  username.value = ''
-  password.value = ''
-  myValue.value = 'yes'
+  const { value: myValue } = useLocalStorage('alreadyRegistered', 'no');
+  localStorage.removeItem('token'); // Token aus Local Storage entfernen
+  userData.value = null;
+  responseText.value = 'Erfolgreich abgemeldet!';
+  username.value = '';
+  password.value = '';
+  myValue.value = 'yes';
 
   /* reload page after log out */
   router.go();
-}
+};
 
 const handleRegister = async (router: any) => {
-  const { value: myValue } = useLocalStorage('alreadyRegistered', 'no')
+  const { value: myValue } = useLocalStorage('alreadyRegistered', 'no');
 
   try {
     const payload = {
@@ -114,28 +113,28 @@ const handleRegister = async (router: any) => {
         bgImage: bgImage.value,
         initials: initials.value,
       },
-    }
+    };
 
-    console.log(payload)
+    console.log(payload);
 
     await fetchDataFromApi('/users/register', 'POST', payload)
       .then((data) => {
         if (data) {
           // If data is returned, it's a successful request
-          store.updateIsRegisterSuccess(true)
-          myValue.value = 'yes'
-          router.push('/success')
+          store.updateIsRegisterSuccess(true);
+          myValue.value = 'yes';
+          router.push('/success');
         }
       })
       .catch((error) => {
         // Handle error appropriately
-        console.log('Etwas ist schiefgelaufen:', error.message)
-      })
+        console.log('Etwas ist schiefgelaufen:', error.message);
+      });
   } catch (error: any) {
-    console.error('Fehler bei der Registrierung:', error.message)
-    responseText.value = 'Fehler bei der Registrierung: ' + error.message
+    console.error('Fehler bei der Registrierung:', error.message);
+    responseText.value = 'Fehler bei der Registrierung: ' + error.message;
   }
-}
+};
 
 export function useAuth() {
   return {
@@ -158,5 +157,5 @@ export function useAuth() {
     fetchUserDataOnLoad,
     handleLogout,
     handleRegister,
-  }
+  };
 }

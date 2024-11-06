@@ -39,17 +39,18 @@
 </template>
 
 <script setup lang="ts">
-import { useEvents } from '@/composables/useEvents.ts'
-import InputType from '@/components/InputType.vue'
-import CheckboxType from '@/components/CheckboxType.vue'
-import BadgeType from '@/components/BadgeType.vue'
+import { useEvents } from '@/composables/useEvents.ts';
+import InputType from '@/components/InputType.vue';
+import CheckboxType from '@/components/CheckboxType.vue';
+import BadgeType from '@/components/BadgeType.vue';
 
-const { eventDate, venueStreet, venuePostalCode, showInDashboard } = useEvents()
+const { eventDate, venueStreet, venuePostalCode, showInDashboard } =
+  useEvents();
 
 /* CHECKBOX: SHOW EVENT IN USERS DASHBOARD */
 const updateShowInDashboard = (showDashboard: boolean) => {
-  showInDashboard.value = showDashboard
-}
+  showInDashboard.value = showDashboard;
+};
 
 defineProps({
   venueStreetError: {
@@ -60,7 +61,7 @@ defineProps({
     type: Boolean,
     default: false,
   },
-})
+});
 </script>
 
 <style scoped lang="scss"></style>

@@ -9,23 +9,29 @@
 
     <div :class="['select-wrapper', { 'select-wrapper--dark': themeDark }]">
       <select
-          class="select"
-          :name="selectName"
-          :id="selectID"
-          @change="emitSelection"
+        class="select"
+        :name="selectName"
+        :id="selectID"
+        @change="emitSelection"
       >
         <option
-            :value="selectPlaceholder"
-            :selected="!disablePlaceholderVal"
-            :disabled="disablePlaceholderVal"
+          :value="selectPlaceholder"
+          :selected="!disablePlaceholderVal"
+          :disabled="disablePlaceholderVal"
         >
           {{ selectPlaceholder }}
         </option>
-        <template v-for="option in selectOption" :key="typeof option === 'string' ? option : option.id">
+        <template
+          v-for="option in selectOption"
+          :key="typeof option === 'string' ? option : option.id"
+        >
           <option v-if="!dynamicProperty" :value="option">
             {{ isOption(option) ? option[dynamicProperty] : option }}
           </option>
-          <option v-else :value="isOption(option) ? option[dynamicProperty] : option">
+          <option
+            v-else
+            :value="isOption(option) ? option[dynamicProperty] : option"
+          >
             {{ isOption(option) ? option[dynamicProperty] : option }}
           </option>
         </template>
@@ -37,8 +43,8 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue';
-import {Option} from "@/interface";
+import { ref } from 'vue';
+import { Option } from '@/interface';
 
 const props = defineProps({
   selectID: {
@@ -79,12 +85,12 @@ const props = defineProps({
   },
   dynamicProperty: {
     type: String,
-    default: ''
+    default: '',
   },
   themeDark: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 
 const emit = defineEmits(['update:selection']);
@@ -99,9 +105,13 @@ const emitSelection = (event: Event) => {
   if (!props.dynamicProperty) {
     emitValue = selectedValue;
   } else {
-    const selectedOption = props.selectOption.find((option: string | Option) => {
-      return isOption(option) ? option[props.dynamicProperty] === selectedValue : false;
-    });
+    const selectedOption = props.selectOption.find(
+      (option: string | Option) => {
+        return isOption(option)
+          ? option[props.dynamicProperty] === selectedValue
+          : false;
+      }
+    );
 
     emitValue = selectedOption ? selectedOption : selectedValue;
   }
@@ -109,11 +119,9 @@ const emitSelection = (event: Event) => {
   emit('update:selection', emitValue);
 };
 
-
 function isOption(option: string | Option): option is Option {
   return typeof option !== 'string';
 }
-
 </script>
 
 <style scoped lang="scss">

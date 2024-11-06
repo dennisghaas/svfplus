@@ -34,7 +34,7 @@
         <div class="card-body-profile--item">
           <span class="typo-label"> Rolle </span>
           <span class="text-right">
-            {{resolveRole(subtitle)}}
+            {{ resolveRole(subtitle) }}
           </span>
         </div>
 
@@ -43,7 +43,10 @@
           <span> {{ name }} {{ surname }} </span>
         </div>
 
-        <div v-if="store.state.isMajor || isCurrentUsersProfile" class="card-body-profile--item">
+        <div
+          v-if="store.state.isMajor || isCurrentUsersProfile"
+          class="card-body-profile--item"
+        >
           <span class="typo-label"> E-Mail </span>
           <span>
             {{ email }}
@@ -62,9 +65,7 @@
 
         <div class="card-body-profile--item">
           <span class="typo-label"> Spielernummer </span>
-          <span v-if="handleJerseyNumber(jerseyNumber) === 0">
-            k.A.
-          </span>
+          <span v-if="handleJerseyNumber(jerseyNumber) === 0"> k.A. </span>
           <span v-else>
             {{ handleJerseyNumber(jerseyNumber) }}
           </span>
@@ -72,11 +73,18 @@
 
         <div class="card-body-profile--item">
           <span class="typo-label"> Geburtstag </span>
-          <span v-if="`${formattedDate?.day}.${formattedDate?.month}.${formattedDate?.year}` === '01.01.1955'">
+          <span
+            v-if="
+              `${formattedDate?.day}.${formattedDate?.month}.${formattedDate?.year}` ===
+              '01.01.1955'
+            "
+          >
             k.A.
           </span>
           <span v-else>
-            {{formattedDate?.day}}.{{formattedDate?.month}}.{{formattedDate?.year}}
+            {{ formattedDate?.day }}.{{ formattedDate?.month }}.{{
+              formattedDate?.year
+            }}
           </span>
         </div>
 
@@ -87,7 +95,10 @@
           </span>
         </div>
 
-        <div v-if="store.state.isSergeant || isCurrentUsersProfile" class="card-body-profile--item">
+        <div
+          v-if="store.state.isSergeant || isCurrentUsersProfile"
+          class="card-body-profile--item"
+        >
           <span class="typo-label"> Offener betrag mannschaftskasse </span>
           <span v-if="role.includes('Trainer')"> Befreit </span>
           <span v-else> {{ debts.toFixed(2) }}&nbsp;€ </span>
@@ -121,21 +132,21 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { resolveRole } from '@/helpers/resolveRole.ts'
-import { formatDate } from '@/helpers/formatDate.ts'
-import { handleJerseyNumber } from '@/helpers/handleJerseyNumber.ts'
-import { handleSuit } from '@/helpers/handleSuit.ts'
-import {useBreakpoint} from "@/composables/useBreakpoint.ts";
-import CardFrame from '@/components/CardFrame.vue'
-import BadgeType from '@/components/BadgeType.vue'
-import ProfilePanel from '@/components/ProfilePanel.vue'
-import LinkType from '@/components/LinkType.vue'
-import AppDialog from '@/components/AppDialog.vue'
-import store from '@/store'
-import AppDialogSingleUser from '@/components/AppDialogSingleUser.vue'
+import { computed, ref } from 'vue';
+import { resolveRole } from '@/helpers/resolveRole.ts';
+import { formatDate } from '@/helpers/formatDate.ts';
+import { handleJerseyNumber } from '@/helpers/handleJerseyNumber.ts';
+import { handleSuit } from '@/helpers/handleSuit.ts';
+import { useBreakpoint } from '@/composables/useBreakpoint.ts';
+import CardFrame from '@/components/CardFrame.vue';
+import BadgeType from '@/components/BadgeType.vue';
+import ProfilePanel from '@/components/ProfilePanel.vue';
+import LinkType from '@/components/LinkType.vue';
+import AppDialog from '@/components/AppDialog.vue';
+import store from '@/store';
+import AppDialogSingleUser from '@/components/AppDialogSingleUser.vue';
 
-const {isMobile} = useBreakpoint();
+const { isMobile } = useBreakpoint();
 
 const props = defineProps({
   title: {
@@ -206,31 +217,31 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-})
+});
 
 const formattedDate = computed(() => {
-  return formatDate(props.birthday)
-})
+  return formatDate(props.birthday);
+});
 
 /* DIALOG */
-const dialogOpen = ref(false)
+const dialogOpen = ref(false);
 
 const closeAppDialog = () => {
-  dialogOpen.value = false
+  dialogOpen.value = false;
 
   /* close edit modal dialog if app dialog is closed */
-  handleClose()
-}
+  handleClose();
+};
 
-const emit = defineEmits(['closeDialog'])
+const emit = defineEmits(['closeDialog']);
 const handleClose = () => {
-  emit('closeDialog')
-}
+  emit('closeDialog');
+};
 
 const toggleDialog = () => {
-  dialogOpen.value = true
-  store.updateOverflowHidden(true)
-}
+  dialogOpen.value = true;
+  store.updateOverflowHidden(true);
+};
 </script>
 
 <style scoped lang="scss">

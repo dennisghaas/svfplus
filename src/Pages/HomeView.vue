@@ -12,7 +12,10 @@
       <h2>Übersicht: Wichtige Termine</h2>
       <div class="body-text-b2">
         <p>
-          Deine Trainer haben diese Termine als <u>äußert wichtig</u> gekennzeichnet. Bitte schnellstmöglich antworten. Sobald das geschehen ist, verschwinden diese aus deinem Dashboard 🚀
+          Deine Trainer haben diese Termine als
+          <u>äußert wichtig</u> gekennzeichnet. Bitte schnellstmöglich
+          antworten. Sobald das geschehen ist, verschwinden diese aus deinem
+          Dashboard 🚀
         </p>
       </div>
     </template>
@@ -77,48 +80,48 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, computed } from 'vue'
-import { useBreakpoint } from '@/composables/useBreakpoint.ts'
-import { useEvents } from '@/composables/useEvents.ts'
-import { useEventResponse } from '@/composables/useEventResponse.ts'
-import store from '@/store'
-import CardEvent from '@/components/CardEvent.vue'
-import SectionType from '@/components/SectionType.vue'
-import BadgeType from '@/components/BadgeType.vue'
-import UpcomingEvents from '@/components/UpcomingEvents.vue'
+import { onMounted, computed } from 'vue';
+import { useBreakpoint } from '@/composables/useBreakpoint.ts';
+import { useEvents } from '@/composables/useEvents.ts';
+import { useEventResponse } from '@/composables/useEventResponse.ts';
+import store from '@/store';
+import CardEvent from '@/components/CardEvent.vue';
+import SectionType from '@/components/SectionType.vue';
+import BadgeType from '@/components/BadgeType.vue';
+import UpcomingEvents from '@/components/UpcomingEvents.vue';
 
-const { isTablet, isMobile } = useBreakpoint()
-const { events } = useEvents()
-const { fetchUserResponseToEvent, getResponseForEvent } = useEventResponse()
+const { isTablet, isMobile } = useBreakpoint();
+const { events } = useEvents();
+const { fetchUserResponseToEvent, getResponseForEvent } = useEventResponse();
 
 // Filter dashboard events
 const filteredDashboardEvents = computed(() => {
-  return events.value.filter((event) => event.showInDashboard)
-})
+  return events.value.filter((event) => event.showInDashboard);
+});
 
 // For each event, get the corresponding response
 const eventResponses = computed(() => {
   return filteredDashboardEvents.value.map((event) => ({
     eventId: event.id,
     response: getResponseForEvent(event.id), // Get response for each event ID
-  }))
-})
+  }));
+});
 
 // Computed property to check if all events have been responded to
 const allEventsResponded = computed(() => {
   return filteredDashboardEvents.value.every(
-    (_, index) => eventResponses.value[index].response,
-  )
-})
+    (_, index) => eventResponses.value[index].response
+  );
+});
 
 onMounted(() => {
   // Fetch responses for each event shown in the dashboard
   filteredDashboardEvents.value.forEach((event) => {
-    fetchUserResponseToEvent(event.id) // Call with each event ID
-  })
+    fetchUserResponseToEvent(event.id); // Call with each event ID
+  });
 
-  store.pageHeadline(`Moin ${store.state.userData.name}`)
-})
+  store.pageHeadline(`Moin ${store.state.userData.name}`);
+});
 </script>
 
 <style scoped lang="scss"></style>

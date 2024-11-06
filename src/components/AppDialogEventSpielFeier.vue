@@ -201,21 +201,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue'
-import { useEvents } from '@/composables/useEvents.ts'
-import { validateStreet } from '@/helpers/validateStreet.ts'
-import { validatePostalCode } from '@/helpers/validatePostalCode.ts'
-import { extractDateAndTime } from '@/helpers/extractDateAndTime.ts'
-import { useRouter } from 'vue-router'
-import { validateFussballDeLink } from '@/helpers/validateFussballDeLink.ts'
-import ButtonType from '@/components/ButtonType.vue'
-import InputType from '@/components/InputType.vue'
-import CheckboxType from '@/components/CheckboxType.vue'
-import BadgeType from '@/components/BadgeType.vue'
-import SelectTypeUser from '@/components/SelectTypeUser.vue'
-import AppDialogEventDesc from '@/components/AppDialogEventDesc.vue'
+import { ref, watch, onMounted } from 'vue';
+import { useEvents } from '@/composables/useEvents.ts';
+import { validateStreet } from '@/helpers/validateStreet.ts';
+import { validatePostalCode } from '@/helpers/validatePostalCode.ts';
+import { extractDateAndTime } from '@/helpers/extractDateAndTime.ts';
+import { useRouter } from 'vue-router';
+import { validateFussballDeLink } from '@/helpers/validateFussballDeLink.ts';
+import ButtonType from '@/components/ButtonType.vue';
+import InputType from '@/components/InputType.vue';
+import CheckboxType from '@/components/CheckboxType.vue';
+import BadgeType from '@/components/BadgeType.vue';
+import SelectTypeUser from '@/components/SelectTypeUser.vue';
+import AppDialogEventDesc from '@/components/AppDialogEventDesc.vue';
 
-const router = useRouter()
+const router = useRouter();
 
 const {
   editEventByID,
@@ -236,7 +236,7 @@ const {
   linkExtern,
   playerWithNoAccess,
   showInDashboard,
-} = useEvents()
+} = useEvents();
 
 // Define props
 const props = defineProps({
@@ -252,130 +252,130 @@ const props = defineProps({
     type: String,
     default: '',
   },
-})
+});
 
 /* update description inputs */
 const updateTitle = (newTitle: string) => {
-  selectedEvent.value[0].eventDescription.title = newTitle
-}
+  selectedEvent.value[0].eventDescription.title = newTitle;
+};
 
 const updateSubtitle = (newSubtitle: string) => {
-  selectedEvent.value[0].eventDescription.subtitle = newSubtitle
-}
+  selectedEvent.value[0].eventDescription.subtitle = newSubtitle;
+};
 
 const updateDescription = (newDescription: string) => {
-  selectedEvent.value[0].eventDescription.description = newDescription
-}
+  selectedEvent.value[0].eventDescription.description = newDescription;
+};
 
 const updateMeetAt = (newMeetAt: string) => {
-  selectedEvent.value[0].eventDescription.meetAt = newMeetAt
-}
+  selectedEvent.value[0].eventDescription.meetAt = newMeetAt;
+};
 
 const updateBeginAt = (newBeginAt: string) => {
-  selectedEvent.value[0].eventDescription.beginAt = newBeginAt
-}
+  selectedEvent.value[0].eventDescription.beginAt = newBeginAt;
+};
 
 const updateEndAt = (newEndAt: string) => {
-  selectedEvent.value[0].eventDescription.endAt = newEndAt
-}
+  selectedEvent.value[0].eventDescription.endAt = newEndAt;
+};
 
 const updateDeadlineToStartDay = (newDeadlineDay: string) => {
-  deadlineToStartDay.value = newDeadlineDay
-}
+  deadlineToStartDay.value = newDeadlineDay;
+};
 
 const updateDeadlineToStartTime = (newDeadlineTime: string) => {
-  deadlineToStartTime.value = newDeadlineTime
-}
+  deadlineToStartTime.value = newDeadlineTime;
+};
 
 /* update booleans */
 const updateShowInDashboard = (showDashboard: boolean) => {
-  selectedEvent.value[0].showInDashboard = showDashboard
-}
+  selectedEvent.value[0].showInDashboard = showDashboard;
+};
 
 const updatePlayerWithNoAccess = (noAccess: string[]) => {
-  selectedEvent.value[0].playerWithNoAccess = noAccess.map((id) => Number(id))
-}
+  selectedEvent.value[0].playerWithNoAccess = noAccess.map((id) => Number(id));
+};
 
 /* get Date */
-const eventDateNewValue = ref(new Date(props.date))
-const formattedDate = ref(props.date)
+const eventDateNewValue = ref(new Date(props.date));
+const formattedDate = ref(props.date);
 watch(formattedDate, (newVal) => {
-  eventDateNewValue.value = new Date(newVal)
-})
+  eventDateNewValue.value = new Date(newVal);
+});
 
 /* deadline to start */
 if (selectedEvent.value[0].eventDescription.deadlineToStart) {
-  extractDateAndTime(selectedEvent.value[0].eventDescription.deadlineToStart)
+  extractDateAndTime(selectedEvent.value[0].eventDescription.deadlineToStart);
 }
-const deadlineToStartDay = ref('')
-const deadlineToStartTime = ref('')
+const deadlineToStartDay = ref('');
+const deadlineToStartTime = ref('');
 
 watch([deadlineToStartDay, deadlineToStartTime], ([newDate, newTime]) => {
   const combineDateAndTime = (date: string, time: string): Date => {
-    return new Date(`${date}T${time}`)
-  }
+    return new Date(`${date}T${time}`);
+  };
 
   // Ensure newDate and newTime are not empty or invalid
   if (newDate && newTime) {
-    const combinedDate = combineDateAndTime(newDate, newTime)
-    deadlineToStart.value = combinedDate.toISOString()
-    deadlineError.value = false
+    const combinedDate = combineDateAndTime(newDate, newTime);
+    deadlineToStart.value = combinedDate.toISOString();
+    deadlineError.value = false;
   } else {
-    deadlineError.value = true
+    deadlineError.value = true;
   }
-})
+});
 
 /* save form*/
 const saveForm = (eventID: number, eventType: string, router: any) => {
-  editEventByID(eventID, eventType, router)
-}
+  editEventByID(eventID, eventType, router);
+};
 
 /* validate from*/
-const venueStreetError = ref(false)
-const venuePostalCodeError = ref(false)
-const titleError = ref(false)
-const subtitleError = ref(false)
-const meetAtError = ref(false)
-const beginAtError = ref(false)
-const deadlineError = ref(false)
-const linkExternError = ref(false)
+const venueStreetError = ref(false);
+const venuePostalCodeError = ref(false);
+const titleError = ref(false);
+const subtitleError = ref(false);
+const meetAtError = ref(false);
+const beginAtError = ref(false);
+const deadlineError = ref(false);
+const linkExternError = ref(false);
 
 const validateForm = (eventID: number, eventType: string, router: any) => {
   // Set unchanged data
-  venue.value = selectedEvent.value[0].venue
-  standingOrderID.value = selectedEvent.value[0].standingOrderID
-  eventDate.value = eventDateNewValue.value
+  venue.value = selectedEvent.value[0].venue;
+  standingOrderID.value = selectedEvent.value[0].standingOrderID;
+  eventDate.value = eventDateNewValue.value;
 
   // Set changed data
-  venueStreet.value = selectedEvent.value[0].venueStreet
-  venuePostalCode.value = selectedEvent.value[0].venuePostalCode
-  title.value = selectedEvent.value[0].eventDescription.title
-  subtitle.value = selectedEvent.value[0].eventDescription.subtitle
-  description.value = selectedEvent.value[0].eventDescription.description
-  meetAt.value = selectedEvent.value[0].eventDescription.meetAt as string
-  beginAt.value = selectedEvent.value[0].eventDescription.beginAt as string
-  endAt.value = selectedEvent.value[0].eventDescription.endAt as string
-  linkExtern.value = selectedEvent.value[0].linkExtern
-  showInDashboard.value = selectedEvent.value[0].showInDashboard
+  venueStreet.value = selectedEvent.value[0].venueStreet;
+  venuePostalCode.value = selectedEvent.value[0].venuePostalCode;
+  title.value = selectedEvent.value[0].eventDescription.title;
+  subtitle.value = selectedEvent.value[0].eventDescription.subtitle;
+  description.value = selectedEvent.value[0].eventDescription.description;
+  meetAt.value = selectedEvent.value[0].eventDescription.meetAt as string;
+  beginAt.value = selectedEvent.value[0].eventDescription.beginAt as string;
+  endAt.value = selectedEvent.value[0].eventDescription.endAt as string;
+  linkExtern.value = selectedEvent.value[0].linkExtern;
+  showInDashboard.value = selectedEvent.value[0].showInDashboard;
   playerWithNoAccess.value = selectedEvent.value[0].playerWithNoAccess
     ? selectedEvent.value[0].playerWithNoAccess.map(String)
-    : []
+    : [];
 
   /* validation for new input */
   venueStreetError.value =
-    !validateStreet(venueStreet.value) || venueStreet.value.length <= 0
+    !validateStreet(venueStreet.value) || venueStreet.value.length <= 0;
   venuePostalCodeError.value =
     !validatePostalCode(venuePostalCode.value) ||
-    venuePostalCode.value.length <= 0
-  titleError.value = title.value.length <= 0
-  subtitleError.value = subtitle.value.length <= 0
-  meetAtError.value = meetAt.value.length <= 0
-  beginAtError.value = beginAt.value.length <= 0
+    venuePostalCode.value.length <= 0;
+  titleError.value = title.value.length <= 0;
+  subtitleError.value = subtitle.value.length <= 0;
+  meetAtError.value = meetAt.value.length <= 0;
+  beginAtError.value = beginAt.value.length <= 0;
 
   if (linkExtern.value) {
-    linkExternError.value = !validateFussballDeLink(linkExtern.value)
+    linkExternError.value = !validateFussballDeLink(linkExtern.value);
   } else {
-    linkExternError.value = false
+    linkExternError.value = false;
   }
 
   if (eventType === 'Spiel') {
@@ -388,7 +388,7 @@ const validateForm = (eventID: number, eventType: string, router: any) => {
       !beginAtError.value &&
       !linkExternError.value
     ) {
-      saveForm(eventID, eventType, router)
+      saveForm(eventID, eventType, router);
     }
   } else {
     if (
@@ -399,31 +399,31 @@ const validateForm = (eventID: number, eventType: string, router: any) => {
       !meetAtError.value &&
       !beginAtError.value
     ) {
-      saveForm(eventID, eventType, router)
+      saveForm(eventID, eventType, router);
     }
   }
-}
+};
 
 // Fetch events on mounted
 onMounted(() => {
-  fetchEventsByID(props.eventID)
+  fetchEventsByID(props.eventID);
 
   if (selectedEvent.value && selectedEvent.value.length > 0) {
     const deadlineToStart =
-      selectedEvent.value[0].eventDescription.deadlineToStart
+      selectedEvent.value[0].eventDescription.deadlineToStart;
 
     // Check if deadlineToStart is not null before extracting
     if (deadlineToStart) {
-      const { day, formattedTime } = extractDateAndTime(deadlineToStart)
-      deadlineToStartDay.value = day || '' // Fallback to an empty string if day is null
-      deadlineToStartTime.value = formattedTime || '' // Fallback to an empty string if formattedTime is null
+      const { day, formattedTime } = extractDateAndTime(deadlineToStart);
+      deadlineToStartDay.value = day || ''; // Fallback to an empty string if day is null
+      deadlineToStartTime.value = formattedTime || ''; // Fallback to an empty string if formattedTime is null
     } else {
       // If deadlineToStart is null, set defaults or handle as necessary
-      deadlineToStartDay.value = ''
-      deadlineToStartTime.value = ''
+      deadlineToStartDay.value = '';
+      deadlineToStartTime.value = '';
     }
   }
-})
+});
 </script>
 
 <style scoped lang="scss"></style>

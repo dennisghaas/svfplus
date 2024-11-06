@@ -74,7 +74,7 @@ defineProps({
     type: String,
     default: '',
   },
-})
+});
 </script>
 
 <style scoped lang="scss">

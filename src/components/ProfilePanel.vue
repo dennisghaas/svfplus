@@ -1,23 +1,23 @@
 <template>
   <component
-      :is="link ? 'router-link' : 'div'"
-      v-bind="link ? { to: link } : {}"
-      :class="[
-        'profile-panel',
-        { 'profile-panel--reverse': displayReverse },
-        { 'profile-panel--link': link },
-        { 'profile-panel--medium': displayMedium },
-        { 'profile-panel--small': displaySmall }
-      ]"
+    :is="link ? 'router-link' : 'div'"
+    v-bind="link ? { to: link } : {}"
+    :class="[
+      'profile-panel',
+      { 'profile-panel--reverse': displayReverse },
+      { 'profile-panel--link': link },
+      { 'profile-panel--medium': displayMedium },
+      { 'profile-panel--small': displaySmall },
+    ]"
   >
     <div
-        :class="[
-          'profile-panel__generic-image',
-          { 'profile-panel__generic-image-has-border': addBorder },
-          { 'profile-panel__custom-image': isImage },
-          { 'profile-panel__is-add-button': isAddButton }
-        ]"
-        :style="computedStyle"
+      :class="[
+        'profile-panel__generic-image',
+        { 'profile-panel__generic-image-has-border': addBorder },
+        { 'profile-panel__custom-image': isImage },
+        { 'profile-panel__is-add-button': isAddButton },
+      ]"
+      :style="computedStyle"
     >
       <template v-if="!isAddButton">
         {{ userInitials }}
@@ -26,15 +26,20 @@
         <i class="icon-injured"></i>
       </template>
     </div>
-    <span v-if="userName"
-          :class="['profile-panel__name', { 'profile-panel__name--small': displayMedium || displaySmall }]">
+    <span
+      v-if="userName"
+      :class="[
+        'profile-panel__name',
+        { 'profile-panel__name--small': displayMedium || displaySmall },
+      ]"
+    >
       {{ userName }}
     </span>
   </component>
 </template>
 
 <script setup lang="ts">
-import {computed} from "vue";
+import { computed } from 'vue';
 
 const props = defineProps({
   userInitials: {
@@ -67,7 +72,7 @@ const props = defineProps({
   },
   displayMedium: {
     type: Boolean,
-    default: false
+    default: false,
   },
   isImage: {
     type: Boolean,
@@ -75,14 +80,18 @@ const props = defineProps({
   },
   isAddButton: {
     type: Boolean,
-    default: false
-  }
-})
+    default: false,
+  },
+});
 
 const computedStyle = computed(() => {
   return {
-    '--profile-generic-image-bg': !props.isImage ? `var(${props.bgColor})` : undefined,
-    '--profile-custom-image-bg': props.isImage ? `url(${props.bgColor})` : undefined,
+    '--profile-generic-image-bg': !props.isImage
+      ? `var(${props.bgColor})`
+      : undefined,
+    '--profile-custom-image-bg': props.isImage
+      ? `url(${props.bgColor})`
+      : undefined,
   };
 });
 </script>
@@ -143,7 +152,7 @@ const computedStyle = computed(() => {
   }
 
   &__is-add-button {
-    [class*="icon-"] {
+    [class*='icon-'] {
       font-size: $font-size-12;
     }
   }

@@ -4,30 +4,38 @@
       <ul class="blanklist">
         <template v-for="(item, index) in navigation" :key="index">
           <li
-              v-if="item.showInMobileBar && item.accessibleRouteFrom.includes(store.state.userData.accessRights)"
-              :style="{ order: item.linkName === 'Erstellen' ? 0 : index - 1 }"
+            v-if="
+              item.showInMobileBar &&
+              item.accessibleRouteFrom.includes(
+                store.state.userData.accessRights
+              )
+            "
+            :style="{ order: item.linkName === 'Erstellen' ? 0 : index - 1 }"
           >
             <router-link
-                :to="item.linkUrl"
-                :title="item.linkName + ' ' + 'öffnen'"
-                :class="
-          item.linkName === 'Profil' &&
-          router.currentRoute.value.path === `/team/${store.state.userData.id}`
-            ? 'router-link-exact-active'
-            : ''
-        "
-                @click="routeLeave()"
+              :to="item.linkUrl"
+              :title="item.linkName + ' ' + 'öffnen'"
+              :class="
+                item.linkName === 'Profil' &&
+                router.currentRoute.value.path ===
+                  `/team/${store.state.userData.id}`
+                  ? 'router-link-exact-active'
+                  : ''
+              "
+              @click="routeLeave()"
             >
               <i
-                  v-if="item.properties[0].hasIcon"
-                  :class="item.properties[0].iconName"
+                v-if="item.properties[0].hasIcon"
+                :class="item.properties[0].iconName"
               ></i>
               <ProfilePanel
-                  v-if="item.properties[0].isProfile"
-                  :bg-color="store.state.userData.userImage.bgColor"
-                  :user-initials="store.state.userData.userImage.initials"
-                  :is-image="!store.state.userData.userImage.bgColor.includes('--')"
-                  :display-small="true"
+                v-if="item.properties[0].isProfile"
+                :bg-color="store.state.userData.userImage.bgColor"
+                :user-initials="store.state.userData.userImage.initials"
+                :is-image="
+                  !store.state.userData.userImage.bgColor.includes('--')
+                "
+                :display-small="true"
               />
               <span class="d-none">{{ item.linkName }}</span>
             </router-link>
@@ -39,16 +47,16 @@
 </template>
 
 <script setup lang="ts">
-import {navigation} from '@/config'
-import store from "@/store";
-import ProfilePanel from "@/components/ProfilePanel.vue";
-import {useRouter} from "vue-router";
+import { navigation } from '@/config';
+import store from '@/store';
+import ProfilePanel from '@/components/ProfilePanel.vue';
+import { useRouter } from 'vue-router';
 
 const routeLeave = () => {
   setTimeout(() => {
     window.scrollTo(0, 0);
   }, 0);
-}
+};
 
 const router = useRouter();
 
@@ -57,7 +65,7 @@ defineProps({
     type: Boolean,
     default: false,
   },
-})
+});
 </script>
 
 <style scoped lang="scss">

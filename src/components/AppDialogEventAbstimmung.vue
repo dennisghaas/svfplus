@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import BadgeType from '@/components/BadgeType.vue'
+import BadgeType from '@/components/BadgeType.vue';
 </script>
 
 <style scoped lang="scss"></style>

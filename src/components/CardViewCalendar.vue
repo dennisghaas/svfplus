@@ -10,8 +10,8 @@
 </template>
 
 <script setup lang="ts">
-import { formatWeekday } from '@/helpers/formatWeekday.ts'
-import { formatMonth } from '@/helpers/formatMonth.ts'
+import { formatWeekday } from '@/helpers/formatWeekday.ts';
+import { formatMonth } from '@/helpers/formatMonth.ts';
 
 defineProps({
   weekday: {
@@ -26,7 +26,7 @@ defineProps({
     type: String,
     default: '',
   },
-})
+});
 </script>
 
 <style scoped lang="scss">

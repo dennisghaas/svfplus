@@ -6,8 +6,8 @@
 </template>
 
 <script setup lang="ts">
-import MainNavigation from '@/components/MainNavigation.vue'
-import ContentImage from '@/components/ContentImage.vue'
+import MainNavigation from '@/components/MainNavigation.vue';
+import ContentImage from '@/components/ContentImage.vue';
 </script>
 
 <style scoped lang="scss">

@@ -77,40 +77,40 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed } from 'vue';
 
 // Props definieren
 const props = defineProps<{
-  inputType?: string
-  inputPlaceholder?: string
-  modelValue?: string | number | Date | null
-  id?: string
-  label?: string
-  errorMessage?: string
-  readonly?: boolean
-  hideLabel?: boolean
-  isVoteOptions?: boolean
-  requiredMessage?: string
-  minVal?: number
-  maxNumbers?: boolean
-  maxVal?: number
-}>()
+  inputType?: string;
+  inputPlaceholder?: string;
+  modelValue?: string | number | Date | null;
+  id?: string;
+  label?: string;
+  errorMessage?: string;
+  readonly?: boolean;
+  hideLabel?: boolean;
+  isVoteOptions?: boolean;
+  requiredMessage?: string;
+  minVal?: number;
+  maxNumbers?: boolean;
+  maxVal?: number;
+}>();
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string | number | Date): void
-  (e: 'focus', event: FocusEvent): void
-}>()
+  (e: 'update:modelValue', value: string | number | Date): void;
+  (e: 'focus', event: FocusEvent): void;
+}>();
 
 // Lokaler Zustand für Passwortsichtbarkeit
-const displayPassword = ref(false)
+const displayPassword = ref(false);
 
 // Computed-Eigenschaft für Passworttyp
 const passwordType = computed(() =>
-  displayPassword.value ? 'text' : 'password',
-)
+  displayPassword.value ? 'text' : 'password'
+);
 
 // Funktion zur Überprüfung, ob ein Datum gültig ist
-const isValidDate = (date: Date) => !isNaN(date.getTime())
+const isValidDate = (date: Date) => !isNaN(date.getTime());
 
 // Wenn das Eingabefeld vom Typ "date" ist, wird das Datum formatiert
 const formattedValue = computed(() => {
@@ -119,40 +119,40 @@ const formattedValue = computed(() => {
     props.modelValue instanceof Date &&
     isValidDate(props.modelValue)
   ) {
-    return props.modelValue.toISOString().split('T')[0]
+    return props.modelValue.toISOString().split('T')[0];
   }
-  return props.modelValue
-})
+  return props.modelValue;
+});
 
 // Eingabe-Ereignis behandeln
 const onInput = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  let value: string | number | Date
+  const target = event.target as HTMLInputElement;
+  let value: string | number | Date;
 
   if (props.inputType === 'date') {
-    const parsedDate = new Date(target.value)
+    const parsedDate = new Date(target.value);
     if (isValidDate(parsedDate)) {
-      value = parsedDate
+      value = parsedDate;
     } else {
       // Wenn das Datum ungültig ist, verwenden wir den eingegebenen Wert als String weiter
-      value = target.value
+      value = target.value;
     }
   } else {
-    value = target.value
+    value = target.value;
   }
 
-  emit('update:modelValue', value)
-}
+  emit('update:modelValue', value);
+};
 
 // Passwortsichtbarkeit umschalten
 const togglePasswordVisibility = () => {
-  displayPassword.value = !displayPassword.value
-}
+  displayPassword.value = !displayPassword.value;
+};
 
 // Fokus-Ereignis weiterleiten
 const emitFocus = (event: FocusEvent) => {
-  emit('focus', event)
-}
+  emit('focus', event);
+};
 </script>
 
 <style scoped lang="scss">

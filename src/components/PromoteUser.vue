@@ -28,9 +28,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
-import { accessibleRoles } from '@/config'
-import BadgeType from '@/components/BadgeType.vue'
+import { computed } from 'vue';
+import { accessibleRoles } from '@/config';
+import BadgeType from '@/components/BadgeType.vue';
 
 const props = defineProps({
   name: {
@@ -45,34 +45,34 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-})
+});
 
 // Define emits
 const emit = defineEmits<{
-  (event: 'update-roles', roles: string[]): void
-}>()
+  (event: 'update-roles', roles: string[]): void;
+}>();
 
 const newRoles = computed(() => {
-  return props.roles as string[] // Explicitly define the type as string[]
-})
+  return props.roles as string[]; // Explicitly define the type as string[]
+});
 
 // Function to update roles
 const updateRoles = (role: string, event: Event) => {
-  const target = event.target as HTMLInputElement // Type assertion for target
-  const isChecked = target.checked
+  const target = event.target as HTMLInputElement; // Type assertion for target
+  const isChecked = target.checked;
 
-  let updatedRoles = [...newRoles.value]
+  let updatedRoles = [...newRoles.value];
 
   if (isChecked) {
     // Add role
-    updatedRoles.push(role)
+    updatedRoles.push(role);
   } else {
     // Remove role
-    updatedRoles = updatedRoles.filter((r) => r !== role)
+    updatedRoles = updatedRoles.filter((r) => r !== role);
   }
 
-  emit('update-roles', updatedRoles)
-}
+  emit('update-roles', updatedRoles);
+};
 </script>
 
 <style lang="scss" scoped>

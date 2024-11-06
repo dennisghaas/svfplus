@@ -11,9 +11,17 @@
   <!-- Just Mobile -->
   <BottomNavigation
     v-if="isMobile || isTablet"
-    :hide-bottom-navigation="store.state.menuOpen || removePadding || hideBottomNavigation"
+    :hide-bottom-navigation="
+      store.state.menuOpen || removePadding || hideBottomNavigation
+    "
   />
-  <main :class="['pageMain', {'pageMain--no-padding' : removePadding}, {'pageMain--no-bottom-nav' : hideBottomNavigation}]">
+  <main
+    :class="[
+      'pageMain',
+      { 'pageMain--no-padding': removePadding },
+      { 'pageMain--no-bottom-nav': hideBottomNavigation },
+    ]"
+  >
     <div class="container">
       <slot name="pageMainContent"></slot>
     </div>
@@ -21,27 +29,27 @@
 </template>
 
 <script setup lang="ts">
-import store from '@/store'
-import { useBreakpoint } from '@/composables/useBreakpoint.ts'
+import store from '@/store';
+import { useBreakpoint } from '@/composables/useBreakpoint.ts';
 
-import PageHeader from '@/components/PageHeader.vue'
-import SidebarNavigation from '@/components/SidebarNavigation.vue'
-import BottomNavigation from '@/components/BottomNavigation.vue'
-import LoadingResponse from '@/components/LoadingResponse.vue'
+import PageHeader from '@/components/PageHeader.vue';
+import SidebarNavigation from '@/components/SidebarNavigation.vue';
+import BottomNavigation from '@/components/BottomNavigation.vue';
+import LoadingResponse from '@/components/LoadingResponse.vue';
 
 /* to detect device width */
-const { isMobile, isTablet, isDesktop } = useBreakpoint()
+const { isMobile, isTablet, isDesktop } = useBreakpoint();
 
 defineProps({
   removePadding: {
     type: Boolean,
-    default: false
+    default: false,
   },
   hideBottomNavigation: {
     type: Boolean,
-    default: false
-  }
-})
+    default: false,
+  },
+});
 </script>
 
 <style scoped lang="scss">

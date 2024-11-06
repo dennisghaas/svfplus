@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import InjuredIcon from '@/components/InjuredIcon.vue'
+import InjuredIcon from '@/components/InjuredIcon.vue';
 
 defineProps({
   badgeType: {
@@ -49,20 +49,20 @@ defineProps({
   },
   badgeNoIcon: {
     type: Boolean,
-    default: false
-  }
-})
+    default: false,
+  },
+});
 
 const genIconNameOnType = (type: string) => {
   if (type === 'error') {
-    return 'icon-warning'
+    return 'icon-warning';
   }
   if (type === 'success') {
-    return 'icon-check'
+    return 'icon-check';
   }
 
-  return 'icon-' + type
-}
+  return 'icon-' + type;
+};
 </script>
 
 <style scoped lang="scss">

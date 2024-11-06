@@ -48,32 +48,32 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { useBreakpoint } from '@/composables/useBreakpoint.ts'
-import store from '@/store'
-import ContentImage from '@/components/ContentImage.vue'
-import BurgerMenu from '@/components/BurgerMenu.vue'
-import MainNavigation from '@/components/MainNavigation.vue'
-import ProfilePanel from '@/components/ProfilePanel.vue'
+import { ref, watch } from 'vue';
+import { useBreakpoint } from '@/composables/useBreakpoint.ts';
+import store from '@/store';
+import ContentImage from '@/components/ContentImage.vue';
+import BurgerMenu from '@/components/BurgerMenu.vue';
+import MainNavigation from '@/components/MainNavigation.vue';
+import ProfilePanel from '@/components/ProfilePanel.vue';
 
-const { isMobile, isTablet } = useBreakpoint()
-const showDropdown = ref(store.state.menuOpen)
+const { isMobile, isTablet } = useBreakpoint();
+const showDropdown = ref(store.state.menuOpen);
 
 const toggleDropdown = () => {
-  store.updateOverflowHidden(true)
-  store.menuOpen(!store.state.menuOpen)
+  store.updateOverflowHidden(true);
+  store.menuOpen(!store.state.menuOpen);
 
-  if(!store.state.menuOpen) {
-    store.updateOverflowHidden(false)
+  if (!store.state.menuOpen) {
+    store.updateOverflowHidden(false);
   }
-}
+};
 
 watch(
   () => store.state.menuOpen,
   (newVal) => {
-    showDropdown.value = newVal
-  },
-)
+    showDropdown.value = newVal;
+  }
+);
 </script>
 
 <style scoped lang="scss">

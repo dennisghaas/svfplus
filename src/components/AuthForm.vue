@@ -40,28 +40,28 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { useLocalStorage } from '@/composables/useLocalStorage.ts'
-import LoginForm from '@/components/LoginForm.vue'
-import RegisterForm from '@/components/RegisterForm.vue'
-import ContentImage from '@/components/ContentImage.vue'
+import { onMounted, ref } from 'vue';
+import { useLocalStorage } from '@/composables/useLocalStorage.ts';
+import LoginForm from '@/components/LoginForm.vue';
+import RegisterForm from '@/components/RegisterForm.vue';
+import ContentImage from '@/components/ContentImage.vue';
 
-const showLogin = ref(false)
+const showLogin = ref(false);
 
-const { loadValue } = useLocalStorage('alreadyRegistered', 'no')
-const fetchedStorageRegisteredValue = ref('')
+const { loadValue } = useLocalStorage('alreadyRegistered', 'no');
+const fetchedStorageRegisteredValue = ref('');
 
 const changeView = () => {
-  showLogin.value = !showLogin.value
-}
+  showLogin.value = !showLogin.value;
+};
 
 onMounted(() => {
-  fetchedStorageRegisteredValue.value = loadValue()
+  fetchedStorageRegisteredValue.value = loadValue();
 
   if (fetchedStorageRegisteredValue.value === 'yes') {
-    showLogin.value = true
+    showLogin.value = true;
   }
-})
+});
 </script>
 
 <style scoped lang="scss">

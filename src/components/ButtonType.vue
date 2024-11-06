@@ -49,15 +49,15 @@ defineProps({
     type: String,
     default: '',
   },
-})
+});
 
 const emit = defineEmits<{
-  (event: 'click'): void
-}>()
+  (event: 'click'): void;
+}>();
 
 const handleClick = () => {
-  emit('click')
-}
+  emit('click');
+};
 </script>
 
 <style scoped lang="scss">

@@ -4,30 +4,35 @@
       <span class="typo-label"> Menü </span>
     </li>
     <template v-for="item in navigation" :key="item.linkName">
-      <li v-if="item.accessibleRouteFrom.includes(store.state.userData.accessRights)">
+      <li
+        v-if="
+          item.accessibleRouteFrom.includes(store.state.userData.accessRights)
+        "
+      >
         <!-- handleRouteLeave() just for mobile -->
         <router-link
-            :to="item.linkUrl"
-            @click="!isDesktop ? handleRouteLeave() : ''"
-            :class="
-          item.linkName === 'Profil' &&
-          router.currentRoute.value.path === `/team/${store.state.userData.id}`
-            ? 'router-link-exact-active'
-            : ''
-        "
+          :to="item.linkUrl"
+          @click="!isDesktop ? handleRouteLeave() : ''"
+          :class="
+            item.linkName === 'Profil' &&
+            router.currentRoute.value.path ===
+              `/team/${store.state.userData.id}`
+              ? 'router-link-exact-active'
+              : ''
+          "
         >
           <template v-if="item.properties">
             <i
-                v-if="item.properties[0].hasIcon"
-                :class="item.properties[0].iconName"
+              v-if="item.properties[0].hasIcon"
+              :class="item.properties[0].iconName"
             ></i>
             <ProfilePanel
-                v-if="item.properties[0].isProfile"
-                :user-initials="store.state.userData.userImage.initials"
-                :bg-color="store.state.userData.userImage.bgColor"
-                :add-border="true"
-                :display-small="true"
-                :is-image="!store.state.userData.userImage.bgColor.includes('--')"
+              v-if="item.properties[0].isProfile"
+              :user-initials="store.state.userData.userImage.initials"
+              :bg-color="store.state.userData.userImage.bgColor"
+              :add-border="true"
+              :display-small="true"
+              :is-image="!store.state.userData.userImage.bgColor.includes('--')"
             />
           </template>
           <span>{{ item.linkName }}</span>
@@ -44,24 +49,24 @@
 </template>
 
 <script setup lang="ts">
-import { useAuth } from '@/composables/useAuth.ts'
-import { useRouter } from 'vue-router'
-import { useHandleDropdownOnRouteLeave } from '@/composables/useHandleDropdownOnRouteLeave.ts'
-import { useBreakpoint } from '@/composables/useBreakpoint.ts'
+import { useAuth } from '@/composables/useAuth.ts';
+import { useRouter } from 'vue-router';
+import { useHandleDropdownOnRouteLeave } from '@/composables/useHandleDropdownOnRouteLeave.ts';
+import { useBreakpoint } from '@/composables/useBreakpoint.ts';
 
-import store from '@/store'
-import { navigation } from '@/config'
-import ProfilePanel from '@/components/ProfilePanel.vue'
+import store from '@/store';
+import { navigation } from '@/config';
+import ProfilePanel from '@/components/ProfilePanel.vue';
 
-const { handleLogout } = useAuth()
-const { handleRouteLeave } = useHandleDropdownOnRouteLeave()
+const { handleLogout } = useAuth();
+const { handleRouteLeave } = useHandleDropdownOnRouteLeave();
 
-const { isDesktop } = useBreakpoint()
-const router = useRouter()
+const { isDesktop } = useBreakpoint();
+const router = useRouter();
 
 const onLogout = () => {
-  handleLogout(router)
-}
+  handleLogout(router);
+};
 </script>
 
 <style scoped lang="scss">

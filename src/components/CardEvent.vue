@@ -41,7 +41,10 @@
       />
 
       <AppButton
-        v-if="!preview && store.state.isMajor || eventType === 'Abstimmung' && store.state.isCorporal"
+        v-if="
+          (!preview && store.state.isMajor) ||
+          (eventType === 'Abstimmung' && store.state.isCorporal)
+        "
         :label="'Event bearbeiten'"
         :additional-class="`bg-white ${displayBackgroundColorOnEventType(eventType, true)}`"
         :icon="'icon-settings'"
@@ -100,7 +103,7 @@
         </template>
 
         <template v-else>
-<!--          <template v-if="!voteMultipleSelection">
+          <!--          <template v-if="!voteMultipleSelection">
             <RadioType
                 :radio="voteOptions"
                 :name="`question_${id}`"
@@ -152,7 +155,9 @@
           :not-nominated="notNominated"
           :player-with-no-access="playerWithNoAccess"
           :event-i-d="id"
-          :is-allowed-to-click-on-control="countdown === 'Zeit zum reagieren abgelaufen'"
+          :is-allowed-to-click-on-control="
+            countdown === 'Zeit zum reagieren abgelaufen'
+          "
         />
 
         <nav v-else>
@@ -169,63 +174,63 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import store from '@/store'
-import { formatDate } from '@/helpers/formatDate.ts'
-import { useCountdown } from '@/composables/useCountdown.ts'
-import { VoteOption } from '@/interface'
-import CardFrame from '@/components/CardFrame.vue'
-import CardViewCalendar from '@/components/CardViewCalendar.vue'
-import BadgeType from '@/components/BadgeType.vue'
-import LinkExternalFussballDe from '@/components/LinkExternalFussballDe.vue'
+import { computed, ref } from 'vue';
+import store from '@/store';
+import { formatDate } from '@/helpers/formatDate.ts';
+import { useCountdown } from '@/composables/useCountdown.ts';
+import { VoteOption } from '@/interface';
+import CardFrame from '@/components/CardFrame.vue';
+import CardViewCalendar from '@/components/CardViewCalendar.vue';
+import BadgeType from '@/components/BadgeType.vue';
+import LinkExternalFussballDe from '@/components/LinkExternalFussballDe.vue';
 // import RadioType from "@/components/RadioType.vue";
 // import CheckboxType from "@/components/CheckboxType.vue";
-import ButtonType from '@/components/ButtonType.vue'
-import AppButton from '@/components/AppButton.vue'
-import EditModeDialog from '@/components/EditModeDialog.vue'
-import CardEventControls from '@/components/CardEventControls.vue'
+import ButtonType from '@/components/ButtonType.vue';
+import AppButton from '@/components/AppButton.vue';
+import EditModeDialog from '@/components/EditModeDialog.vue';
+import CardEventControls from '@/components/CardEventControls.vue';
 
-const showEditModeDialog = ref(false)
+const showEditModeDialog = ref(false);
 const handleShowEditModeDialog = () => {
-  showEditModeDialog.value = !showEditModeDialog.value
-}
+  showEditModeDialog.value = !showEditModeDialog.value;
+};
 
 /* create computed from event Date with formatDate Helper function */
-const formattedDate = computed(() => formatDate(props.eventDate))
+const formattedDate = computed(() => formatDate(props.eventDate));
 
 /* add computed to check if a player is not nominated for a game */
-const possibleNotNominatedEventTypes = ['Training', 'Spiel', 'Feier']
+const possibleNotNominatedEventTypes = ['Training', 'Spiel', 'Feier'];
 const notNominated = computed(() => {
   return possibleNotNominatedEventTypes.some(
     (type) =>
       type === props.eventType &&
-      props.playerWithNoAccess.includes(store.state.userData.id.toString()),
-  )
-})
+      props.playerWithNoAccess.includes(store.state.userData.id.toString())
+  );
+});
 
 const displayBackgroundColorOnEventType = (
   eventType: string,
-  useTextColor?: boolean,
+  useTextColor?: boolean
 ) => {
-  const prefix = useTextColor ? 'text-color' : 'bg'
+  const prefix = useTextColor ? 'text-color' : 'bg';
   if (eventType === 'Spiel') {
-    return `${prefix}-blue-light-gray`
+    return `${prefix}-blue-light-gray`;
   } else if (eventType === 'Feier') {
-    return `${prefix}-blue-dark-gray`
+    return `${prefix}-blue-dark-gray`;
   } else if (eventType === 'Abstimmung') {
-    return `${prefix}-blue-primary`
+    return `${prefix}-blue-primary`;
   } else {
-    return `${prefix}-blue-soft-gray`
+    return `${prefix}-blue-soft-gray`;
   }
-}
+};
 
 const displayEventDetails = (time: string) => {
   if (!time) {
-    return '-'
+    return '-';
   }
 
-  return time
-}
+  return time;
+};
 
 const props = defineProps({
   id: {
@@ -304,13 +309,13 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-})
+});
 
-const isAbstimmung = ref(props.eventType === 'Abstimmung')
+const isAbstimmung = ref(props.eventType === 'Abstimmung');
 
 const { startCountdown, showCountdown, countdownExpired, countdown } =
-  useCountdown()
-startCountdown(props.timeToReact)
+  useCountdown();
+startCountdown(props.timeToReact);
 </script>
 
 <style scoped lang="scss">

@@ -1,11 +1,11 @@
-import {exceptions} from "@/config";
+import { exceptions } from '@/config';
 export function validateSentence(sentence: string) {
-  const sentenceLowerCase = sentence.toLowerCase()
+  const sentenceLowerCase = sentence.toLowerCase();
 
   if (exceptions.includes(sentenceLowerCase)) {
-    return true
+    return true;
   }
 
-  const words = sentenceLowerCase.trim().split(/\s+/).filter(Boolean)
-  return words.length >= 3
+  const words = sentenceLowerCase.trim().split(/\s+/).filter(Boolean);
+  return words.length >= 3;
 }

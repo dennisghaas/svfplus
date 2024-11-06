@@ -101,8 +101,8 @@
 
 <script setup lang="ts">
 // Importing components
-import InputType from '@/components/InputType.vue'
-import TextareaType from '@/components/TextareaType.vue'
+import InputType from '@/components/InputType.vue';
+import TextareaType from '@/components/TextareaType.vue';
 
 // Define props
 defineProps({
@@ -120,7 +120,7 @@ defineProps({
   beginAtError: Boolean,
   deadlineError: Boolean,
   isTraining: Boolean,
-})
+});
 
 // Define emits
 const emit = defineEmits([
@@ -132,22 +132,22 @@ const emit = defineEmits([
   'update:endAt',
   'update:deadlineToStartDay',
   'update:deadlineToStartTime',
-])
+]);
 
 const updateTitle = (newTitle: string | number | Date) =>
-  emit('update:title', newTitle.toString())
+  emit('update:title', newTitle.toString());
 const updateSubtitle = (newSubtitle: string | number | Date) =>
-  emit('update:subtitle', newSubtitle.toString())
+  emit('update:subtitle', newSubtitle.toString());
 const updateDescription = (newDescription: string | number | Date) =>
-  emit('update:description', newDescription.toString())
+  emit('update:description', newDescription.toString());
 const updateMeetAt = (newMeetAt: string | number | Date) =>
-  emit('update:meetAt', newMeetAt.toString())
+  emit('update:meetAt', newMeetAt.toString());
 const updateBeginAt = (newBeginAt: string | number | Date) =>
-  emit('update:beginAt', newBeginAt.toString())
+  emit('update:beginAt', newBeginAt.toString());
 const updateEndAt = (newEndAt: string | number | Date) =>
-  emit('update:endAt', newEndAt.toString())
+  emit('update:endAt', newEndAt.toString());
 const updateDeadlineToStartDay = (newDeadlineDay: string | number | Date) =>
-  emit('update:deadlineToStartDay', newDeadlineDay.toString())
+  emit('update:deadlineToStartDay', newDeadlineDay.toString());
 const updateDeadlineToStartTime = (newDeadlineTime: string | number | Date) =>
-  emit('update:deadlineToStartTime', newDeadlineTime.toString())
+  emit('update:deadlineToStartTime', newDeadlineTime.toString());
 </script>

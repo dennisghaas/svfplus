@@ -1,6 +1,6 @@
 export function formatMonthToWord(
   month: string,
-  isIndexNumbering?: boolean,
+  isIndexNumbering?: boolean
 ): string {
   if (!isIndexNumbering) {
     const monthMap: { [key: string]: string } = {
@@ -16,10 +16,10 @@ export function formatMonthToWord(
       '10': 'Oktober',
       '11': 'November',
       '12': 'Dezember',
-    }
-    return monthMap[month] || month
+    };
+    return monthMap[month] || month;
   } else {
-    const monthNumber = parseInt(month)
+    const monthNumber = parseInt(month);
     const monthMap: { [key: number]: string } = {
       0: 'Januar',
       1: 'Februar',
@@ -33,7 +33,7 @@ export function formatMonthToWord(
       9: 'Oktober',
       10: 'November',
       11: 'Dezember',
-    }
-    return monthMap[monthNumber] || month // Use monthNumber as the key
+    };
+    return monthMap[monthNumber] || month; // Use monthNumber as the key
   }
 }

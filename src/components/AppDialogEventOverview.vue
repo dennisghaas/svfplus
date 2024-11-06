@@ -1,48 +1,50 @@
 <template>
   <div class="event-reaction-overview__wrapper">
     <div
-        v-if="filteredUserData.keineReaktion.length > 0"
-        class="event-reaction-overview"
+      v-if="filteredUserData.keineReaktion.length > 0"
+      class="event-reaction-overview"
     >
       <h3>
         Noch nicht reagiert ({{ filteredUserData.counts.keineReaktionCount }})
       </h3>
       <ul class="blanklist event-reaction-overview__list">
         <li
-            v-for="user in filteredUserData.keineReaktion"
-            :key="user.id"
-            class="event-reaction-overview__item"
+          v-for="user in filteredUserData.keineReaktion"
+          :key="user.id"
+          class="event-reaction-overview__item"
         >
           <div class="event-reaction-overview__item-image">
             <ProfilePanel
-                :user-name="user.name + ' ' + user.surname"
-                :bg-color="user.userImage.bgColor"
-                :is-image="!user.userImage.bgColor.includes('--')"
-                :user-initials="user.userImage.initials"
-                :display-medium="true"
+              :user-name="user.name + ' ' + user.surname"
+              :bg-color="user.userImage.bgColor"
+              :is-image="!user.userImage.bgColor.includes('--')"
+              :user-initials="user.userImage.initials"
+              :display-medium="true"
             />
 
-            <span v-if="store.state.isMajor || isCurrentUsersProfile(user.id)" class="event-reaction-overview__reason">
-              {{user.reason}}
+            <span
+              v-if="store.state.isMajor || isCurrentUsersProfile(user.id)"
+              class="event-reaction-overview__reason"
+            >
+              {{ user.reason }}
             </span>
           </div>
           <div
-              v-if="filterEventResponse(user.id)"
-              class="event-reaction-overview__item-controls"
+            v-if="filterEventResponse(user.id)"
+            class="event-reaction-overview__item-controls"
           >
             <template
-                v-for="button in accessibleReactions"
-                :key="button.reaction"
+              v-for="button in accessibleReactions"
+              :key="button.reaction"
             >
-
               <ButtonCircle
-                  :name="button.reaction"
-                  :icon="button.icon"
-                  :reaction="button.reaction"
-                  :username="user.name"
-                  :background="button.background"
-                  :api-response="filterEventResponse(user.id).value?.response"
-                  @click="sendResponse(button.reaction, user.id)"
+                :name="button.reaction"
+                :icon="button.icon"
+                :reaction="button.reaction"
+                :username="user.name"
+                :background="button.background"
+                :api-response="filterEventResponse(user.id).value?.response"
+                @click="sendResponse(button.reaction, user.id)"
               />
             </template>
           </div>
@@ -51,48 +53,50 @@
     </div>
 
     <div
-        v-if="filteredUserData.zusagen.length > 0"
-        class="event-reaction-overview"
+      v-if="filteredUserData.zusagen.length > 0"
+      class="event-reaction-overview"
     >
       <h3>Zusagen ({{ filteredUserData.counts.zusagenCount }})</h3>
       <ul class="blanklist event-reaction-overview__list">
         <li
-            v-for="user in filteredUserData.zusagen"
-            :key="user.id"
-            class="event-reaction-overview__item"
+          v-for="user in filteredUserData.zusagen"
+          :key="user.id"
+          class="event-reaction-overview__item"
         >
           <div class="event-reaction-overview__item-image">
             <ProfilePanel
-                :user-name="user.name + ' ' + user.surname"
-                :bg-color="user.userImage.bgColor"
-                :is-image="!user.userImage.bgColor.includes('--')"
-                :user-initials="user.userImage.initials"
-                :display-medium="true"
+              :user-name="user.name + ' ' + user.surname"
+              :bg-color="user.userImage.bgColor"
+              :is-image="!user.userImage.bgColor.includes('--')"
+              :user-initials="user.userImage.initials"
+              :display-medium="true"
             />
 
-            <span v-if="store.state.isMajor || isCurrentUsersProfile(user.id)" class="event-reaction-overview__reason">
-              {{user.reason}}
+            <span
+              v-if="store.state.isMajor || isCurrentUsersProfile(user.id)"
+              class="event-reaction-overview__reason"
+            >
+              {{ user.reason }}
             </span>
 
-            <span v-if="user.id === selectEventResponses[0].userId">
-            </span>
+            <span v-if="user.id === selectEventResponses[0].userId"> </span>
           </div>
           <div
-              v-if="filterEventResponse(user.id)"
-              class="event-reaction-overview__item-controls"
+            v-if="filterEventResponse(user.id)"
+            class="event-reaction-overview__item-controls"
           >
             <template
-                v-for="button in accessibleReactions"
-                :key="button.reaction"
+              v-for="button in accessibleReactions"
+              :key="button.reaction"
             >
               <ButtonCircle
-                  :name="button.reaction"
-                  :icon="button.icon"
-                  :reaction="button.reaction"
-                  :username="user.name"
-                  :background="button.background"
-                  :api-response="filterEventResponse(user.id).value?.response"
-                  @click="sendResponse(button.reaction, user.id)"
+                :name="button.reaction"
+                :icon="button.icon"
+                :reaction="button.reaction"
+                :username="user.name"
+                :background="button.background"
+                :api-response="filterEventResponse(user.id).value?.response"
+                @click="sendResponse(button.reaction, user.id)"
               />
             </template>
           </div>
@@ -101,45 +105,48 @@
     </div>
 
     <div
-        v-if="filteredUserData.absagen.length > 0"
-        class="event-reaction-overview"
+      v-if="filteredUserData.absagen.length > 0"
+      class="event-reaction-overview"
     >
       <h3>Absagen / Abwesend ({{ filteredUserData.counts.absagenCount }})</h3>
       <ul class="blanklist event-reaction-overview__list">
         <li
-            v-for="user in filteredUserData.absagen"
-            :key="user.id"
-            class="event-reaction-overview__item"
+          v-for="user in filteredUserData.absagen"
+          :key="user.id"
+          class="event-reaction-overview__item"
         >
           <div class="event-reaction-overview__item-image">
             <ProfilePanel
-                :user-name="user.name + ' ' + user.surname"
-                :bg-color="user.userImage.bgColor"
-                :is-image="!user.userImage.bgColor.includes('--')"
-                :user-initials="user.userImage.initials"
-                :display-medium="true"
+              :user-name="user.name + ' ' + user.surname"
+              :bg-color="user.userImage.bgColor"
+              :is-image="!user.userImage.bgColor.includes('--')"
+              :user-initials="user.userImage.initials"
+              :display-medium="true"
             />
 
-            <span v-if="store.state.isMajor || isCurrentUsersProfile(user.id)" class="event-reaction-overview__reason">
-              {{user.reason}}
+            <span
+              v-if="store.state.isMajor || isCurrentUsersProfile(user.id)"
+              class="event-reaction-overview__reason"
+            >
+              {{ user.reason }}
             </span>
           </div>
           <div
-              v-if="filterEventResponse(user.id)"
-              class="event-reaction-overview__item-controls"
+            v-if="filterEventResponse(user.id)"
+            class="event-reaction-overview__item-controls"
           >
             <template
-                v-for="button in accessibleReactions"
-                :key="button.reaction"
+              v-for="button in accessibleReactions"
+              :key="button.reaction"
             >
               <ButtonCircle
-                  :name="button.reaction"
-                  :icon="button.icon"
-                  :reaction="button.reaction"
-                  :username="user.name"
-                  :background="button.background"
-                  :api-response="filterEventResponse(user.id).value?.response"
-                  @click="sendResponse(button.reaction, user.id)"
+                :name="button.reaction"
+                :icon="button.icon"
+                :reaction="button.reaction"
+                :username="user.name"
+                :background="button.background"
+                :api-response="filterEventResponse(user.id).value?.response"
+                @click="sendResponse(button.reaction, user.id)"
               />
             </template>
           </div>
@@ -148,45 +155,48 @@
     </div>
 
     <div
-        v-if="filteredUserData.unsicher.length > 0"
-        class="event-reaction-overview"
+      v-if="filteredUserData.unsicher.length > 0"
+      class="event-reaction-overview"
     >
       <h3>Unsicher ({{ filteredUserData.counts.unsicherCount }})</h3>
       <ul class="blanklist event-reaction-overview__list">
         <li
-            v-for="user in filteredUserData.unsicher"
-            :key="user.id"
-            class="event-reaction-overview__item"
+          v-for="user in filteredUserData.unsicher"
+          :key="user.id"
+          class="event-reaction-overview__item"
         >
           <div class="event-reaction-overview__item-image">
             <ProfilePanel
-                :user-name="user.name + ' ' + user.surname"
-                :bg-color="user.userImage.bgColor"
-                :is-image="!user.userImage.bgColor.includes('--')"
-                :user-initials="user.userImage.initials"
-                :display-medium="true"
+              :user-name="user.name + ' ' + user.surname"
+              :bg-color="user.userImage.bgColor"
+              :is-image="!user.userImage.bgColor.includes('--')"
+              :user-initials="user.userImage.initials"
+              :display-medium="true"
             />
 
-            <span v-if="store.state.isMajor || isCurrentUsersProfile(user.id)" class="event-reaction-overview__reason">
-              {{user.reason}}
+            <span
+              v-if="store.state.isMajor || isCurrentUsersProfile(user.id)"
+              class="event-reaction-overview__reason"
+            >
+              {{ user.reason }}
             </span>
           </div>
           <div
-              v-if="filterEventResponse(user.id)"
-              class="event-reaction-overview__item-controls"
+            v-if="filterEventResponse(user.id)"
+            class="event-reaction-overview__item-controls"
           >
             <template
-                v-for="button in accessibleReactions"
-                :key="button.reaction"
+              v-for="button in accessibleReactions"
+              :key="button.reaction"
             >
               <ButtonCircle
-                  :name="button.reaction"
-                  :icon="button.icon"
-                  :reaction="button.reaction"
-                  :username="user.name"
-                  :background="button.background"
-                  :api-response="filterEventResponse(user.id).value?.response"
-                  @click="sendResponse(button.reaction, user.id)"
+                :name="button.reaction"
+                :icon="button.icon"
+                :reaction="button.reaction"
+                :username="user.name"
+                :background="button.background"
+                :api-response="filterEventResponse(user.id).value?.response"
+                @click="sendResponse(button.reaction, user.id)"
               />
             </template>
           </div>
@@ -195,36 +205,36 @@
     </div>
 
     <div
-        v-if="filteredUserData.nichtNominiert.length > 0"
-        class="event-reaction-overview"
+      v-if="filteredUserData.nichtNominiert.length > 0"
+      class="event-reaction-overview"
     >
       <h3>
         Nicht nominiert ({{ filteredUserData.counts.nichtNominiertCount }})
       </h3>
       <ul class="blanklist event-reaction-overview__list">
         <li
-            v-for="user in filteredUserData.nichtNominiert"
-            :key="user.id"
-            class="event-reaction-overview__item"
+          v-for="user in filteredUserData.nichtNominiert"
+          :key="user.id"
+          class="event-reaction-overview__item"
         >
           <div class="event-reaction-overview__item-image">
             <ProfilePanel
-                :user-name="user.name + ' ' + user.surname"
-                :bg-color="user.userImage.bgColor"
-                :is-image="!user.userImage.bgColor.includes('--')"
-                :user-initials="user.userImage.initials"
-                :display-medium="true"
+              :user-name="user.name + ' ' + user.surname"
+              :bg-color="user.userImage.bgColor"
+              :is-image="!user.userImage.bgColor.includes('--')"
+              :user-initials="user.userImage.initials"
+              :display-medium="true"
             />
           </div>
           <div
-              v-if="filterEventResponse(user.id)"
-              class="event-reaction-overview__item-controls"
+            v-if="filterEventResponse(user.id)"
+            class="event-reaction-overview__item-controls"
           >
             <BadgeType
-                :badge-text="'Nicht nominiert'"
-                :badge-type="'error'"
-                :badge-centered="true"
-                :badge-alt="true"
+              :badge-text="'Nicht nominiert'"
+              :badge-type="'error'"
+              :badge-centered="true"
+              :badge-alt="true"
             />
           </div>
         </li>
@@ -234,20 +244,20 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, ref, computed} from 'vue'
-import {useUser} from '@/composables/useUser.ts'
-import {useEventResponse} from '@/composables/useEventResponse.ts'
-import {useRouter} from 'vue-router'
-import {UserData} from '@/interface'
-import ProfilePanel from '@/components/ProfilePanel.vue'
-import ButtonCircle from '@/components/ButtonCircle.vue'
-import BadgeType from '@/components/BadgeType.vue'
-import store from "@/store";
+import { onMounted, ref, computed } from 'vue';
+import { useUser } from '@/composables/useUser.ts';
+import { useEventResponse } from '@/composables/useEventResponse.ts';
+import { useRouter } from 'vue-router';
+import { UserData } from '@/interface';
+import ProfilePanel from '@/components/ProfilePanel.vue';
+import ButtonCircle from '@/components/ButtonCircle.vue';
+import BadgeType from '@/components/BadgeType.vue';
+import store from '@/store';
 
-const {fetchAllUsers, completeUserData} = useUser()
-const {fetchEventResponse, selectEventResponses} = useEventResponse()
-const userData = ref<UserData[]>([])
-const router = useRouter()
+const { fetchAllUsers, completeUserData } = useUser();
+const { fetchEventResponse, selectEventResponses } = useEventResponse();
+const userData = ref<UserData[]>([]);
+const router = useRouter();
 const props = defineProps({
   eventID: {
     type: Number,
@@ -257,121 +267,120 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
-})
+});
 
 const filterEventResponse = (userId: number) => {
   return computed(() => {
     if (selectEventResponses.value) {
       return (
-          selectEventResponses.value.find(
-              (response) => response.userId === userId,
-          ) || null
-      )
+        selectEventResponses.value.find(
+          (response) => response.userId === userId
+        ) || null
+      );
     }
-    return null
-  })
-}
+    return null;
+  });
+};
 
 const filteredUserData = computed(() => {
   const zusagenUsers = userData.value
-      .filter(
-          (user) =>
-              user.username !== 'admin' &&
-              user.accessRights !== 'svf_commander' &&
-              user.userIsActivated &&
-              !props.playerWithNoAccess.includes(user.id.toString()) &&
-              selectEventResponses.value?.some(
-                  (response) =>
-                      response.userId === user.id && response.response === 'Zusagen',
-              ),
-      )
-      .map((user) => {
-        // Find the corresponding response for the user to get the reason
-        const userResponse = selectEventResponses.value?.find(
-            (response) =>
-                response.userId === user.id && response.response === 'Zusagen',
-        );
+    .filter(
+      (user) =>
+        user.username !== 'admin' &&
+        user.accessRights !== 'svf_commander' &&
+        user.userIsActivated &&
+        !props.playerWithNoAccess.includes(user.id.toString()) &&
+        selectEventResponses.value?.some(
+          (response) =>
+            response.userId === user.id && response.response === 'Zusagen'
+        )
+    )
+    .map((user) => {
+      // Find the corresponding response for the user to get the reason
+      const userResponse = selectEventResponses.value?.find(
+        (response) =>
+          response.userId === user.id && response.response === 'Zusagen'
+      );
 
-        return {
-          ...user,
-          reason: userResponse?.reason || '',
-        };
-      });
+      return {
+        ...user,
+        reason: userResponse?.reason || '',
+      };
+    });
 
   const absagenUsers = userData.value
-      .filter(
-          (user) =>
-              user.username !== 'admin' &&
-              user.accessRights !== 'svf_commander' &&
-              user.userIsActivated &&
-              !props.playerWithNoAccess.includes(user.id.toString()) &&
-              selectEventResponses.value?.some(
-                  (response) =>
-                      response.userId === user.id && response.response === 'Absagen',
-              ),
-      )
-      .map((user) => {
-        // Find the corresponding response for the user to get the reason
-        const userResponse = selectEventResponses.value?.find(
-            (response) =>
-                response.userId === user.id && response.response === 'Absagen',
-        );
+    .filter(
+      (user) =>
+        user.username !== 'admin' &&
+        user.accessRights !== 'svf_commander' &&
+        user.userIsActivated &&
+        !props.playerWithNoAccess.includes(user.id.toString()) &&
+        selectEventResponses.value?.some(
+          (response) =>
+            response.userId === user.id && response.response === 'Absagen'
+        )
+    )
+    .map((user) => {
+      // Find the corresponding response for the user to get the reason
+      const userResponse = selectEventResponses.value?.find(
+        (response) =>
+          response.userId === user.id && response.response === 'Absagen'
+      );
 
-        return {
-          ...user,
-          reason: userResponse?.reason || '',
-        };
-      });
+      return {
+        ...user,
+        reason: userResponse?.reason || '',
+      };
+    });
 
   const unsicherUsers = userData.value
-      .filter(
-          (user) =>
-              user.username !== 'admin' &&
-              user.accessRights !== 'svf_commander' &&
-              user.userIsActivated &&
-              !props.playerWithNoAccess.includes(user.id.toString()) &&
-              selectEventResponses.value?.some(
-                  (response) =>
-                      response.userId === user.id && response.response === 'Unsicher',
-              ),
-      )
-      .map((user) => {
-        // Find the corresponding response for the user to get the reason
-        const userResponse = selectEventResponses.value?.find(
-            (response) =>
-                response.userId === user.id && response.response === 'Unsicher',
-        );
+    .filter(
+      (user) =>
+        user.username !== 'admin' &&
+        user.accessRights !== 'svf_commander' &&
+        user.userIsActivated &&
+        !props.playerWithNoAccess.includes(user.id.toString()) &&
+        selectEventResponses.value?.some(
+          (response) =>
+            response.userId === user.id && response.response === 'Unsicher'
+        )
+    )
+    .map((user) => {
+      // Find the corresponding response for the user to get the reason
+      const userResponse = selectEventResponses.value?.find(
+        (response) =>
+          response.userId === user.id && response.response === 'Unsicher'
+      );
 
-        return {
-          ...user,
-          reason: userResponse?.reason || '',
-        };
-      });
+      return {
+        ...user,
+        reason: userResponse?.reason || '',
+      };
+    });
 
   const keineReaktionUsers = userData.value
-      .filter(
-          (user) =>
-              user.username !== 'admin' &&
-              user.accessRights !== 'svf_commander' &&
-              user.userIsActivated &&
-              !props.playerWithNoAccess.includes(user.id.toString()) &&
-              !selectEventResponses.value?.some(
-                  (response) => response.userId === user.id,
-              ),
-      )
-      .map((user) => ({
-        ...user,
-        reason: '',
-      }));
+    .filter(
+      (user) =>
+        user.username !== 'admin' &&
+        user.accessRights !== 'svf_commander' &&
+        user.userIsActivated &&
+        !props.playerWithNoAccess.includes(user.id.toString()) &&
+        !selectEventResponses.value?.some(
+          (response) => response.userId === user.id
+        )
+    )
+    .map((user) => ({
+      ...user,
+      reason: '',
+    }));
 
-  const nichtNominiertUsers = userData.value
-      .filter(
-          (user) =>
-              user.username !== 'admin' &&
-              user.accessRights !== 'svf_commander' &&
-              user.userIsActivated &&
-              props.playerWithNoAccess.includes(user.id.toString()),
-      )
+  const nichtNominiertUsers = userData.value.filter(
+    (user) =>
+      user.username !== 'admin' &&
+      user.accessRights !== 'svf_commander' &&
+      user.userIsActivated &&
+      props.playerWithNoAccess.includes(user.id.toString())
+  );
 
   return {
     zusagen: zusagenUsers,
@@ -405,26 +414,28 @@ const accessibleReactions = ref([
     icon: 'icon-question-mark',
     background: '--gray-dark',
   },
-])
+]);
 
 const isCurrentUsersProfile = (id: number) => {
   return id === store.state.userData.id;
-}
+};
 
 const sendResponse = async (reaction: string, userID: number) => {
   if (store.state.isMajor) {
-    const {eventResponse} = useEventResponse()
-    await eventResponse(reaction, props.eventID, '', router, true, userID)
+    const { eventResponse } = useEventResponse();
+    await eventResponse(reaction, props.eventID, '', router, true, userID);
   } else {
-    console.warn('Nur bestimmte Personen haben das Recht dazu, die Reaktionen der Spieler anzupassen');
+    console.warn(
+      'Nur bestimmte Personen haben das Recht dazu, die Reaktionen der Spieler anzupassen'
+    );
   }
-}
+};
 
 onMounted(async () => {
-  await fetchAllUsers()
-  await fetchEventResponse(props.eventID)
-  userData.value = completeUserData.value
-})
+  await fetchAllUsers();
+  await fetchEventResponse(props.eventID);
+  userData.value = completeUserData.value;
+});
 </script>
 
 <style scoped lang="scss">

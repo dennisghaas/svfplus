@@ -98,42 +98,42 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { useHandleNextCreateForm } from '@/composables/useHandleNextCreateForm.ts'
-import { useEvents } from '@/composables/useEvents.ts'
-import { combineDateAndTime } from '@/helpers/combineDateAndTime.ts'
-import CreateFormNextButton from '@/components/CreateFormNextButton.vue'
-import InputType from '@/components/InputType.vue'
-import TextareaType from '@/components/TextareaType.vue'
-import BadgeType from '@/components/BadgeType.vue'
+import { ref, watch } from 'vue';
+import { useHandleNextCreateForm } from '@/composables/useHandleNextCreateForm.ts';
+import { useEvents } from '@/composables/useEvents.ts';
+import { combineDateAndTime } from '@/helpers/combineDateAndTime.ts';
+import CreateFormNextButton from '@/components/CreateFormNextButton.vue';
+import InputType from '@/components/InputType.vue';
+import TextareaType from '@/components/TextareaType.vue';
+import BadgeType from '@/components/BadgeType.vue';
 
 /* ERROR REFS */
-const titleError = ref(false)
-const subtitleError = ref(false)
-const meetAtError = ref(false)
-const beginAtError = ref(false)
-const deadlineError = ref(false)
+const titleError = ref(false);
+const subtitleError = ref(false);
+const meetAtError = ref(false);
+const beginAtError = ref(false);
+const deadlineError = ref(false);
 
 /* HANDLE FORM VALIDATION */
-const { handleNextForm } = useHandleNextCreateForm()
+const { handleNextForm } = useHandleNextCreateForm();
 
 const validateForm = () => {
-  titleError.value = title.value.length <= 0
-  subtitleError.value = subtitle.value.length <= 0
-  meetAtError.value = meetAt.value.length <= 0
-  beginAtError.value = beginAt.value.length <= 0
+  titleError.value = title.value.length <= 0;
+  subtitleError.value = subtitle.value.length <= 0;
+  meetAtError.value = meetAt.value.length <= 0;
+  beginAtError.value = beginAt.value.length <= 0;
 
   /* extra check for deadline to start error message */
   if (eventType.value !== 'Training') {
     if (deadlineToStart.value === undefined || !deadlineToStart.value) {
-      deadlineError.value = true
+      deadlineError.value = true;
     }
   }
 
   if (eventType.value === 'Abstimmung') {
     if (!deadlineError.value && deadlineToStart.value) {
-      eventDate.value = new Date(deadlineToStart.value)
-      handleNextForm('result')
+      eventDate.value = new Date(deadlineToStart.value);
+      handleNextForm('result');
     }
   } else {
     if (
@@ -143,21 +143,21 @@ const validateForm = () => {
       !beginAtError.value &&
       !deadlineError.value
     ) {
-      handleNextForm('result')
+      handleNextForm('result');
     }
   }
-}
+};
 
-const deadlineToReactDate = ref(new Date())
-const deadlineToReactTime = ref('')
+const deadlineToReactDate = ref(new Date());
+const deadlineToReactTime = ref('');
 
 watch([deadlineToReactDate, deadlineToReactTime], ([newDate, newTime]) => {
-  deadlineToStart.value = combineDateAndTime(newDate, newTime)
+  deadlineToStart.value = combineDateAndTime(newDate, newTime);
 
   if (deadlineToStart.value) {
-    deadlineError.value = false
+    deadlineError.value = false;
   }
-})
+});
 
 const {
   eventType,
@@ -169,7 +169,7 @@ const {
   beginAt,
   endAt,
   deadlineToStart,
-} = useEvents()
+} = useEvents();
 </script>
 
 <style scoped lang="scss">

@@ -155,7 +155,7 @@ const updateWeeks = async () => {
     }
   } else {
     console.error(
-      'Fehler: weekComposable oder calculateWeeks ist nicht definiert',
+      'Fehler: weekComposable oder calculateWeeks ist nicht definiert'
     );
   }
 };
@@ -215,8 +215,12 @@ const isCurrentWeek = (week: any) => {
 };
 
 onMounted(async () => {
-  const monthQuery = route.query.month ? parseInt(route.query.month as string) : null;
-  const yearQuery = route.query.year ? parseInt(route.query.year as string) : null;
+  const monthQuery = route.query.month
+    ? parseInt(route.query.month as string)
+    : null;
+  const yearQuery = route.query.year
+    ? parseInt(route.query.year as string)
+    : null;
 
   // If the query is missing, set it to current month and year
   if (!monthQuery || !yearQuery) {
@@ -227,29 +231,35 @@ onMounted(async () => {
   }
 
   // Use the query values or fallbacks
-  currentMonth.value = monthQuery !== null ? monthQuery : currentDate.getMonth();
-  currentYear.value = yearQuery !== null ? yearQuery : currentDate.getFullYear();
+  currentMonth.value =
+    monthQuery !== null ? monthQuery : currentDate.getMonth();
+  currentYear.value =
+    yearQuery !== null ? yearQuery : currentDate.getFullYear();
 
   // Initial fetch handled in watch, no need to duplicate here
-  store.pageHeadline(`Termine im ${formatMonthToWord(currentMonth.value.toString(), true)}`);
+  store.pageHeadline(
+    `Termine im ${formatMonthToWord(currentMonth.value.toString(), true)}`
+  );
 });
 
 watch(
-    () => route.query, // Watch the query parameters
-    async (newQuery) => {
-      if (newQuery.year && newQuery.month) {
-        // Update year and month based on the new query parameters
-        currentYear.value = parseInt(newQuery.year as string);
-        currentMonth.value = parseInt(newQuery.month as string);
+  () => route.query, // Watch the query parameters
+  async (newQuery) => {
+    if (newQuery.year && newQuery.month) {
+      // Update year and month based on the new query parameters
+      currentYear.value = parseInt(newQuery.year as string);
+      currentMonth.value = parseInt(newQuery.month as string);
 
-        // Fetch events and update weeks
-        await fetchEvents();
-        await updateWeeks();
+      // Fetch events and update weeks
+      await fetchEvents();
+      await updateWeeks();
 
-        store.pageHeadline(`Termine im ${formatMonthToWord(currentMonth.value.toString(), true)}`);
-      }
-    },
-    { immediate: true }
+      store.pageHeadline(
+        `Termine im ${formatMonthToWord(currentMonth.value.toString(), true)}`
+      );
+    }
+  },
+  { immediate: true }
 );
 </script>
 

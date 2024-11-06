@@ -7,7 +7,7 @@ export function formatWeekday(weekday: string): string {
     Freitag: 'Fr.',
     Samstag: 'Sa.',
     Sonntag: 'So.',
-  }
+  };
 
-  return weekdayMap[weekday] || weekday
+  return weekdayMap[weekday] || weekday;
 }

@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import ButtonType from '@/components/ButtonType.vue'
+import ButtonType from '@/components/ButtonType.vue';
 
 const props = defineProps({
   nextID: {
@@ -28,15 +28,15 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-})
+});
 
-const emit = defineEmits(['click'])
+const emit = defineEmits(['click']);
 
 const handleClick = () => {
   if (!props.disabled) {
-    emit('click')
+    emit('click');
   }
-}
+};
 </script>
 
 <style scoped lang="scss"></style>

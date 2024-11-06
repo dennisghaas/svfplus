@@ -1,7 +1,7 @@
 export function handleSuit(suitValue: boolean) {
   if (!suitValue) {
-    return 'Nein'
+    return 'Nein';
   } else {
-    return 'Ja'
+    return 'Ja';
   }
 }
