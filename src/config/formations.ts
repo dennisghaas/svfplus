@@ -7,7 +7,6 @@ export const formationNav = ['4-4-2', '4-3-3(2)'];
 export const formation_4141: Positions[] = [
   {
     pos: 'tw',
-    name: 'Torwart',
     player: '',
     x: 'center',
     y: 'gk',
@@ -18,7 +17,6 @@ export const formation_4141: Positions[] = [
   },
   {
     pos: 'riv',
-    name: 'Innenverteidiger',
     player: '',
     x: 'center center-right',
     y: 'cb',
@@ -29,7 +27,6 @@ export const formation_4141: Positions[] = [
   },
   {
     pos: 'liv',
-    name: 'Innenverteidiger',
     player: '',
     x: 'center center-left',
     y: 'cb',
@@ -40,7 +37,6 @@ export const formation_4141: Positions[] = [
   },
   {
     pos: 'rv',
-    name: 'Außenverteidiger',
     player: '',
     x: 'right',
     y: 'fb',
@@ -51,7 +47,6 @@ export const formation_4141: Positions[] = [
   },
   {
     pos: 'lv',
-    name: 'Außenverteidiger',
     player: '',
     x: 'left',
     y: 'fb',
@@ -62,7 +57,6 @@ export const formation_4141: Positions[] = [
   },
   {
     pos: 'zdm',
-    name: 'Defensives Mittelfeld',
     player: '',
     x: 'center',
     y: 'cdm',
@@ -73,7 +67,6 @@ export const formation_4141: Positions[] = [
   },
   {
     pos: 'rzm',
-    name: 'Zentrales Mittelfeld',
     player: '',
     x: 'center center-right',
     y: 'cm',
@@ -84,7 +77,6 @@ export const formation_4141: Positions[] = [
   },
   {
     pos: 'lzm',
-    name: 'Zentrales Mittelfeld',
     player: '',
     x: 'center center-left',
     y: 'cm',
@@ -95,7 +87,6 @@ export const formation_4141: Positions[] = [
   },
   {
     pos: 'rm',
-    name: 'Flügelspieler',
     player: '',
     x: 'right',
     y: 'winger',
@@ -106,7 +97,6 @@ export const formation_4141: Positions[] = [
   },
   {
     pos: 'lm',
-    name: 'Flügelspieler',
     player: '',
     x: 'left',
     y: 'winger',
@@ -117,7 +107,6 @@ export const formation_4141: Positions[] = [
   },
   {
     pos: 'st',
-    name: 'Stürmer',
     player: '',
     x: 'center',
     y: 'st',
@@ -131,7 +120,6 @@ export const formation_4141: Positions[] = [
 export const formation_442: Positions[] = [
   {
     pos: 'tw',
-    name: 'Torwart',
     player: '',
     x: 'center',
     y: 'gk',
@@ -142,7 +130,6 @@ export const formation_442: Positions[] = [
   },
   {
     pos: 'riv',
-    name: 'Innenverteidiger',
     player: '',
     x: 'center center-right',
     y: 'cb',
@@ -153,7 +140,6 @@ export const formation_442: Positions[] = [
   },
   {
     pos: 'liv',
-    name: 'Innenverteidiger',
     player: '',
     x: 'center center-left',
     y: 'cb',
@@ -164,7 +150,6 @@ export const formation_442: Positions[] = [
   },
   {
     pos: 'rv',
-    name: 'Außenverteidiger',
     player: '',
     x: 'right',
     y: 'fb',
@@ -175,7 +160,6 @@ export const formation_442: Positions[] = [
   },
   {
     pos: 'lv',
-    name: 'Außenverteidiger',
     player: '',
     x: 'left',
     y: 'fb',
@@ -186,7 +170,6 @@ export const formation_442: Positions[] = [
   },
   {
     pos: 'rzm',
-    name: 'Zentrales Mittelfeld',
     player: '',
     x: 'center center-right',
     y: 'cm',
@@ -197,7 +180,6 @@ export const formation_442: Positions[] = [
   },
   {
     pos: 'lzm',
-    name: 'Zentrales Mittelfeld',
     player: '',
     x: 'center center-left',
     y: 'cm',
@@ -208,7 +190,6 @@ export const formation_442: Positions[] = [
   },
   {
     pos: 'rm',
-    name: 'Flügelspieler',
     player: '',
     x: 'right',
     y: 'winger',
@@ -219,7 +200,6 @@ export const formation_442: Positions[] = [
   },
   {
     pos: 'lm',
-    name: 'Flügelspieler',
     player: '',
     x: 'left',
     y: 'winger',
@@ -230,7 +210,6 @@ export const formation_442: Positions[] = [
   },
   {
     pos: 'st',
-    name: 'Stürmer',
     player: '',
     x: 'center center-right',
     y: 'st',
@@ -241,7 +220,6 @@ export const formation_442: Positions[] = [
   },
   {
     pos: 'st',
-    name: 'Stürmer',
     player: '',
     x: 'center center-left',
     y: 'st',
@@ -255,7 +233,6 @@ export const formation_442: Positions[] = [
 export const formation_443_2: Positions[] = [
   {
     pos: 'tw',
-    name: 'Torwart',
     player: '',
     x: 'center',
     y: 'gk',
@@ -266,7 +243,6 @@ export const formation_443_2: Positions[] = [
   },
   {
     pos: 'riv',
-    name: 'Innenverteidiger',
     player: '',
     x: 'center center-right',
     y: 'cb',
@@ -277,7 +253,6 @@ export const formation_443_2: Positions[] = [
   },
   {
     pos: 'liv',
-    name: 'Innenverteidiger',
     player: '',
     x: 'center center-left',
     y: 'cb',
@@ -288,7 +263,6 @@ export const formation_443_2: Positions[] = [
   },
   {
     pos: 'rv',
-    name: 'Außenverteidiger',
     player: '',
     x: 'right',
     y: 'fb',
@@ -299,7 +273,6 @@ export const formation_443_2: Positions[] = [
   },
   {
     pos: 'lv',
-    name: 'Außenverteidiger',
     player: '',
     x: 'left',
     y: 'fb',
@@ -310,7 +283,6 @@ export const formation_443_2: Positions[] = [
   },
   {
     pos: 'zdm',
-    name: 'Defensives Mittelfeld',
     player: '',
     x: 'center',
     y: 'cdm',
@@ -321,7 +293,6 @@ export const formation_443_2: Positions[] = [
   },
   {
     pos: 'rzm',
-    name: 'Zentrales Mittelfeld',
     player: '',
     x: 'center center-right',
     y: 'cm',
@@ -332,7 +303,6 @@ export const formation_443_2: Positions[] = [
   },
   {
     pos: 'lzm',
-    name: 'Zentrales Mittelfeld',
     player: '',
     x: 'center center-left',
     y: 'cm',
@@ -343,7 +313,6 @@ export const formation_443_2: Positions[] = [
   },
   {
     pos: 'rf',
-    name: 'Flügelspieler',
     player: '',
     x: 'right',
     y: 'winger winger-top',
@@ -354,7 +323,6 @@ export const formation_443_2: Positions[] = [
   },
   {
     pos: 'lf',
-    name: 'Flügelspieler',
     player: '',
     x: 'left',
     y: 'winger winger-top',
@@ -365,7 +333,6 @@ export const formation_443_2: Positions[] = [
   },
   {
     pos: 'st',
-    name: 'Stürmer',
     player: '',
     x: 'center',
     y: 'st',

@@ -133,7 +133,6 @@ export interface answer {
 
 export interface Positions {
   pos: string;
-  name: string;
   player: string;
   x: string;
   y: string;
@@ -148,9 +147,4 @@ export interface Option {
   name: string;
 
   [key: string]: any;
-}
-
-export interface LineUpSteps {
-  name: string;
-  active: boolean;
 }

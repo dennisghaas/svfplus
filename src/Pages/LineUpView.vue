@@ -1,5 +1,9 @@
-<template></template>
+<template>
+  <LineUp />
+</template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import LineUp from '@/components/LineUp.vue';
+</script>
 
 <style lang="scss" scoped></style>
