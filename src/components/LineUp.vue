@@ -1,5 +1,5 @@
 <template>
-  <ul v-for="game in games">
+  <ul v-for="(game, index) in games" :key="index">
     <li>
       <button type="button" @click="loadSelectedEvent(game)">
         {{ game.eventDescription.title }}
@@ -13,6 +13,11 @@
   <pre>
     {{ linedUpPlayers }}
   </pre>
+
+  <template v-if="selectedEvent">
+    <h2>{{ selectedEvent.id }} {{ selectedEvent.eventDescription.title }}</h2>
+    <h3>{{ selectedEvent.eventDescription.subtitle}}</h3>
+  </template>
 
   <template v-if="!errorNotEnoughPlayers">
     <template v-if="eventResponse && selectedUserList">
@@ -38,19 +43,13 @@
       </ul>
     </template>
 
-    <template v-if="selectedEvent">
-      <pre>
-      {{ selectedEvent }}
-    </pre
-      >
-    </template>
-
     <template v-if="selectedUserList">
       <strong>Alle verfügbaren Spieler</strong><br />
-      <pre>
-      {{ selectedUserList }}
-    </pre
-      >
+      <ul>
+        <li v-for="(user, index) in selectedUserList" :key="index">
+          {{ user.id }} ~ {{ user.name }}
+        </li>
+      </ul>
     </template>
   </template>
 

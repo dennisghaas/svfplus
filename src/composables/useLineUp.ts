@@ -30,7 +30,7 @@ export const useLineUp = () => {
     await fetchAllUsers();
 
     /* throw error if event hasn't enough players to line up complete team */
-    errorNotEnoughPlayers.value = selectEventResponses.value < 11;
+    errorNotEnoughPlayers.value = selectEventResponses.value.length < 11;
 
     /* add api data to custom ref */
     eventResponse.value = selectEventResponses.value;
