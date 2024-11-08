@@ -133,11 +133,9 @@ export interface answer {
 
 export interface Positions {
   pos: string;
-  player: string;
   x: string;
   y: string;
   id: number | null;
-  userId: number | null;
   isSelected: boolean;
   user: UserData | null;
 }
@@ -147,4 +145,10 @@ export interface Option {
   name: string;
 
   [key: string]: any;
+}
+
+export interface LineUpStep {
+  index: number;
+  name: string;
+  active: boolean;
 }
