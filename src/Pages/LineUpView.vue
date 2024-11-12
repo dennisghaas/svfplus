@@ -7,15 +7,24 @@
   />
 
   <template v-if="activeStep === 0">
-    <ul v-for="(game, index) in games" :key="index">
-      <li>
-        <button type="button" @click="handleLoadSelectedEvent(game)">
-          {{ game.eventDescription.title }}
-          {{ game.eventDescription.subtitle }}
-          {{ game.id }}
-        </button>
-      </li>
-    </ul>
+    <LineUpCard
+      :headline="'Wähle ein Spiel aus'"
+      :body-text="'Du kannst aus einem der kommenden Spiele wählen um dir nur die Spieler anzeigen zu lassen, die zu dem Spiel zugesagt haben.'"
+      :games="games"
+      :layout-default="false"
+      @event-click="handleLoadSelectedEvent"
+    />
+
+    <LineUpCard :headline="'Erstellte Aufstellung laden'" :body-text="''">
+      <template #layoutDefaultContent>
+        <SelectType :select-placeholder="'Meine_Aufstellung_2132 (tbc)'" />
+        <ButtonType
+          :btn-class="'w-100'"
+          :btn-text="'Aufstellung anzeigen'"
+          :type-button="true"
+        />
+      </template>
+    </LineUpCard>
   </template>
 
   <LineUp
@@ -33,6 +42,9 @@ import { useEvents } from '@/composables/useEvents.ts';
 import { Event } from '@/interface';
 import LineUpSteps from '@/components/LineUpSteps.vue';
 import LineUp from '@/components/LineUp.vue';
+import LineUpCard from '@/components/LineUpCard.vue';
+import SelectType from '@/components/SelectType.vue';
+import ButtonType from '@/components/ButtonType.vue';
 
 const { loadSelectedEvent } = useLineUp();
 const games = ref<Event[]>([]);

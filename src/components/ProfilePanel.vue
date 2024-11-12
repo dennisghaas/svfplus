@@ -8,6 +8,7 @@
       { 'profile-panel--link': link },
       { 'profile-panel--medium': displayMedium },
       { 'profile-panel--small': displaySmall },
+      { 'profile-panel--lineup': displayLineUp },
     ]"
   >
     <div
@@ -71,6 +72,10 @@ const props = defineProps({
     default: false,
   },
   displayMedium: {
+    type: Boolean,
+    default: false,
+  },
+  displayLineUp: {
     type: Boolean,
     default: false,
   },
@@ -141,6 +146,15 @@ const computedStyle = computed(() => {
       height: rem(36px);
       min-width: rem(36px);
       min-height: rem(36px);
+      border-width: 1px;
+      font-size: rem(14px);
+    }
+
+    .profile-panel--lineup & {
+      width: rem(42px);
+      height: rem(42px);
+      min-width: rem(42px);
+      min-height: rem(42px);
       border-width: 1px;
       font-size: rem(14px);
     }

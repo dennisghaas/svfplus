@@ -61,7 +61,7 @@ export const useLineUp = () => {
     }
   };
 
-  const selectedUserListEventResponse = (id: number) => {
+  const selectedUserListEventResponse = (id: number | undefined) => {
     return eventResponse.value.find((response) => response.userId === id)
       ?.response;
   };

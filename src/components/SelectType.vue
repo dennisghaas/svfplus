@@ -8,7 +8,7 @@
       </template>
     </label>
 
-    <div class="select-wrapper">
+    <div :class="['select-wrapper', { 'select-wrapper--dark': darkUI }]">
       <select
         class="select"
         :name="selectName"
@@ -71,6 +71,10 @@ defineProps({
   errorMessage: {
     type: String,
     default: '',
+  },
+  darkUI: {
+    type: Boolean,
+    default: false,
   },
 });
 

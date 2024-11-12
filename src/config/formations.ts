@@ -214,7 +214,7 @@ export const formation_443_2: Positions[] = [
   {
     pos: 'rv',
     x: 'right',
-    y: 'fb',
+    y: 'fb fb-top',
     id: 3,
     isSelected: false,
     user: null,
@@ -222,7 +222,7 @@ export const formation_443_2: Positions[] = [
   {
     pos: 'lv',
     x: 'left',
-    y: 'fb',
+    y: 'fb fb-top',
     id: 4,
     isSelected: false,
     user: null,
@@ -230,7 +230,7 @@ export const formation_443_2: Positions[] = [
   {
     pos: 'zdm',
     x: 'center',
-    y: 'cdm',
+    y: 'cdm cdm-top',
     id: 5,
     isSelected: false,
     user: null,
@@ -238,7 +238,7 @@ export const formation_443_2: Positions[] = [
   {
     pos: 'rzm',
     x: 'center center-right',
-    y: 'cm',
+    y: 'cm cm-top',
     id: 6,
     isSelected: false,
     user: null,
@@ -246,7 +246,7 @@ export const formation_443_2: Positions[] = [
   {
     pos: 'lzm',
     x: 'center center-left',
-    y: 'cm',
+    y: 'cm cm-top',
     id: 7,
     isSelected: false,
     user: null,
