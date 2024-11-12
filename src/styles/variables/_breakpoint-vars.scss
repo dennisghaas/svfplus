@@ -29,7 +29,13 @@ $xxl: map-get($breakpoints, xxl);
 
 @mixin media-breakpoint-between($min-breakpoint, $max-breakpoint) {
   $min-width: map-get($breakpoints, $min-breakpoint);
-  $max-width: map-get($breakpoints, $max-breakpoint - 1);
+  $max-width: map-get($breakpoints, $max-breakpoint);
+
+  @if type-of($max-width) == 'number' and unit($max-width) == 'px' {
+    $max-width: $max-width - 1px;
+  } @else {
+    $max-width: $max-width - 1;
+  }
 
   @media (min-width: $min-width) and (max-width: $max-width) {
     @content;

@@ -1,7 +1,18 @@
 <template>
+  <SelectType
+    v-if="!isMobile"
+    :select-option="formationNav"
+    :select-i-d="'select-formation'"
+    :select-placeholder="'4-1-4-1'"
+    :hide-count="true"
+    :select-name="'select-formation'"
+    @update:selection="updateSelectedFormation"
+  />
+
   <div class="lineup__field">
     <div class="lineup__field-content">
       <SelectType
+        v-if="isMobile"
         :select-option="formationNav"
         :select-i-d="'select-formation'"
         :select-placeholder="'4-1-4-1'"
@@ -11,9 +22,22 @@
         @update:selection="updateSelectedFormation"
       />
 
-      <ul class="lineup__field-formation blanklist">
+      <ul
+        :class="[
+          'lineup__field-formation',
+          'blanklist',
+          { 'lineup__field-formation--tooltip-open': tooltipIsOpen },
+        ]"
+      >
         <li
-          :class="['lineup__field__pos-item', pos.x, pos.y]"
+          :class="[
+            'lineup__field__pos-item',
+            pos.x,
+            pos.y,
+            {
+              'lineup__field__pos-item--tooltip-selected': tooltipOpen[index],
+            },
+          ]"
           v-for="(pos, index) in selectedFormation"
           :key="index"
         >
@@ -104,8 +128,8 @@
 
     <ContentImage
       :img-alt="'field'"
-      :img-src="'field-mobile.jpg'"
-      :img-class="'lineup__field-background ratio ration 9x16'"
+      :img-src="isMobile ? 'field-mobile.jpg' : 'field-desktop.png'"
+      :class="`lineup__field-background ratio ${isMobile ? 'ratio-9x16' : ''}`"
     />
   </div>
 
@@ -148,7 +172,7 @@
     </template>
   </LineUpCard>
 
-  <ButtonWrapper>
+  <ButtonWrapper :align-as-row="!isMobile">
     <template #buttons>
       <ButtonType
         :btn-text="'Zurück'"
@@ -175,7 +199,13 @@
   </div>
 
   <AppDialog
-    :headline="playerToPosition ? 'Spieler hinzufügen' : 'Position hinzufügen'"
+    :headline="
+      playerToPosition
+        ? 'Spieler hinzufügen'
+        : switchPlayer
+          ? 'Spieler austauschen'
+          : 'Position hinzufügen'
+    "
     :open="dialogOpen"
     @update:open="closeAppDialog()"
   >
@@ -195,6 +225,7 @@ import {
   formation_443_2,
 } from '@/config/formations.ts';
 import { textTruncate } from '@/helpers/textTruncate';
+import { useBreakpoint } from '@/composables/useBreakpoint.ts';
 import SelectType from '@/components/SelectType.vue';
 import { Positions } from '@/interface';
 import AppDialog from '@/components/AppDialog.vue';
@@ -205,11 +236,14 @@ import ContentImage from '@/components/ContentImage.vue';
 import ProfilePanel from '@/components/ProfilePanel.vue';
 import LineUpCard from '@/components/LineUpCard.vue';
 
+const { isMobile } = useBreakpoint();
+
 const {
   selectedUserList,
   linedUpPlayers,
   playerToPosition,
   selectedFormation,
+  switchPlayer,
   addPositionToPlayer,
   addPlayerToPosition,
   removePlayerFromPosition,
@@ -218,6 +252,7 @@ const {
 selectedFormation.value = formation_4141;
 
 const tooltipOpen = ref<boolean[]>(Array(11).fill(false));
+const tooltipIsOpen = ref(false);
 
 const updateSelectedFormation = (formation: string) => {
   if (formation === '4-4-2') {
@@ -252,7 +287,10 @@ const handleClickStepHandling = (type: string) => {
 
 const handleAddPlayerToPosition = (pos: Positions, isSwitch?: boolean) => {
   dialogOpen.value = true;
+
+  /* remove state from tooltip */
   tooltipOpen.value = tooltipOpen.value.map(() => false);
+  tooltipIsOpen.value = false;
 
   if (!isSwitch) {
     addPlayerToPosition(pos);
@@ -263,7 +301,10 @@ const handleAddPlayerToPosition = (pos: Positions, isSwitch?: boolean) => {
 
 const handleAddPositionToPlayer = (id: number) => {
   dialogOpen.value = true;
+
+  /* remove state from tooltip */
   tooltipOpen.value = tooltipOpen.value.map(() => false);
+  tooltipIsOpen.value = false;
 
   addPositionToPlayer(id);
 };
@@ -271,20 +312,24 @@ const handleAddPositionToPlayer = (id: number) => {
 const handleRemovePlayerFromPosition = (pos: Positions) => {
   removePlayerFromPosition(pos);
 
+  /* remove state from tooltip */
   tooltipOpen.value = tooltipOpen.value.map(() => false);
+  tooltipIsOpen.value = false;
 };
 
 const handleToggleTooltip = (index: number) => {
   if (tooltipOpen.value[index]) {
     tooltipOpen.value[index] = false;
+    tooltipIsOpen.value = false;
   } else {
     tooltipOpen.value = tooltipOpen.value.map(() => false);
     tooltipOpen.value[index] = true;
+    tooltipIsOpen.value = true;
   }
 };
 
 const tooltipAlignment = (alignment: string) => {
-  if (alignment === 'right') {
+  if (alignment === 'right' || alignment === 'center center-right') {
     return 'lineup__field__pos-tooltip--align-left';
   }
 };
@@ -313,6 +358,12 @@ const handleClose = () => {
     left: -#{$gutter-width * 2};
     color: var(--white);
 
+    @include media-breakpoint-up(sm) {
+      flex-direction: column;
+      aspect-ratio: 16 / 9;
+      margin: 0 0 rem(40px);
+    }
+
     &-content {
       display: flex;
       flex-direction: column;
@@ -323,17 +374,43 @@ const handleClose = () => {
       left: 0;
       top: 0;
       padding: calc(#{$pageHeaderHeight} + rem(40px)) rem(20px) 0;
+
+      @include media-breakpoint-up(sm) {
+        position: relative;
+        padding: 0;
+      }
     }
 
     &-background {
       position: relative;
-      top: 0;
       z-index: 1;
+
+      @include media-breakpoint-up(sm) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
     }
 
     &-formation {
       position: relative;
       height: 100%;
+
+      &--tooltip-open {
+        .lineup__field__pos-item {
+          z-index: 0;
+          filter: blur(1px);
+          opacity: 0.9;
+
+          &--tooltip-selected {
+            z-index: 1;
+            filter: blur(0);
+            opacity: 1;
+          }
+        }
+      }
     }
 
     &__pos {
@@ -374,6 +451,16 @@ const handleClose = () => {
 
         &.left {
           left: 0;
+
+          @include media-breakpoint-up(sm) {
+            &.fb {
+              left: 15%;
+            }
+
+            &.winger {
+              left: 20%;
+            }
+          }
         }
 
         &.center {
@@ -391,6 +478,16 @@ const handleClose = () => {
 
         &.right {
           right: 0;
+
+          @include media-breakpoint-up(sm) {
+            &.fb {
+              right: 15%;
+            }
+
+            &.winger {
+              right: 20%;
+            }
+          }
         }
 
         &.gk {
@@ -523,6 +620,57 @@ const handleClose = () => {
 
       &--unsure {
         background: var(--gray-dark);
+      }
+    }
+
+    @include media-breakpoint-up(md) {
+      display: flex;
+      flex-wrap: wrap;
+
+      li {
+        border: 0;
+        gap: rem(10px);
+        width: calc(50% - #{rem(20px)});
+        max-width: calc(50% - #{rem(20px)});
+        margin: 0 rem(20px) 0 0;
+        padding: rem(10px) rem(20px) rem(10px) 0;
+        position: relative;
+
+        &::after {
+          content: '';
+          width: 1px;
+          height: rem(30px);
+          background: var(--border-color);
+          position: absolute;
+          right: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          display: block;
+        }
+      }
+    }
+
+    @include media-breakpoint-between(md, xl) {
+      li {
+        &:nth-child(even) {
+          &::after {
+            display: none;
+          }
+        }
+      }
+    }
+
+    @include media-breakpoint-up(xl) {
+      li {
+        width: calc(25% - #{rem(20px)});
+        max-width: calc(25% - #{rem(20px)});
+
+        &:nth-child(4n),
+        &:last-child {
+          &::after {
+            display: none;
+          }
+        }
       }
     }
   }
