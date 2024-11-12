@@ -1,30 +1,35 @@
 <template>
   <LineUpSteps
-    v-if="activeStep !== 1"
+    v-if="(activeStep !== 1 && isMobile) || isTablet"
     :steps="steps"
     :active-step="activeStep"
     @change-step="handleChangeStep"
   />
 
   <template v-if="activeStep === 0">
-    <LineUpCard
-      :headline="'Wähle ein Spiel aus'"
-      :body-text="'Du kannst aus einem der kommenden Spiele wählen um dir nur die Spieler anzeigen zu lassen, die zu dem Spiel zugesagt haben.'"
-      :games="games"
-      :layout-default="false"
-      @event-click="handleLoadSelectedEvent"
-    />
-
-    <LineUpCard :headline="'Erstellte Aufstellung laden'" :body-text="''">
-      <template #layoutDefaultContent>
-        <SelectType :select-placeholder="'Meine_Aufstellung_2132 (tbc)'" />
-        <ButtonType
-          :btn-class="'w-100'"
-          :btn-text="'Aufstellung anzeigen'"
-          :type-button="true"
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-lg-12 col-xl-6">
+        <LineUpCard
+          :headline="'Wähle ein Spiel aus'"
+          :body-text="'Du kannst aus einem der kommenden Spiele wählen um dir nur die Spieler anzeigen zu lassen, die zu dem Spiel zugesagt haben.'"
+          :games="games"
+          :layout-default="false"
+          @event-click="handleLoadSelectedEvent"
         />
-      </template>
-    </LineUpCard>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-lg-12 col-xl-6">
+        <LineUpCard :headline="'Erstellte Aufstellung laden'" :body-text="''">
+          <template #layoutDefaultContent>
+            <SelectType :select-placeholder="'Meine_Aufstellung_2132 (tbc)'" />
+            <ButtonType
+              :btn-class="'w-100'"
+              :btn-text="'Aufstellung anzeigen'"
+              :type-button="true"
+            />
+          </template>
+        </LineUpCard>
+      </div>
+    </div>
   </template>
 
   <LineUp
@@ -39,6 +44,7 @@
 import { onMounted, reactive, ref } from 'vue';
 import { useLineUp } from '@/composables/useLineUp.ts';
 import { useEvents } from '@/composables/useEvents.ts';
+import { useBreakpoint } from '@/composables/useBreakpoint.ts';
 import { Event } from '@/interface';
 import LineUpSteps from '@/components/LineUpSteps.vue';
 import LineUp from '@/components/LineUp.vue';
@@ -46,6 +52,7 @@ import LineUpCard from '@/components/LineUpCard.vue';
 import SelectType from '@/components/SelectType.vue';
 import ButtonType from '@/components/ButtonType.vue';
 
+const { isMobile, isTablet } = useBreakpoint();
 const { loadSelectedEvent } = useLineUp();
 const games = ref<Event[]>([]);
 

@@ -181,8 +181,9 @@
         @click="handleClickStepHandling('prev')"
       />
 
+      <!--  :disabled="linedUpPlayers.length < 11" -->
+
       <ButtonType
-        :disabled="linedUpPlayers.length < 11"
         :btn-text="'Weiter'"
         :btn-class="'w-100 w'"
         :type-button="true"
