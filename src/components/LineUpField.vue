@@ -422,12 +422,10 @@ const handleClose = () => {
         .lineup__field__pos-item {
           z-index: 0;
           filter: blur(1px);
-          opacity: 0.9;
 
           &--tooltip-selected {
             z-index: 1;
             filter: blur(0);
-            opacity: 1;
           }
         }
       }
