@@ -264,7 +264,7 @@ const updateSelectedFormation = (formation: string) => {
   }
 
   /* remove data from array if user switches formation */
-  linedUpPlayers.value = []; // Es wird ein leeres Array gesetzt
+  linedUpPlayers.value = [];
   selectedFormation.value.forEach((pos) => {
     if (pos) {
       pos.isSelected = false;
@@ -280,6 +280,26 @@ const emit = defineEmits(['prev-step', 'next-step', 'closeDialog']);
 const handleClickStepHandling = (type: string) => {
   if (type === 'prev') {
     emit('prev-step', type);
+
+    /* set back to default formation */
+    if (selectedFormation.value !== formation_4141) {
+      selectedFormation.value = formation_4141;
+    }
+
+    /* remove data from array if user switches formation */
+    linedUpPlayers.value = [];
+    selectedFormation.value.forEach((pos) => {
+      if (pos) {
+        pos.isSelected = false;
+        pos.user = null;
+      }
+    });
+
+    /* set open tooltip back to false */
+    tooltipOpen.value = tooltipOpen.value.map(() => false);
+
+    /* clean selected user list */
+    selectedUserList.value = [];
   } else {
     emit('next-step', type);
   }
