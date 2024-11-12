@@ -45,6 +45,7 @@ import { onMounted, reactive, ref } from 'vue';
 import { useLineUp } from '@/composables/useLineUp.ts';
 import { useEvents } from '@/composables/useEvents.ts';
 import { useBreakpoint } from '@/composables/useBreakpoint.ts';
+import store from '@/store';
 import { Event } from '@/interface';
 import LineUpSteps from '@/components/LineUpSteps.vue';
 import LineUp from '@/components/LineUp.vue';
@@ -111,6 +112,8 @@ onMounted(async () => {
   const { fetchGames, events } = useEvents();
   await fetchGames();
   games.value = events.value;
+
+  store.pageHeadline('Aufstellung erstellen');
 });
 </script>
 

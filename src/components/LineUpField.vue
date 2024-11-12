@@ -350,7 +350,7 @@ const handleToggleTooltip = (index: number) => {
 };
 
 const tooltipAlignment = (alignment: string) => {
-  if (alignment === 'right' || alignment === 'center center-right') {
+  if (alignment === 'right') {
     return 'lineup__field__pos-tooltip--align-left';
   }
 };

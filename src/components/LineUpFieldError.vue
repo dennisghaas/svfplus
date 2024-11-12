@@ -1,30 +1,35 @@
 <template>
-  <LineUpCard>
-    <template #layoutDefaultContent>
-      <div class="lineup__error">
-        <h2>🙇‍♂️ Ooops!</h2>
+  <div class="row">
+    <div class="col-xs-12 col-xl-6">
+      <LineUpCard>
+        <template #layoutDefaultContent>
+          <div class="lineup__error">
+            <h2>🙇‍♂️ Ooops!</h2>
 
-        <div class="body-text-b2">
-          <p>
-            Es sind leider nicht genügend Spieler für dieses Event verfügbar.
-            Die Anzahl muss >= 11 sein, damit Daten ausgegeben werden können.
-          </p>
-          <p>Gehe <q>Zurück</q> und wähle ein anderes Spiel aus!</p>
-        </div>
+            <div class="body-text-b2">
+              <p>
+                Es sind leider nicht genügend Spieler für dieses Event
+                verfügbar. Die Anzahl muss >= 11 sein, damit Daten ausgegeben
+                werden können.
+              </p>
+              <p>Gehe <q>Zurück</q> und wähle ein anderes Spiel aus!</p>
+            </div>
 
-        <ButtonWrapper>
-          <template #buttons>
-            <ButtonType
-              :btn-class="'w-100'"
-              :btn-text="'Zurück'"
-              :type-button="true"
-              @click="handlePrevStep"
-            />
-          </template>
-        </ButtonWrapper>
-      </div>
-    </template>
-  </LineUpCard>
+            <ButtonWrapper>
+              <template #buttons>
+                <ButtonType
+                  :btn-class="'w-100'"
+                  :btn-text="'Zurück'"
+                  :type-button="true"
+                  @click="handlePrevStep"
+                />
+              </template>
+            </ButtonWrapper>
+          </div>
+        </template>
+      </LineUpCard>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
