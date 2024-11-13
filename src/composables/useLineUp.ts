@@ -6,6 +6,7 @@ import { Event, EventResponse, Positions, UserData } from '@/interface';
 const selectedEvent = ref<Event | null>(null);
 const selectedUserList = ref<UserData[]>([]);
 const selectedFormation = ref<Positions[]>([]);
+const selectedFormationValue = ref('');
 const selectedPosition = ref<Positions | null>(null);
 const eventResponse = ref<EventResponse[]>([]);
 const linedUpPlayers = ref<number[]>([]);
@@ -184,5 +185,6 @@ export const useLineUp = () => {
     selectedUserId,
     selectedPositionId,
     switchPlayer,
+    selectedFormationValue,
   };
 };

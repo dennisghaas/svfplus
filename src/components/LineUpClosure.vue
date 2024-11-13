@@ -1,5 +1,8 @@
 <template>
-  <h2>Abschluss</h2>
+  <h2>Aufstellung speichern</h2>
+
+  <button type="button" @click="saveFormation">Test Api connection</button>
+
   <ButtonWrapper>
     <template #buttons>
       <ButtonType
@@ -13,9 +16,11 @@
 </template>
 
 <script setup lang="ts">
+import { useLineUpResponses } from '@/composables/useLineUpResponses.ts';
 import ButtonWrapper from '@/components/ButtonWrapper.vue';
 import ButtonType from '@/components/ButtonType.vue';
 
+const { saveFormation } = useLineUpResponses();
 const emit = defineEmits(['prev-step', 'next-step']);
 
 const handleClickStepHandling = (type: string) => {

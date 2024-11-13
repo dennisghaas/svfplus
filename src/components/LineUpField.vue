@@ -245,12 +245,16 @@ const {
   playerToPosition,
   selectedFormation,
   switchPlayer,
+  selectedFormationValue,
   addPositionToPlayer,
   addPlayerToPosition,
   removePlayerFromPosition,
   selectedUserListEventResponse,
 } = useLineUp();
+
+/* default values for formation */
 selectedFormation.value = formation_4141;
+selectedFormationValue.value = '4-1-4-1';
 
 const tooltipOpen = ref<boolean[]>(Array(11).fill(false));
 const tooltipIsOpen = ref(false);
@@ -275,6 +279,9 @@ const updateSelectedFormation = (formation: string) => {
 
   /* set open tooltip back to false */
   tooltipOpen.value = tooltipOpen.value.map(() => false);
+
+  /* assign formation string to value for api controlling */
+  selectedFormationValue.value = formation;
 };
 
 const emit = defineEmits(['prev-step', 'next-step', 'closeDialog']);

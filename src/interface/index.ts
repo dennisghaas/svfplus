@@ -152,3 +152,8 @@ export interface LineUpStep {
   name: string;
   active: boolean;
 }
+
+export interface LoadedLineUpSelectionNames {
+  id: number;
+  name: string;
+}
