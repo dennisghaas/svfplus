@@ -38,7 +38,7 @@
                   :btn-class="'btn-light btn-light--error'"
                   :btn-text="isMobile ? 'Löschen' : 'Aufstellung löschen'"
                   :type-button="true"
-                  @click="deleteLineUpById(item.id, router)"
+                  @click="handleDeleteLineUp(item.id)"
                 />
               </template>
             </ButtonWrapper>
@@ -47,9 +47,41 @@
       </tbody>
     </table>
   </div>
+
+  <WarningDialog
+    :headline="'Achtung!'"
+    :open="dialogState.open"
+    @close="dialogState.open = false"
+  >
+    <template #DialogBody>
+      <div class="body-text-b2 text-color-black-75">
+        <p>
+          Du bist dabei, eine Aufstellung zu löschen. Dieser Vorgang kann nicht
+          rückgängig gemacht werden.
+        </p>
+      </div>
+      <ButtonWrapper>
+        <template #buttons>
+          <ButtonType
+            :btn-text="'Abbrechen'"
+            :btn-class="'btn-secondary w-100'"
+            :type-button="true"
+            @click="dialogState.open = false"
+          />
+          <ButtonType
+            :btn-text="'Aufstellung löschen'"
+            :btn-class="'w-100'"
+            :type-button="true"
+            @click="handleDeleteLineUp(dialogState.deleteId)"
+          />
+        </template>
+      </ButtonWrapper>
+    </template>
+  </WarningDialog>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import { formatDate } from '@/helpers/formatDate';
 import { useLineUpResponses } from '@/composables/useLineUpResponses.ts';
 import { useRouter } from 'vue-router';
@@ -58,15 +90,29 @@ import { textTruncate } from '@/helpers/textTruncate.ts';
 import { LoadedLineUpSelectionNames } from '@/interface';
 import ButtonType from '@/components/ButtonType.vue';
 import ButtonWrapper from '@/components/ButtonWrapper.vue';
+import WarningDialog from '@/components/WarningDialog.vue';
 
 const { deleteLineUpById } = useLineUpResponses();
-const router = useRouter();
 const emits = defineEmits(['loadLineUp']);
 const { isMobile } = useBreakpoint();
+const router = useRouter();
 
-const handleLoadFormation = (id: number) => {
-  emits('loadLineUp', id);
+const dialogState = ref({
+  open: false,
+  deleteId: 0,
+});
+
+const handleDeleteLineUp = (id: number) => {
+  if (dialogState.value.open) {
+    deleteLineUpById(id, router);
+    dialogState.value.open = false;
+  } else {
+    dialogState.value.open = true;
+    dialogState.value.deleteId = id;
+  }
 };
+
+const handleLoadFormation = (id: number) => emits('loadLineUp', id);
 
 defineProps({
   storage: {

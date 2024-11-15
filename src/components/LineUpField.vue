@@ -14,9 +14,11 @@
     <div class="lineup__field-content">
       <SelectType
         v-if="isMobile"
-        :select-option="formationNav"
+        :select-option="updatedFormationNav"
         :select-i-d="'select-formation'"
-        :select-placeholder="'4-1-4-1'"
+        :select-placeholder="
+          !isExistingLineUp ? '4-1-4-1' : selectedFormationValue
+        "
         :hide-count="true"
         :select-name="'select-formation'"
         :dark-u-i="true"
@@ -178,6 +180,7 @@
     :badge-type="'warning'"
     :badge-text="'Die Aufstellung ist noch nicht komplett'"
     :badge-centered="true"
+    :badge-alt="isMobile"
     :additional-class="'event'"
   />
 
