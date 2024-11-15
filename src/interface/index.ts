@@ -154,6 +154,18 @@ export interface LineUpStep {
 }
 
 export interface LoadedLineUpSelectionNames {
+  author: string;
   id: number;
   name: string;
+  updatedAt: string;
+}
+
+export interface LoadedLineUp {
+  id: number;
+  author: string;
+  eventId: number;
+  linedUpPlayers: number[] | null;
+  name: string;
+  selectedFormation: Positions[];
+  selectedFormationValue: string;
 }

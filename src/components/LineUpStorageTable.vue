@@ -4,30 +4,44 @@
       <thead>
         <tr>
           <th>Nr.</th>
+          <th>Ersteller</th>
           <th>Name</th>
-          <th></th>
+          <th>Zuletzt bearbeitet</th>
           <th></th>
         </tr>
       </thead>
 
       <tbody>
-        <tr v-for="item in storage" :key="item.id">
+        <tr v-for="item in storage.slice().reverse()" :key="item.id">
           <td class="text-color-black-75">{{ item.id }}</td>
+          <td class="text-color-black-75">{{ item.author }}</td>
           <td class="text-color-black-75">{{ item.name }}</td>
-          <td class="table__button">
-            <ButtonType
-              :btn-class="'btn-light btn-light--success'"
-              :btn-text="'Aufstellung laden'"
-              :type-button="true"
-              @click="handleLoadFormation(item.id)"
-            />
+          <td class="text-color-black-75">
+            {{
+              formatDate(item.updatedAt).day +
+              '.' +
+              formatDate(item.updatedAt).month +
+              '.' +
+              formatDate(item.updatedAt).year
+            }}
           </td>
           <td class="table__button">
-            <ButtonType
-              :btn-class="'btn-light btn-light--error'"
-              :btn-text="'Aufstellung löschen'"
-              :type-button="true"
-            />
+            <ButtonWrapper :align-as-row="true">
+              <template #buttons>
+                <ButtonType
+                  :btn-class="'btn-light btn-light--success'"
+                  :btn-text="'Aufstellung laden'"
+                  :type-button="true"
+                  @click="handleLoadFormation(item.id)"
+                />
+                <ButtonType
+                  :btn-class="'btn-light btn-light--error'"
+                  :btn-text="'Aufstellung löschen'"
+                  :type-button="true"
+                  @click="deleteLineUpById(item.id)"
+                />
+              </template>
+            </ButtonWrapper>
           </td>
         </tr>
       </tbody>
@@ -36,13 +50,17 @@
 </template>
 
 <script setup lang="ts">
+import { formatDate } from '@/helpers/formatDate';
+import { useLineUpResponses } from '@/composables/useLineUpResponses.ts';
 import { LoadedLineUpSelectionNames } from '@/interface';
 import ButtonType from '@/components/ButtonType.vue';
+import ButtonWrapper from '@/components/ButtonWrapper.vue';
 
-const emits = defineEmits(['loadFormation']);
+const { deleteLineUpById } = useLineUpResponses();
+const emits = defineEmits(['loadLineUp']);
 
 const handleLoadFormation = (id: number) => {
-  emits('loadFormation', id);
+  emits('loadLineUp', id);
 };
 
 defineProps({
@@ -66,11 +84,13 @@ defineProps({
   }
 
   thead {
-    background: var(--blue-light);
+    background: var(--gray-dark);
+    color: var(--white);
 
     th {
       text-align: left;
       padding: rem(20px);
+      font-weight: $font-weight-400;
     }
   }
 
@@ -88,8 +108,8 @@ defineProps({
         }
 
         &.table__button {
-          > * {
-            margin-left: auto;
+          .button-wrapper {
+            justify-content: flex-end;
           }
         }
       }

@@ -5,9 +5,7 @@
     </h3>
 
     <div v-if="bodyText" class="body-text-b2">
-      <p>
-        {{ bodyText }}
-      </p>
+      <p v-html="bodyText" />
     </div>
 
     <template v-if="layoutDefault">
@@ -71,6 +69,9 @@ defineProps({
 
 <style scoped lang="scss">
 .lineup__card {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - #{rem(20px)});
   background: var(--white);
   padding: rem(20px);
   border-radius: rem(10px);
@@ -79,6 +80,10 @@ defineProps({
   h3,
   .h3 {
     margin-bottom: rem(10px);
+  }
+
+  .body-text-b2 {
+    margin-bottom: rem(30px);
   }
 
   &-games {
@@ -106,6 +111,14 @@ defineProps({
         padding-right: rem(20px);
       }
     }
+  }
+}
+</style>
+
+<style lang="scss">
+.lineup__card {
+  .btn {
+    margin-top: auto;
   }
 }
 </style>

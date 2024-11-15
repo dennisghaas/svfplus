@@ -219,6 +219,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useLineUp } from '@/composables/useLineUp.ts';
+import { useLineUpResponses } from '@/composables/useLineUpResponses.ts';
 import {
   formationNav,
   formation_442,
@@ -252,9 +253,13 @@ const {
   selectedUserListEventResponse,
 } = useLineUp();
 
-/* default values for formation */
-selectedFormation.value = formation_4141;
-selectedFormationValue.value = '4-1-4-1';
+const { isExistingLineUp } = useLineUpResponses();
+
+/* default values for formation | check if data comes from api */
+if (!isExistingLineUp.value) {
+  selectedFormation.value = formation_4141;
+  selectedFormationValue.value = '4-1-4-1';
+}
 
 const tooltipOpen = ref<boolean[]>(Array(11).fill(false));
 const tooltipIsOpen = ref(false);
@@ -270,6 +275,7 @@ const updateSelectedFormation = (formation: string) => {
 
   /* remove data from array if user switches formation */
   linedUpPlayers.value = [];
+
   selectedFormation.value.forEach((pos) => {
     if (pos) {
       pos.isSelected = false;
@@ -582,14 +588,19 @@ const handleClose = () => {
         }
 
         li {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: var(--black);
           width: rem(50px);
           height: rem(50px);
           margin-bottom: rem(10px);
-          box-shadow: $box-shadow-default;
+
+          > button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            background: var(--black);
+            box-shadow: $box-shadow-default;
+          }
 
           &:last-child {
             margin-bottom: 0;
@@ -691,11 +702,8 @@ const handleClose = () => {
         width: calc(25% - #{rem(20px)});
         max-width: calc(25% - #{rem(20px)});
 
-        &:nth-child(4n),
-        &:last-child {
-          &::after {
-            display: none;
-          }
+        &::after {
+          display: none;
         }
       }
     }

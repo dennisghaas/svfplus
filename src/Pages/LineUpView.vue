@@ -1,9 +1,11 @@
 <template>
   <LineUpSteps
-    v-if="activeStep !== 1 && !isDesktop"
+    v-if="activeStep !== 1"
     :steps="steps"
     :active-step="activeStep"
+    :show-prev-link="!welcomeView"
     @change-step="handleChangeStep"
+    @welcome-view-click="handleWelcomeViewClick('')"
   />
 
   <template v-if="activeStep === 0">
@@ -19,26 +21,17 @@
       <div class="col-xs-12 col-sm-6 col-lg-6 col-xs-12">
         <SelectCard
           :title="'Aufstellung laden'"
-          :body-text="'Du kannst vorher erstellte Aufstellungen laden und anschließend bearbeiten.'"
+          :body-text="'Eine gespeicherte Aufstellung laden und bearbeiten.'"
           @open-selected-option="handleWelcomeViewClick('select')"
         />
       </div>
     </div>
 
     <div v-else class="row">
-      <div class="col-xs-12">
-        <LinkType
-          :btn-class="'btn-prev w-100'"
-          :btn-text="'Zurück zur Auswahl'"
-          :btn-icon-prev="true"
-          :btn-icon="'icon-chevron-left'"
-          @click="handleWelcomeViewClick('')"
-        />
-      </div>
       <div v-if="createView" class="col-xs-12 col-sm-6 col-lg-12 col-xl-6">
         <LineUpCard
           :headline="'Wähle ein Spiel aus'"
-          :body-text="'Du kannst aus einem der kommenden Spiele wählen um dir nur die Spieler anzeigen zu lassen, die zu dem Spiel zugesagt haben.'"
+          :body-text="'Du kannst aus einem der kommenden Spiele wählen um dir nur die Spieler anzeigen zu lassen, die zu dem Spiel zugesagt oder auf <q>Unsicher</q> reagiert haben.'"
           :games="games"
           :layout-default="false"
           @event-click="handleLoadSelectedEvent"
@@ -47,7 +40,7 @@
       <div v-else class="col-xs-12">
         <LineUpStorageTable
           :storage="loadedLineUpSelectionNames"
-          @load-formation="test"
+          @load-line-up="loadLineUp"
         />
       </div>
     </div>
@@ -66,26 +59,41 @@ import { onMounted, reactive, ref } from 'vue';
 import { useLineUp } from '@/composables/useLineUp.ts';
 import { useLineUpResponses } from '@/composables/useLineUpResponses.ts';
 import { useEvents } from '@/composables/useEvents.ts';
-import { useBreakpoint } from '@/composables/useBreakpoint.ts';
 import store from '@/store';
 import { Event } from '@/interface';
 import LineUpSteps from '@/components/LineUpSteps.vue';
 import LineUp from '@/components/LineUp.vue';
 import LineUpCard from '@/components/LineUpCard.vue';
 import SelectCard from '@/components/SelectCard.vue';
-import LinkType from '@/components/LinkType.vue';
 import LineUpStorageTable from '@/components/LineUpStorageTable.vue';
 
-const { isDesktop } = useBreakpoint();
 const { loadSelectedEvent } = useLineUp();
-const { fetchLineUpNames, loadedLineUpSelectionNames } = useLineUpResponses();
+const {
+  fetchLineUpNames,
+  fetchLineUpById,
+  loadedLineUpSelectionNames,
+  loadedLineUp,
+  isExistingLineUp,
+} = useLineUpResponses();
+const { fetchSingleEventById, selectedSingleEvent } = useEvents();
+
 const games = ref<Event[]>([]);
 const welcomeView = ref(true);
 const createView = ref(false);
 const selectView = ref(false);
 
-const test = (id: number) => {
-  console.log('id aus tabelle', id);
+const loadLineUp = async (id: number) => {
+  await fetchLineUpById(id);
+  selectView.value = false;
+
+  await fetchSingleEventById(loadedLineUp.value?.eventId);
+
+  if (selectedSingleEvent.value) {
+    isExistingLineUp.value = true;
+    handleLoadSelectedEvent(selectedSingleEvent.value);
+  } else {
+    console.error('selected event is null :/');
+  }
 };
 
 const handleWelcomeViewClick = (type: string) => {
@@ -95,6 +103,11 @@ const handleWelcomeViewClick = (type: string) => {
     if (type === 'create') {
       createView.value = true;
       fetchGameData();
+
+      /* remove existing line up from app for create */
+      if (isExistingLineUp.value) {
+        isExistingLineUp.value = false;
+      }
     } else {
       selectView.value = true;
 

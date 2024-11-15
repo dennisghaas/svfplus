@@ -1,5 +1,13 @@
 <template>
-  <nav class="line-up-steps">
+  <LinkType
+    v-if="activeStep === 0 && showPrevLink"
+    :btn-class="'btn-prev w-100'"
+    :btn-text="'Zurück zur Auswahl'"
+    :btn-icon-prev="true"
+    :btn-icon="'icon-chevron-left'"
+    @click="handleWelcomeViewClick"
+  />
+  <nav v-if="!isDesktop" class="line-up-steps">
     <ul class="blanklist">
       <li
         v-for="step in steps"
@@ -27,7 +35,11 @@
 </template>
 
 <script setup lang="ts">
+import { useBreakpoint } from '@/composables/useBreakpoint.ts';
 import { LineUpStep } from '@/interface';
+import LinkType from '@/components/LinkType.vue';
+
+const { isDesktop } = useBreakpoint();
 
 defineProps({
   activeStep: {
@@ -38,14 +50,23 @@ defineProps({
     type: Array as () => LineUpStep[],
     default: () => [] as LineUpStep[],
   },
+  showPrevLink: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits<{
   (event: 'change-step', index: number): void;
+  (event: 'welcomeViewClick'): void;
 }>();
 
 const handleChangeStep = (index: number) => {
   emit('change-step', index);
+};
+
+const handleWelcomeViewClick = () => {
+  emit('welcomeViewClick');
 };
 </script>
 

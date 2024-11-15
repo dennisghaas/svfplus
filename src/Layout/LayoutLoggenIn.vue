@@ -80,6 +80,7 @@ defineProps({
     padding-bottom: rem(40px);
 
     @include media-breakpoint-up(lg) {
+      min-height: calc(100vh - #{$pageHeaderHeightDesktop});
       padding-top: 0;
     }
   }

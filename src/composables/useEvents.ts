@@ -10,6 +10,7 @@ import { Event, StandingOrder } from '@/interface';
 
 const events = ref<Event[]>([]);
 const selectedEvent = ref<Event[]>([]);
+const selectedSingleEvent = ref<Event | null>(null);
 const eventDate = ref(new Date());
 const eventCreatedSuccessful = ref(false);
 const title = ref('');
@@ -82,6 +83,19 @@ export const useEvents = () => {
       events.value = filteredEvents;
     } catch (error) {
       console.error('Fehler beim Abrufen der Events:', error);
+    }
+  };
+
+  const fetchSingleEventById = async (id: number | undefined | null) => {
+    try {
+      if (id) {
+        selectedSingleEvent.value = await fetchDataFromApi(
+          `/events/${id}`,
+          'GET'
+        );
+      }
+    } catch (error) {
+      console.error('Blöd');
     }
   };
 
@@ -581,6 +595,7 @@ export const useEvents = () => {
     fetchEventsByID,
     deleteStandingOrderById,
     fetchGames,
+    fetchSingleEventById,
     events,
     eventDate,
     title,
@@ -605,5 +620,6 @@ export const useEvents = () => {
     eventCreatedSuccessful,
     standingOrderArray,
     selectedEvent,
+    selectedSingleEvent,
   };
 };
