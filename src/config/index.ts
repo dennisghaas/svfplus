@@ -108,7 +108,7 @@ export const navigation: Navigation[] = [
         iconName: 'icon-lineup-base',
       },
     ],
-    accessibleRouteFrom: ['svf_commander'],
+    accessibleRouteFrom: ['svf_major', 'svf_commander'],
   },
   {
     linkName: 'Einstellungen',
