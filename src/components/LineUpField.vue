@@ -1,10 +1,11 @@
 <template>
   <SelectType
     v-if="!isMobile"
-    :select-option="formationNav"
+    :select-option="updatedFormationNav"
     :select-i-d="'select-formation'"
-    :select-placeholder="'4-1-4-1'"
+    :select-placeholder="!isExistingLineUp ? '4-1-4-1' : selectedFormationValue"
     :hide-count="true"
+    :disable-placeholder-val="true"
     :select-name="'select-formation'"
     @update:selection="updateSelectedFormation"
   />
@@ -220,14 +221,14 @@
 import { ref } from 'vue';
 import { useLineUp } from '@/composables/useLineUp.ts';
 import { useLineUpResponses } from '@/composables/useLineUpResponses.ts';
+import { textTruncate } from '@/helpers/textTruncate';
+import { useBreakpoint } from '@/composables/useBreakpoint.ts';
 import {
   formationNav,
   formation_442,
   formation_4141,
   formation_443_2,
 } from '@/config/formations.ts';
-import { textTruncate } from '@/helpers/textTruncate';
-import { useBreakpoint } from '@/composables/useBreakpoint.ts';
 import SelectType from '@/components/SelectType.vue';
 import { Positions } from '@/interface';
 import AppDialog from '@/components/AppDialog.vue';
@@ -253,7 +254,28 @@ const {
   selectedUserListEventResponse,
 } = useLineUp();
 
-const { isExistingLineUp } = useLineUpResponses();
+const { isExistingLineUp, updatedFormationNav } = useLineUpResponses();
+
+const handleSelectionAlignment = (formation: string) => {
+  const index = updatedFormationNav.value.indexOf(formation);
+
+  if (index !== -1) {
+    updatedFormationNav.value.splice(index, 1);
+    updatedFormationNav.value.unshift(formation);
+  }
+};
+
+const handleFormationNav = () => {
+  updatedFormationNav.value = formationNav;
+
+  if (isExistingLineUp.value) {
+    handleSelectionAlignment(selectedFormationValue.value);
+  } else {
+    handleSelectionAlignment('4-1-4-1');
+  }
+};
+
+handleFormationNav();
 
 /* default values for formation | check if data comes from api */
 if (!isExistingLineUp.value) {

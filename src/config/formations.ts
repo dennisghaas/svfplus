@@ -1,7 +1,6 @@
 import { Positions } from '@/interface';
 
-/* all formations as nav for easy access / remove 4-1-4-1 as navigation link since it's the default selection for line up */
-export const formationNav = ['4-4-2', '4-3-3(2)'];
+export const formationNav = ['4-1-4-1', '4-4-2', '4-3-3(2)'];
 
 /* defined formations */
 export const formation_4141: Positions[] = [

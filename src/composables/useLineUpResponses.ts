@@ -14,6 +14,7 @@ const loadedLineUps = ref<Positions[]>([]);
 const loadedLineUp = ref<LoadedLineUp | null>(null);
 const loadedLineUpSelectionNames = ref(<LoadedLineUpSelectionNames[]>[]);
 const isExistingLineUp = ref(false);
+const updatedFormationNav = ref<string[]>([]);
 
 const {
   selectedEvent,
@@ -193,7 +194,7 @@ export const useLineUpResponses = () => {
 
     try {
       if (id) {
-        const response = await fetchDataFromApi(`/lineup/${id}`, 'PUT', {
+        await fetchDataFromApi(`/lineup/${id}`, 'PUT', {
           author: store.state.userData.name,
           eventId: loadedLineUp.value?.eventId,
           linedUpPlayers: linedUpPlayers.value,
@@ -202,7 +203,7 @@ export const useLineUpResponses = () => {
           selectedFormationValue: selectedFormationValue.value,
         });
 
-        console.log('Neue Formation', response);
+        // DEBUG = console.log('Neue Formation', response);
 
         store.updateLoadingResponse(false);
         store.updateOverflowHidden(false);
@@ -235,5 +236,6 @@ export const useLineUpResponses = () => {
     loadedLineUps,
     loadedLineUpSelectionNames,
     isExistingLineUp,
+    updatedFormationNav,
   };
 };
