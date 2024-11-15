@@ -38,10 +38,22 @@
         />
       </div>
       <div v-else class="col-xs-12">
-        <LineUpStorageTable
-          :storage="loadedLineUpSelectionNames"
-          @load-line-up="loadLineUp"
-        />
+        <template
+          v-if="
+            loadedLineUpSelectionNames && loadedLineUpSelectionNames.length > 0
+          "
+        >
+          <LineUpStorageTable
+            :storage="loadedLineUpSelectionNames"
+            @load-line-up="loadLineUp"
+          />
+        </template>
+        <template v-else>
+          <BadgeType
+            :badge-text="'Bisher wurden keine Aufstellungen angelegt'"
+            :badge-type="'info'"
+          />
+        </template>
       </div>
     </div>
   </template>
@@ -66,6 +78,7 @@ import LineUp from '@/components/LineUp.vue';
 import LineUpCard from '@/components/LineUpCard.vue';
 import SelectCard from '@/components/SelectCard.vue';
 import LineUpStorageTable from '@/components/LineUpStorageTable.vue';
+import BadgeType from '@/components/BadgeType.vue';
 
 const { loadSelectedEvent } = useLineUp();
 const {

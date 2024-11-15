@@ -10,7 +10,7 @@
             :type-button="true"
             :btn-class="'w-100'"
             :btn-text="'Aufstellung aktualisieren'"
-            @click="editLineUpById(loadedLineUp?.id ?? null)"
+            @click="editLineUpById(loadedLineUp?.id ?? null, router)"
           />
         </template>
       </LineUpCard>
@@ -26,7 +26,7 @@
             :type-button="true"
             :btn-class="'btn-secondary w-100'"
             :btn-text="'Aufstellung speichern'"
-            @click="saveFormation"
+            @click="saveFormation(router)"
           />
         </template>
       </LineUpCard>
@@ -44,7 +44,7 @@
             :type-button="true"
             :btn-class="'w-100'"
             :btn-text="'Aufstellung speichern'"
-            @click="saveFormation"
+            @click="saveFormation(router)"
           />
         </template>
       </LineUpCard>
@@ -65,10 +65,12 @@
 
 <script setup lang="ts">
 import { useLineUpResponses } from '@/composables/useLineUpResponses.ts';
+import { useRouter } from 'vue-router';
 import ButtonWrapper from '@/components/ButtonWrapper.vue';
 import ButtonType from '@/components/ButtonType.vue';
 import LineUpCard from '@/components/LineUpCard.vue';
 
+const router = useRouter();
 const { saveFormation, editLineUpById, isExistingLineUp, loadedLineUp } =
   useLineUpResponses();
 const emit = defineEmits(['prev-step', 'next-step']);

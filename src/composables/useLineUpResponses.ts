@@ -57,18 +57,34 @@ export const useLineUpResponses = () => {
   };
 
   const fetchLineUp = async () => {
+    store.updateLoadingResponse(true);
+    store.updateOverflowHidden(true);
+    store.updateLoadingResponseText('Aufstellungen werden geladen...');
+
     try {
       const response = await fetchDataFromApi('/lineup', 'GET');
       loadedLineUps.value = response;
+
+      store.updateLoadingResponse(false);
+      store.updateOverflowHidden(false);
+      store.updateLoadingResponseText('');
     } catch (error) {
       console.error(
         'Ausgewählte Aufstellung konnte leider nicht geladen werden',
         error
       );
+
+      store.updateLoadingResponse(false);
+      store.updateOverflowHidden(false);
+      store.updateLoadingResponseText('');
     }
   };
 
   const fetchLineUpById = async (id: number) => {
+    store.updateLoadingResponse(true);
+    store.updateOverflowHidden(true);
+    store.updateLoadingResponseText('Aufstellungen werden geladen...');
+
     try {
       const response = await fetchDataFromApi(`/lineup/${id}`, 'GET');
       loadedLineUp.value = response[0];
@@ -78,15 +94,27 @@ export const useLineUpResponses = () => {
       selectedFormation.value = loadedLineUp.value?.selectedFormation || [];
       selectedFormationValue.value =
         loadedLineUp.value?.selectedFormationValue || '';
+
+      store.updateLoadingResponse(false);
+      store.updateOverflowHidden(false);
+      store.updateLoadingResponseText('');
     } catch (error) {
       console.error(
         'Die ausgewählte Aufstellung konnte nicht geladen werden',
         error
       );
+
+      store.updateLoadingResponse(false);
+      store.updateOverflowHidden(false);
+      store.updateLoadingResponseText('');
     }
   };
 
-  const saveFormation = async () => {
+  const saveFormation = async (router: any) => {
+    store.updateLoadingResponse(true);
+    store.updateOverflowHidden(true);
+    store.updateLoadingResponseText('Aufstellungen wird gespeichert...');
+
     const d = new Date().toISOString();
     const numericDate =
       formatDate(d).year + formatDate(d).month + formatDate(d).day;
@@ -116,20 +144,54 @@ export const useLineUpResponses = () => {
         selectedFormation: selectedFormation.value,
         selectedFormationValue: selectedFormationValue.value,
       });
+
+      store.updateLoadingResponse(false);
+      store.updateOverflowHidden(false);
+      store.updateLoadingResponseText('');
+
+      /* reload page */
+      router.go();
     } catch (error) {
       console.error('Fehler beim speichern der Aufstellung aufgetreten', error);
+
+      store.updateLoadingResponse(false);
+      store.updateOverflowHidden(false);
+      store.updateLoadingResponseText('');
     }
   };
 
-  const deleteLineUpById = async (id: number) => {
+  const deleteLineUpById = async (id: number, router: any) => {
+    store.updateLoadingResponse(true);
+    store.updateOverflowHidden(true);
+    store.updateLoadingResponseText(
+      'Aufstellung wird gelöscht. Seite wird neu geladen...'
+    );
+
     try {
       await fetchDataFromApi(`/lineup/${id}`, 'DELETE');
+
+      store.updateLoadingResponse(false);
+      store.updateOverflowHidden(false);
+      store.updateLoadingResponseText('');
+
+      /* reload page if deletion is successful */
+      router.go();
     } catch (error) {
       console.error('Aufstellung konnte leider nicht gelöscht werden', error);
+
+      store.updateLoadingResponse(false);
+      store.updateOverflowHidden(false);
+      store.updateLoadingResponseText('');
     }
   };
 
-  const editLineUpById = async (id: number | null) => {
+  const editLineUpById = async (id: number | null, router: any) => {
+    store.updateLoadingResponse(true);
+    store.updateOverflowHidden(true);
+    store.updateLoadingResponseText(
+      'Aufstellung wird aktualisiert. Seite wird neu geladen...'
+    );
+
     try {
       if (id) {
         const response = await fetchDataFromApi(`/lineup/${id}`, 'PUT', {
@@ -142,12 +204,23 @@ export const useLineUpResponses = () => {
         });
 
         console.log('Neue Formation', response);
+
+        store.updateLoadingResponse(false);
+        store.updateOverflowHidden(false);
+        store.updateLoadingResponseText('');
       }
+
+      /* reload page if put was successful */
+      router.go();
     } catch (error) {
       console.log(
         'Die Aufstellung konnte leider nicht aktualisiert werden',
         error
       );
+
+      store.updateLoadingResponse(false);
+      store.updateOverflowHidden(false);
+      store.updateLoadingResponseText('');
     }
   };
 

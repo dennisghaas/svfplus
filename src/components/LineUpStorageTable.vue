@@ -38,7 +38,7 @@
                   :btn-class="'btn-light btn-light--error'"
                   :btn-text="'Aufstellung löschen'"
                   :type-button="true"
-                  @click="deleteLineUpById(item.id)"
+                  @click="deleteLineUpById(item.id, router)"
                 />
               </template>
             </ButtonWrapper>
@@ -52,11 +52,13 @@
 <script setup lang="ts">
 import { formatDate } from '@/helpers/formatDate';
 import { useLineUpResponses } from '@/composables/useLineUpResponses.ts';
+import { useRouter } from 'vue-router';
 import { LoadedLineUpSelectionNames } from '@/interface';
 import ButtonType from '@/components/ButtonType.vue';
 import ButtonWrapper from '@/components/ButtonWrapper.vue';
 
 const { deleteLineUpById } = useLineUpResponses();
+const router = useRouter();
 const emits = defineEmits(['loadLineUp']);
 
 const handleLoadFormation = (id: number) => {
