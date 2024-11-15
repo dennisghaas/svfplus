@@ -25,7 +25,7 @@
           :icon="'icon-lineup-edit'"
           :icon-color="'--primary'"
           :title="'Aufstellung laden'"
-          :body-text="'Eine gespeicherte Aufstellung laden und bearbeiten.'"
+          :body-text="'Eine gespeicherte Aufstellung laden und bearbeiten. Aktualisiere oder speicher eine Neue.'"
           @open-selected-option="handleWelcomeViewClick('select')"
         />
       </div>
@@ -201,7 +201,7 @@ const fetchGameData = async () => {
 };
 
 onMounted(() => {
-  store.pageHeadline('SVF Plus - LineUp');
+  store.pageHeadline('Aufstellung');
 });
 </script>
 
