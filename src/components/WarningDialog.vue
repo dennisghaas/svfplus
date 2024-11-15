@@ -55,6 +55,14 @@ defineProps({
     width: calc(100% - #{$gutter-width * 4});
     box-shadow: $box-shadow-large;
     border-radius: rem(20px);
+
+    @include media-breakpoint-up(sm) {
+      width: 50%;
+    }
+
+    @include media-breakpoint-up(lg) {
+      width: 33.3%;
+    }
   }
 
   &__header {
