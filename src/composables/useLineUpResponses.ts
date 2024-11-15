@@ -130,17 +130,16 @@ export const useLineUpResponses = () => {
           '_' +
           numericDate +
           '_' +
-          (selectedEvent.value?.eventDescription?.title
-            ? replaceSpaceWithDash(
-                selectedEvent.value.eventDescription.title
-              ).toLowerCase()
-            : 'default-title') +
-          '-' +
           (selectedEvent.value?.eventDescription?.subtitle
             ? replaceSpaceWithDash(
                 selectedEvent.value.eventDescription.subtitle
               ).toLowerCase()
-            : 'default-subtitle'),
+            : 'default-subtitle') +
+          (selectedEvent.value?.eventDescription?.title
+            ? replaceSpaceWithDash(
+                selectedEvent.value.eventDescription.title
+              ).toLowerCase()
+            : 'default-title'),
         selectedFormation: selectedFormation.value,
         selectedFormationValue: selectedFormationValue.value,
       });

@@ -105,7 +105,7 @@ export const navigation: Navigation[] = [
       {
         hasIcon: true,
         isProfile: false,
-        iconName: 'icon-lineup',
+        iconName: 'icon-lineup-base',
       },
     ],
     accessibleRouteFrom: ['svf_major', 'svf_commander'],

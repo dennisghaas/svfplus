@@ -12,6 +12,8 @@
     <div v-if="welcomeView" class="row">
       <div class="col-xs-12 col-sm-6 col-lg-6 col-xs-12">
         <SelectCard
+          :icon="'icon-lineup-create'"
+          :icon-color="'--success-light'"
           :title="'Aufstellung erstellen'"
           :body-text="'Erstelle eine neue Aufstellung für eines, der nächsten <q>drei</q> Spiele'"
           @open-selected-option="handleWelcomeViewClick('create')"
@@ -20,6 +22,8 @@
 
       <div class="col-xs-12 col-sm-6 col-lg-6 col-xs-12">
         <SelectCard
+          :icon="'icon-lineup-edit'"
+          :icon-color="'--primary'"
           :title="'Aufstellung laden'"
           :body-text="'Eine gespeicherte Aufstellung laden und bearbeiten.'"
           @open-selected-option="handleWelcomeViewClick('select')"
@@ -168,6 +172,10 @@ const handleClickStepHandling = (type: string) => {
   steps.forEach((step) => {
     step.active = step.index === activeStep.value;
   });
+
+  setTimeout(() => {
+    window.scrollTo(0, 0);
+  }, 0);
 };
 
 const handleChangeStep = (index: number) => {

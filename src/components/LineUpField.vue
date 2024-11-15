@@ -111,12 +111,12 @@
                   <span class="d-none">Spieler entfernen</span>
                 </button>
               </li>
-              <li class="lineup__field__pos-tooltip--exchange">
+              <li class="lineup__field__pos-tooltip--switch">
                 <button
                   type="button"
                   @click="handleAddPlayerToPosition(pos, true)"
                 >
-                  <i class="icon-exchange"> </i>
+                  <i class="icon-switch"> </i>
                   <span class="d-none">Spieler austauschen</span>
                 </button>
               </li>
@@ -375,6 +375,11 @@ const closeAppDialog = () => {
 
   /* close edit modal dialog if app dialog is closed */
   handleClose();
+
+  /* scroll to top if dialog is closed */
+  setTimeout(() => {
+    window.scrollTo(0, 0);
+  }, 0);
 };
 
 const handleClose = () => {
@@ -613,6 +618,10 @@ const handleClose = () => {
           [class*='icon-'] {
             font-size: $font-size-14;
           }
+        }
+
+        &--switch {
+          color: var(--warning-light);
         }
 
         &--exchange {

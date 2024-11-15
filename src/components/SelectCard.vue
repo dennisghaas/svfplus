@@ -1,8 +1,14 @@
 <template>
   <div class="select-card">
-    <h2>
-      {{ title }}
-    </h2>
+    <header
+      class="select-card__header"
+      :style="{ '--select-card-icon-color': `var(${iconColor})` }"
+    >
+      <i v-if="icon" :class="icon"></i>
+      <h2>
+        {{ title }}
+      </h2>
+    </header>
 
     <div class="body-text-b2 text-color-black-75" v-html="bodyText" />
 
@@ -32,6 +38,14 @@ defineProps({
     type: String,
     default: '',
   },
+  icon: {
+    type: String,
+    default: '',
+  },
+  iconColor: {
+    type: String,
+    default: '',
+  },
 });
 </script>
 
@@ -49,9 +63,17 @@ defineProps({
   height: calc(100% - #{rem(30px)});
   text-align: center;
 
-  h2,
-  .h2 {
+  &__header {
     margin-bottom: rem(10px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    [class*='icon-'] {
+      margin-bottom: rem(5px);
+      font-size: $font-size-28;
+      color: var(--select-card-icon-color);
+    }
   }
 
   &__button {
@@ -64,6 +86,13 @@ defineProps({
 
   @include media-breakpoint-up(lg) {
     transition: $transition-base;
+
+    &__header {
+      [class*='icon-'] {
+        margin-bottom: rem(10px);
+        font-size: $font-size-34;
+      }
+    }
 
     [class*='body-text-'] {
       width: 75%;

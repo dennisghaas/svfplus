@@ -20,7 +20,7 @@
           :key="game.id"
         >
           <h4>
-            {{ game.eventDescription.title }}
+            {{ game.venue }}
           </h4>
           <div class="body-text-b3">
             <p class="text-color-white-75">
@@ -87,8 +87,6 @@ defineProps({
   }
 
   &-games {
-    margin-top: rem(30px);
-
     &_item {
       display: flex;
       flex-direction: column;
