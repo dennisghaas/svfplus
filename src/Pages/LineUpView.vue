@@ -28,7 +28,7 @@
     </div>
 
     <div v-else class="row">
-      <div v-if="createView" class="col-xs-12 col-sm-6 col-lg-12 col-xl-6">
+      <div v-if="createView" class="col-xs-12 col-xl-6">
         <LineUpCard
           :headline="'Wähle ein Spiel aus'"
           :body-text="'Du kannst aus einem der kommenden Spiele wählen um dir nur die Spieler anzeigen zu lassen, die zu dem Spiel zugesagt oder auf <q>Unsicher</q> reagiert haben.'"
