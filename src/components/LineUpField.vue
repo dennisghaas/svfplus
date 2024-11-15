@@ -173,6 +173,14 @@
     </template>
   </LineUpCard>
 
+  <BadgeType
+    v-if="linedUpPlayers.length < 11"
+    :badge-type="'warning'"
+    :badge-text="'Die Aufstellung ist noch nicht komplett'"
+    :badge-centered="true"
+    :additional-class="'event'"
+  />
+
   <ButtonWrapper :align-as-row="!isMobile">
     <template #buttons>
       <ButtonType
@@ -192,13 +200,6 @@
       />
     </template>
   </ButtonWrapper>
-
-  <div
-    v-if="linedUpPlayers.length < 11"
-    class="body-text-b4 text-color-primary text-center"
-  >
-    <p>Die Aufstellung ist noch nicht komplett</p>
-  </div>
 
   <AppDialog
     :headline="
@@ -238,6 +239,7 @@ import ButtonWrapper from '@/components/ButtonWrapper.vue';
 import ContentImage from '@/components/ContentImage.vue';
 import ProfilePanel from '@/components/ProfilePanel.vue';
 import LineUpCard from '@/components/LineUpCard.vue';
+import BadgeType from '@/components/BadgeType.vue';
 
 const { isMobile } = useBreakpoint();
 

@@ -22,7 +22,19 @@ const positionToPlayer = ref(false);
 /* validation errors */
 const errorNotEnoughPlayers = ref(false);
 
+/* extra check if data comes from api */
+const notAccessiblePlayers = ref<number[]>([]);
+
 export const useLineUp = () => {
+  const checkResponsesOnLoad = (selectedUserList: UserData[]) => {
+    const selectedUserIds = selectedUserList.map((user) => user.id);
+    const missingFromUsers = linedUpPlayers.value.filter(
+      (playerId) => !selectedUserIds.includes(playerId)
+    );
+
+    notAccessiblePlayers.value.push(...missingFromUsers);
+  };
+
   const loadSelectedEvent = async (game: Event) => {
     /* get event from vue component and add it to empty ref */
     selectedEvent.value = game;
@@ -54,6 +66,24 @@ export const useLineUp = () => {
           (response) => response.userId === user.id
         )
       );
+
+      checkResponsesOnLoad(selectedUserList.value);
+
+      selectedFormation.value.forEach((position) => {
+        /* remove not accessible players from formation */
+        if (
+          position.user?.id !== undefined &&
+          notAccessiblePlayers.value.includes(position.user?.id)
+        ) {
+          position.user = null;
+          position.isSelected = false;
+        }
+
+        /* remove not accessible players from lineUpPlayers Array */
+        linedUpPlayers.value = linedUpPlayers.value.filter(
+          (playerId) => !notAccessiblePlayers.value.includes(playerId)
+        );
+      });
     } else {
       /* handling errors while selecting game */
       console.warn(
