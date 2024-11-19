@@ -20,7 +20,6 @@
           :input-type="'text'"
           :input-placeholder="'Straße der Veranstaltung'"
           v-model:modelValue="selectedEvent[0].venueStreet"
-          :error-message="venueStreetError ? 'Adresse ist leider ungültig' : ''"
         />
       </div>
 
@@ -31,9 +30,6 @@
           :input-type="'text'"
           :input-placeholder="'Postleitzahl der Veranstaltung'"
           v-model:modelValue="selectedEvent[0].venuePostalCode"
-          :error-message="
-            venuePostalCodeError ? 'Postleitzahl ist leider ungültig' : ''
-          "
         />
       </div>
 
@@ -362,11 +358,14 @@ const validateForm = (eventID: number, eventType: string, router: any) => {
     : [];
 
   /* validation for new input */
-  venueStreetError.value =
-    !validateStreet(venueStreet.value) || venueStreet.value.length <= 0;
-  venuePostalCodeError.value =
-    !validatePostalCode(venuePostalCode.value) ||
-    venuePostalCode.value.length <= 0;
+  if (eventType !== 'Spiel') {
+    venueStreetError.value =
+      !validateStreet(venueStreet.value) || venueStreet.value.length <= 0;
+    venuePostalCodeError.value =
+      !validatePostalCode(venuePostalCode.value) ||
+      venuePostalCode.value.length <= 0;
+  }
+
   titleError.value = title.value.length <= 0;
   subtitleError.value = subtitle.value.length <= 0;
   meetAtError.value = meetAt.value.length <= 0;
@@ -380,8 +379,6 @@ const validateForm = (eventID: number, eventType: string, router: any) => {
 
   if (eventType === 'Spiel') {
     if (
-      !venueStreetError.value &&
-      !venuePostalCodeError.value &&
       !titleError.value &&
       !subtitleError.value &&
       !meetAtError.value &&
