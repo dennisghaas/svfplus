@@ -32,8 +32,8 @@ export const useLineUp = () => {
     const missingFromUsers = linedUpPlayers.value.filter(
       (playerId) => !selectedUserIds.includes(playerId)
     );
-
     notAccessiblePlayers.value.push(...missingFromUsers);
+    notAccessiblePlayers.value.push(...notNominatedPlayers.value);
   };
 
   const loadSelectedEvent = async (game: Event) => {
