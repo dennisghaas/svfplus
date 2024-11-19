@@ -131,7 +131,7 @@
 
     <ContentImage
       :img-alt="'field'"
-      :img-src="isMobile ? 'field-mobile.jpg' : 'field-desktop.png'"
+      :img-src="isMobile ? 'field-mobile.webp' : 'field-desktop.webp'"
       :class="`lineup__field-background ratio ${isMobile ? 'ratio-9x16' : ''}`"
     />
   </div>

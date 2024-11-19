@@ -7,7 +7,7 @@
     <ContentImage
       class="d-none d-md-block"
       :lazy-load="false"
-      :img-src="'login-bg-desktop.jpg'"
+      :img-src="'login-bg-desktop.webp'"
       :img-alt="'SVF Plus App Background'"
       :img-class="'pageAuth--bg'"
     />
