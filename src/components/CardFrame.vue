@@ -94,6 +94,7 @@ defineProps({
     &__left {
       flex-direction: column;
       width: 100%;
+      margin-right: rem(10px);
     }
 
     &__right {

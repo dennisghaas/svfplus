@@ -235,6 +235,7 @@
               :badge-type="'error'"
               :badge-centered="true"
               :badge-alt="true"
+              :badge-no-icon="isMobile"
             />
           </div>
         </li>
@@ -248,6 +249,7 @@ import { onMounted, ref, computed } from 'vue';
 import { useUser } from '@/composables/useUser.ts';
 import { useEventResponse } from '@/composables/useEventResponse.ts';
 import { useRouter } from 'vue-router';
+import { useBreakpoint } from '@/composables/useBreakpoint.ts';
 import { UserData } from '@/interface';
 import ProfilePanel from '@/components/ProfilePanel.vue';
 import ButtonCircle from '@/components/ButtonCircle.vue';
@@ -256,6 +258,7 @@ import store from '@/store';
 
 const { fetchAllUsers, completeUserData } = useUser();
 const { fetchEventResponse, selectEventResponses } = useEventResponse();
+const { isMobile } = useBreakpoint();
 const userData = ref<UserData[]>([]);
 const router = useRouter();
 const props = defineProps({
