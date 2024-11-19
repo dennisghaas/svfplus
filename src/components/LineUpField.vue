@@ -140,7 +140,12 @@
     <template #layoutDefaultContent>
       <ul class="lineup__sub blanklist">
         <template v-for="user in selectedUserList">
-          <li v-if="!linedUpPlayers.includes(user.id)">
+          <li
+            v-if="
+              !linedUpPlayers.includes(user.id) &&
+              !notNominatedPlayers.includes(user.id)
+            "
+          >
             <div
               :class="[
                 'lineup__sub-icon',
@@ -253,6 +258,7 @@ const {
   selectedFormation,
   switchPlayer,
   selectedFormationValue,
+  notNominatedPlayers,
   addPositionToPlayer,
   addPlayerToPosition,
   removePlayerFromPosition,

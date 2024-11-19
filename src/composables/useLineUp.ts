@@ -13,6 +13,7 @@ const linedUpPlayers = ref<number[]>([]);
 const selectedUser = ref<UserData | null>(null);
 const selectedUserId = ref(0);
 const selectedPositionId = ref(0);
+const notNominatedPlayers = ref<number[]>([]);
 
 /* keys for dialog */
 const switchPlayer = ref(false);
@@ -216,5 +217,6 @@ export const useLineUp = () => {
     selectedPositionId,
     switchPlayer,
     selectedFormationValue,
+    notNominatedPlayers,
   };
 };

@@ -84,7 +84,7 @@ import SelectCard from '@/components/SelectCard.vue';
 import LineUpStorageTable from '@/components/LineUpStorageTable.vue';
 import BadgeType from '@/components/BadgeType.vue';
 
-const { loadSelectedEvent } = useLineUp();
+const { loadSelectedEvent, notNominatedPlayers } = useLineUp();
 const {
   fetchLineUpNames,
   fetchLineUpById,
@@ -192,11 +192,16 @@ const handleLoadSelectedEvent = (game: Event) => {
 
   /* load data from composable */
   loadSelectedEvent(game);
+
+  game.playerWithNoAccess.forEach((id) => {
+    notNominatedPlayers.value.push(Number(id));
+  });
 };
 
 const fetchGameData = async () => {
   const { fetchGames, events } = useEvents();
   await fetchGames();
+
   games.value = events.value;
 };
 
