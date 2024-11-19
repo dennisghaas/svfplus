@@ -165,8 +165,10 @@
               </template>
             </div>
             <span class="text-color-black-75"
-              >{{ textTruncate(`${user.name}`, 10) }}
-              <strong>{{ textTruncate(`${user.surname}`, 10) }}</strong></span
+              >{{ textTruncate(`${user.name}`, 10, 10) }}
+              <strong>{{
+                textTruncate(`${user.surname}`, 10, 10)
+              }}</strong></span
             >
             <ButtonType
               :btn-class="'btn-small w-auto'"
