@@ -1,5 +1,15 @@
 <template>
   <div class="event-reaction-overview__wrapper">
+    <CheckboxType
+      v-if="store.state.isMajor"
+      :id="'verstecke die reaktionen der spieler'"
+      :label="'Reaktionen verstecken (für Screenshots)'"
+      :margin-bottom="true"
+      :no-border="true"
+      :value="hideSensitiveData"
+      @update:model-value="updateHideSensitiveData"
+    />
+
     <div
       v-if="filteredUserData.keineReaktion.length > 0"
       class="event-reaction-overview"
@@ -22,12 +32,14 @@
               :display-medium="true"
             />
 
-            <span
-              v-if="store.state.isMajor || isCurrentUsersProfile(user.id)"
-              class="event-reaction-overview__reason"
-            >
-              {{ user.reason }}
-            </span>
+            <template v-if="!hideSensitiveData">
+              <span
+                v-if="store.state.isMajor || isCurrentUsersProfile(user.id)"
+                class="event-reaction-overview__reason"
+              >
+                {{ user.reason }}
+              </span>
+            </template>
           </div>
           <div
             v-if="filterEventResponse(user.id)"
@@ -72,12 +84,14 @@
               :display-medium="true"
             />
 
-            <span
-              v-if="store.state.isMajor || isCurrentUsersProfile(user.id)"
-              class="event-reaction-overview__reason"
-            >
-              {{ user.reason }}
-            </span>
+            <template v-if="!hideSensitiveData">
+              <span
+                v-if="store.state.isMajor || isCurrentUsersProfile(user.id)"
+                class="event-reaction-overview__reason"
+              >
+                {{ user.reason }}
+              </span>
+            </template>
 
             <span v-if="user.id === selectEventResponses[0].userId"> </span>
           </div>
@@ -124,12 +138,14 @@
               :display-medium="true"
             />
 
-            <span
-              v-if="store.state.isMajor || isCurrentUsersProfile(user.id)"
-              class="event-reaction-overview__reason"
-            >
-              {{ user.reason }}
-            </span>
+            <template v-if="!hideSensitiveData">
+              <span
+                v-if="store.state.isMajor || isCurrentUsersProfile(user.id)"
+                class="event-reaction-overview__reason"
+              >
+                {{ user.reason }}
+              </span>
+            </template>
           </div>
           <div
             v-if="filterEventResponse(user.id)"
@@ -174,12 +190,14 @@
               :display-medium="true"
             />
 
-            <span
-              v-if="store.state.isMajor || isCurrentUsersProfile(user.id)"
-              class="event-reaction-overview__reason"
-            >
-              {{ user.reason }}
-            </span>
+            <template v-if="!hideSensitiveData">
+              <span
+                v-if="store.state.isMajor || isCurrentUsersProfile(user.id)"
+                class="event-reaction-overview__reason"
+              >
+                {{ user.reason }}
+              </span>
+            </template>
           </div>
           <div
             v-if="filterEventResponse(user.id)"
@@ -255,12 +273,14 @@ import ProfilePanel from '@/components/ProfilePanel.vue';
 import ButtonCircle from '@/components/ButtonCircle.vue';
 import BadgeType from '@/components/BadgeType.vue';
 import store from '@/store';
+import CheckboxType from '@/components/CheckboxType.vue';
 
 const { fetchAllUsers, completeUserData } = useUser();
 const { fetchEventResponse, selectEventResponses } = useEventResponse();
 const { isMobile } = useBreakpoint();
 const userData = ref<UserData[]>([]);
 const router = useRouter();
+const hideSensitiveData = ref(false);
 const props = defineProps({
   eventID: {
     type: Number,
@@ -271,6 +291,10 @@ const props = defineProps({
     default: () => [],
   },
 });
+
+const updateHideSensitiveData = (hideData: boolean) => {
+  hideSensitiveData.value = hideData;
+};
 
 const filterEventResponse = (userId: number) => {
   return computed(() => {
