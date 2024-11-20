@@ -40,7 +40,7 @@ const { fetchEvents, events } = useEvents();
 
 // Filter the first 3 upcoming events
 const upcomingEvents = computed(() => {
-  const today = new Date();
+  const now = new Date(); // Aktuelles Datum und Zeit
 
   return events.value
     .filter((event) => {
@@ -48,7 +48,7 @@ const upcomingEvents = computed(() => {
       if (!event.eventDate) return false; // Exclude events without a valid date
 
       const eventDate = new Date(event.eventDate);
-      return !isNaN(eventDate.getTime()) && eventDate >= today; // Ensure the date is valid and in the future
+      return !isNaN(eventDate.getTime()) && eventDate >= now; // Event bleibt, bis es beginnt
     })
     .sort((a, b) => {
       // Use a null check before creating a Date object
@@ -63,5 +63,3 @@ onMounted(async () => {
   await fetchEvents();
 });
 </script>
-
-<style scoped lang="scss"></style>
