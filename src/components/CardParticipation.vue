@@ -5,7 +5,7 @@
         {{
           currentUserProfile
             ? 'Deine Trainingsbeteiligung'
-            : `${createGenetiveFromName(userName)} Trainingsbeteiligung`
+            : `${createGenetiveFromName(name)} Trainingsbeteiligung`
         }}
       </h4>
       <div class="body-text-b3 text-color-white-75">
@@ -16,11 +16,24 @@
     <template #cardBody>
       <div class="row">
         <div class="col-xs-12">
-          <BadgeType
-            :badge-type="'info'"
-            :badge-text="'Diese Ansicht folgt'"
-            :badge-centered="true"
-          />
+          <template v-if="responseLoading">
+            <span>Daten werden geladen...</span>
+          </template>
+          <template v-else-if="noResponsesFound">
+            <BadgeType
+              :badge-text="'Keine Daten verfügbar'"
+              :badge-type="'info'"
+              :badge-alt="true"
+              :badge-centered="true"
+            />
+          </template>
+          <template v-else>
+            <PracticeLight
+              :list="participationList"
+              :name="name"
+              :surname="surname"
+            />
+          </template>
         </div>
       </div>
     </template>
@@ -28,11 +41,21 @@
 </template>
 
 <script setup lang="ts">
-import CardFrame from '@/components/CardFrame.vue';
+import { onMounted } from 'vue';
 import { createGenetiveFromName } from '@/helpers/createGenetiveFromName.ts';
+import { usePracticeParticipation } from '@/composables/usePracticeParticipation.ts';
+import CardFrame from '@/components/CardFrame.vue';
 import BadgeType from '@/components/BadgeType.vue';
+import PracticeLight from '@/components/PracticeLight.vue';
 
-defineProps({
+const {
+  getPageUser,
+  fetchEventResponse,
+  noResponsesFound,
+  participationList,
+  responseLoading,
+} = usePracticeParticipation();
+const props = defineProps({
   currentUserName: {
     type: String,
     default: '',
@@ -41,10 +64,23 @@ defineProps({
     type: Boolean,
     default: false,
   },
-  userName: {
+  name: {
     type: String,
     default: '',
   },
+  surname: {
+    type: String,
+    default: '',
+  },
+  userId: {
+    type: Number,
+    default: 0,
+  },
+});
+
+onMounted(async () => {
+  getPageUser(props.userId);
+  await fetchEventResponse();
 });
 </script>
 

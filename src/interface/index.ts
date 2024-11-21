@@ -169,3 +169,9 @@ export interface LoadedLineUp {
   selectedFormation: Positions[];
   selectedFormationValue: string;
 }
+
+export interface PartList {
+  id: number;
+  eventId: number;
+  response: string;
+}

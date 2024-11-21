@@ -49,7 +49,9 @@
               <CardParticipation
                 :current-user-profile="isCurrentUsersProfile"
                 :current-user-name="store.state.userData.name || ''"
-                :user-name="getSelectedUser?.name || ''"
+                :name="getSelectedUser?.name || ''"
+                :surname="getSelectedUser?.surname"
+                :user-id="getSelectedUser?.id"
               />
             </div>
           </div>
