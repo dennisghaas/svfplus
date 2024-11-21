@@ -3,20 +3,6 @@
     <h1>{{ store.state.pageHeadline }}</h1>
   </template>
 
-  <button
-    v-if="store.state.isCommander"
-    type="button"
-    style="
-      background: var(--primary);
-      padding: 20px;
-      margin-bottom: 20px;
-      color: var(--white);
-    "
-    @click="changeDeadlineToStartForTraining"
-  >
-    Ändere die Reaktionszeit eines Trainings (Admin Setting)
-  </button>
-
   <SectionType
     v-if="filteredDashboardEvents.length > 0 && !allEventsResponded"
     :class="'mt-0'"
@@ -98,7 +84,6 @@ import { onMounted, computed } from 'vue';
 import { useBreakpoint } from '@/composables/useBreakpoint.ts';
 import { useEvents } from '@/composables/useEvents.ts';
 import { useEventResponse } from '@/composables/useEventResponse.ts';
-import { useChangeDeadlineToStart } from '@/composables/useChangeDeadlineToStart.ts';
 import store from '@/store';
 import CardEvent from '@/components/CardEvent.vue';
 import SectionType from '@/components/SectionType.vue';
@@ -108,8 +93,6 @@ import UpcomingEvents from '@/components/UpcomingEvents.vue';
 const { isTablet, isMobile } = useBreakpoint();
 const { events } = useEvents();
 const { fetchUserResponseToEvent, getResponseForEvent } = useEventResponse();
-
-const { changeDeadlineToStartForTraining } = useChangeDeadlineToStart();
 
 // Filter dashboard events
 const filteredDashboardEvents = computed(() => {
