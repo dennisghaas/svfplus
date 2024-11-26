@@ -58,7 +58,7 @@ const fetchUserDataOnLoad = async (token: string | null, router?: any) => {
       console.error('Fehler beim Abrufen der Benutzerdaten:', error);
       responseText.value =
         'Fehler beim Abrufen der Benutzerdaten: ' + error.message;
-      store.login(false);
+      router.push('/login');
     }
 
     /* add data of user to store */

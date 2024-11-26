@@ -1,5 +1,7 @@
 <template>
-  <template v-if="!store.state.loadData"></template>
+  <template v-if="!store.state.loadData">
+    <RouterView />
+  </template>
   <template v-else>
     <template v-if="store.state.isLoggedIn && !store.state.isRegisterSuccess">
       <LayoutLoggenIn
