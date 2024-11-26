@@ -17,6 +17,7 @@ const state = reactive({
   isMajor: false,
   isCommander: false,
   watchedTutorial: false,
+  loadingApp: true,
 });
 
 const setUserData = (data: any) => {
@@ -113,6 +114,10 @@ const updatedWatchedTutorial = (watched: boolean) => {
   state.watchedTutorial = watched;
 };
 
+const updateLoadingApp = (loading: boolean) => {
+  state.loadingApp = loading;
+};
+
 export default {
   state: readonly(state),
   setUserData,
@@ -130,4 +135,5 @@ export default {
   updateIsRegisterSuccess,
   getUserAccessRights,
   updatedWatchedTutorial,
+  updateLoadingApp,
 };

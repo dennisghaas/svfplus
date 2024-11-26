@@ -55,6 +55,7 @@ const fetchUserDataOnLoad = async (token: string | null, router?: any) => {
         token
       );
       store.login(true);
+      store.loadData(true);
 
       /* add data of user to store */
       store.setUserData(userData.value);
@@ -65,20 +66,22 @@ const fetchUserDataOnLoad = async (token: string | null, router?: any) => {
         store.updatedWatchedTutorial(true);
       }
 
-      store.loadData(true);
-
       if (!store.state.isLoggedIn && !store.state.isRegisterSuccess) {
         router.push('/login');
       } else if (!store.state.isLoggedIn && store.state.isRegisterSuccess) {
         router.push('/success');
       }
+
+      store.updateLoadingApp(false);
     } catch (error: any) {
       console.error('Fehler beim Abrufen der Benutzerdaten:', error);
       responseText.value =
         'Fehler beim Abrufen der Benutzerdaten: ' + error.message;
+      store.updateLoadingApp(false);
     }
   } else {
     router.push('/login');
+    store.updateLoadingApp(false);
   }
 };
 
