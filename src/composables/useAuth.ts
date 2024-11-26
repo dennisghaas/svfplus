@@ -1,6 +1,7 @@
 import { ref } from 'vue';
 import { fetchDataFromApi } from '@/helpers/fetchDataFromApi';
 import { useLocalStorage } from '@/composables/useLocalStorage';
+import { isTokenExpired } from '@/helpers/isTokenExpired.ts';
 import store from '@/store';
 
 // Reaktive Variablen
@@ -45,7 +46,7 @@ const handleLogin = async (router: any) => {
 };
 
 const fetchUserDataOnLoad = async (token: string | null, router?: any) => {
-  if (token) {
+  if (!isTokenExpired(token) && token) {
     try {
       userData.value = await fetchDataFromApi(
         '/users/me',
@@ -54,29 +55,30 @@ const fetchUserDataOnLoad = async (token: string | null, router?: any) => {
         token
       );
       store.login(true);
+
+      /* add data of user to store */
+      store.setUserData(userData.value);
+      store.getUserAccessRights(userData.value);
+
+      /* show tutorial based on user info */
+      if (store.state.userData.watchedTutorial) {
+        store.updatedWatchedTutorial(true);
+      }
+
+      store.loadData(true);
+
+      if (!store.state.isLoggedIn && !store.state.isRegisterSuccess) {
+        router.push('/login');
+      } else if (!store.state.isLoggedIn && store.state.isRegisterSuccess) {
+        router.push('/success');
+      }
     } catch (error: any) {
       console.error('Fehler beim Abrufen der Benutzerdaten:', error);
       responseText.value =
         'Fehler beim Abrufen der Benutzerdaten: ' + error.message;
-      router.push('/login');
     }
-
-    /* add data of user to store */
-    store.setUserData(userData.value);
-    store.getUserAccessRights(userData.value);
-
-    /* show tutorial based on user info */
-    if (store.state.userData.watchedTutorial) {
-      store.updatedWatchedTutorial(true);
-    }
-  }
-
-  store.loadData(true);
-
-  if (!store.state.isLoggedIn && !store.state.isRegisterSuccess) {
+  } else {
     router.push('/login');
-  } else if (!store.state.isLoggedIn && store.state.isRegisterSuccess) {
-    router.push('/success');
   }
 };
 
