@@ -4,8 +4,24 @@
   </template>
 
   <SectionType
-    v-if="filteredDashboardEvents.length > 0 && !allEventsResponded"
+    v-if="todaysBirthdayList && todaysBirthdayList.length > 0"
     :class="'mt-0'"
+  >
+    <template #sectionContent>
+      <div class="row">
+        <div
+          v-for="item in todaysBirthdayList"
+          :key="item.id"
+          class="col-xs-12 col-xl-6"
+        >
+          <CardBirthday :birthday-user="item" />
+        </div>
+      </div>
+    </template>
+  </SectionType>
+
+  <SectionType
+    v-if="filteredDashboardEvents.length > 0 && !allEventsResponded"
     :section-header="true"
   >
     <template #sectionHeaderLeft>
@@ -74,7 +90,20 @@
     </template>
     <template #sectionHeaderRight />
     <template #sectionContent>
-      <BadgeType :badge-type="'info'" :badge-text="'Diese Ansicht folgt'" />
+      <div
+        v-if="nextBirthdaysList && nextBirthdaysList.length > 0"
+        class="row"
+      >
+        <div
+          v-for="item in nextBirthdaysList"
+          :key="item.id"
+          class="col-xs-12 col-sm-6 col-xl-4"
+        >
+          <CardBirthdayAlt
+            :birthday-user="item"
+          />
+        </div>
+      </div>
     </template>
   </SectionType>
 </template>
@@ -84,15 +113,19 @@ import { onMounted, computed } from 'vue';
 import { useBreakpoint } from '@/composables/useBreakpoint.ts';
 import { useEvents } from '@/composables/useEvents.ts';
 import { useEventResponse } from '@/composables/useEventResponse.ts';
+import { useBirthdays } from '@/composables/useBirthdays.ts';
 import store from '@/store';
 import CardEvent from '@/components/CardEvent.vue';
 import SectionType from '@/components/SectionType.vue';
-import BadgeType from '@/components/BadgeType.vue';
 import UpcomingEvents from '@/components/UpcomingEvents.vue';
+import CardBirthday from '@/components/CardBirthday.vue';
+import CardBirthdayAlt from '@/components/CardBirthdayAlt.vue';
 
 const { isTablet, isMobile } = useBreakpoint();
 const { events } = useEvents();
 const { fetchUserResponseToEvent, getResponseForEvent } = useEventResponse();
+const { getNextBirthdays, todaysBirthdayList, nextBirthdaysList } =
+  useBirthdays();
 
 // Filter dashboard events
 const filteredDashboardEvents = computed(() => {
@@ -121,6 +154,9 @@ onMounted(() => {
   });
 
   store.pageHeadline(`Moin ${store.state.userData.name}`);
+
+  /* calling birthday functions */
+  getNextBirthdays();
 });
 </script>
 

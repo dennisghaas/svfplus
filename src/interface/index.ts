@@ -1,5 +1,5 @@
-interface userImage {
-  name: string;
+export interface userImage {
+  name?: string;
   bgColor: string;
   bgImage: string;
   initials: string;
@@ -174,4 +174,14 @@ export interface PartList {
   id: number;
   eventId: number;
   response: string;
+}
+
+export interface BirthdayObject {
+  id: number;
+  name: string;
+  surname: string;
+  birthday: string;
+  age: number;
+  userImage: userImage;
+  nextBirthday?: string | Date;
 }

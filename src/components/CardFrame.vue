@@ -101,7 +101,6 @@ defineProps({
       align-items: center;
       justify-content: flex-end;
       flex-direction: row;
-      flex: rem(110px) 0 0;
       gap: rem(10px);
     }
 
@@ -113,6 +112,8 @@ defineProps({
   &--body {
     position: relative;
     padding: rem(15px) rem(20px);
+    hyphens: auto;
+    text-wrap: pretty;
   }
 
   &--alt {
@@ -145,5 +146,13 @@ defineProps({
       z-index: 1;
     }
   }
+}
+</style>
+
+<style lang="scss">
+.card--header__left--birthday {
+  display: flex;
+  align-items: center;
+  gap: rem(10px);
 }
 </style>
