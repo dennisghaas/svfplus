@@ -1,5 +1,8 @@
 <template>
-  <CardFrame :card-header-b-g="convertCustomProperties(birthdayUser.userImage.bgColor)" :hide-header-right="true">
+  <CardFrame
+    :card-header-b-g="convertCustomProperties(birthdayUser.userImage.bgColor)"
+    :hide-header-right="true"
+  >
     <template #cardHeaderLeft>
       <div class="card--header__left--birthday">
         <ProfilePanel
@@ -19,7 +22,8 @@
       <template v-if="store.state.userData.id === birthdayUser.id">
         <div class="body-text-b3">
           <p>
-            Zur <strong>Feier des Tages</strong> würde sich deine <strong>Mannschaft</strong> über ein paar
+            Zur <strong>Feier des Tages</strong> würde sich deine
+            <strong>Mannschaft</strong> über ein paar
             <strong>Kaltgetränke</strong> freuen 🚀
           </p>
         </div>
@@ -27,9 +31,11 @@
       <template v-else>
         <div class="body-text-b3">
           <p>
-            Sieht so aus als würde {{ textTruncate(birthdayUser.name, 10) }} ein paar <strong>Kaltgetränke</strong> mitbringen.<br>
-            <strong>Gratuliere</strong> ihm zu seinem <strong>{{ birthdayUser.age }}</strong>.
-            Geburtstag 🚀
+            Sieht so aus als würde {{ textTruncate(birthdayUser.name, 10) }} ein
+            paar <strong>Kaltgetränke</strong> mitbringen.<br />
+            <strong>Gratuliere</strong> ihm zu seinem
+            <strong>{{ birthdayUser.age }}</strong
+            >. Geburtstag 🚀
           </p>
         </div>
       </template>
@@ -45,12 +51,12 @@ import { BirthdayObject } from '@/interface';
 import ProfilePanel from '@/components/ProfilePanel.vue';
 
 const convertCustomProperties = (property: string) => {
-  if(property.includes('svg')) {
-    return 'bg-blue-primary'
+  if (property.includes('svg')) {
+    return 'bg-blue-primary';
   }
 
   return `bg-${property.slice(2)}`;
-}
+};
 
 defineProps({
   birthdayUser: {

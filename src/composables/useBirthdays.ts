@@ -66,7 +66,7 @@ export const useBirthdays = () => {
   const getNextBirthdays = async () => {
     await fetchBirthdays();
 
-    const maxRenderingBirthdays = 4
+    const maxRenderingBirthdays = 4;
     const today = createTodaysDate();
     const [todayYear, todayMonth, todayDay] = splitDate(today);
 

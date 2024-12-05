@@ -90,18 +90,13 @@
     </template>
     <template #sectionHeaderRight />
     <template #sectionContent>
-      <div
-        v-if="nextBirthdaysList && nextBirthdaysList.length > 0"
-        class="row"
-      >
+      <div v-if="nextBirthdaysList && nextBirthdaysList.length > 0" class="row">
         <div
           v-for="item in nextBirthdaysList"
           :key="item.id"
           class="col-xs-12 col-sm-6 col-xl-4"
         >
-          <CardBirthdayAlt
-            :birthday-user="item"
-          />
+          <CardBirthdayAlt :birthday-user="item" />
         </div>
       </div>
     </template>
@@ -120,6 +115,7 @@ import SectionType from '@/components/SectionType.vue';
 import UpcomingEvents from '@/components/UpcomingEvents.vue';
 import CardBirthday from '@/components/CardBirthday.vue';
 import CardBirthdayAlt from '@/components/CardBirthdayAlt.vue';
+import ContentImage from '@/components/ContentImage.vue';
 
 const { isTablet, isMobile } = useBreakpoint();
 const { events } = useEvents();

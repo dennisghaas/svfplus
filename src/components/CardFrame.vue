@@ -112,8 +112,6 @@ defineProps({
   &--body {
     position: relative;
     padding: rem(15px) rem(20px);
-    hyphens: auto;
-    text-wrap: pretty;
   }
 
   &--alt {
