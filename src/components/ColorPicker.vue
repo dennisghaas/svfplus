@@ -29,18 +29,60 @@
         </button>
       </li>
     </template>
+    <template v-for="image in accessibleProfileImages">
+      <li
+        v-if="toLowercase(image.username).includes(toLowercase(username))"
+        :class="{
+          'is-selected': onReload
+            ? selectedColor.color === image.color
+            : userImageBgColor === image.color,
+        }"
+      >
+        <button
+          type="button"
+          @click="handleColorPicker(image)"
+          :style="
+            !image.image
+              ? { '--color-picker': `var(${image.color})` }
+              : { '--background-image-path': `url(${image.color})` }
+          "
+          :title="`${image.name} als Profilhintergrundfarbe auswählen`"
+        >
+          <span
+            :class="[
+              'color-picker__picker-circle',
+              { 'color-picker__picker-circle-image': image.image },
+            ]"
+          >
+          </span>
+          <span>
+            <template v-if="isCurrentUsersProfile"> Dein Bild </template>
+            <template v-else>
+              {{ image.name }}
+            </template>
+          </span>
+        </button>
+      </li>
+    </template>
   </ul>
 </template>
 
 <script setup lang="ts">
-import { reactive, onMounted, ref } from 'vue';
+import store from '@/store';
+import { onMounted, ref } from 'vue';
 import { useUser } from '@/composables/useUser.ts';
-import { UserData } from '@/interface';
+import { UserData, Color } from '@/interface';
+import { accessibleProfileImages } from '@/config/accessibleProfileImages.ts';
+import { accessibleColors } from '@/config/accessibleColors.ts';
 
 const { getUserByID, selectedUser } = useUser();
 const getSelectedUser = ref<UserData | null>(null);
 const userImageBgColor = ref('');
 const onReload = ref(false);
+
+const toLowercase = (name: string) => {
+  return name.toLowerCase();
+};
 
 const props = defineProps({
   selectedColor: {
@@ -51,56 +93,19 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
+  isCurrentUsersProfile: {
+    type: Boolean,
+    default: false,
+  },
+  username: {
+    type: String,
+    default: '',
+  },
 });
 
 const emit = defineEmits(['update:selectedColor']);
-const accessibleColors = reactive([
-  {
-    color: '--warning-light',
-    name: 'Gelb',
-  },
-  {
-    color: '--blue-primary',
-    name: 'Blau',
-  },
-  {
-    color: '--primary',
-    name: 'Rot',
-  },
-  {
-    color: '--purple',
-    name: 'Lila',
-  },
-  {
-    color: '--blue-dark-gray',
-    name: 'Dunkelblau',
-  },
-  {
-    color: '--success-mint',
-    name: 'Minzgrün',
-  },
-  {
-    name: 'Derbysieger',
-    color: '/images/hsv.svg',
-    image: true,
-  },
-  {
-    name: 'Kiezkicker',
-    color: '/images/pauli.svg',
-    image: true,
-  },
-  {
-    name: 'Norderstedt',
-    color: '/images/sh.svg',
-    image: true,
-  },
-]);
 
-const handleColorPicker = (color: {
-  color: string;
-  name: string;
-  image?: boolean;
-}) => {
+const handleColorPicker = (color: Color) => {
   onReload.value = true;
   emit('update:selectedColor', color); // Hier das ganze color Objekt übergeben
 };
@@ -146,6 +151,7 @@ onMounted(async () => {
           border-radius: 50%;
           background: var(--color-picker);
           border: 2px solid var(--white);
+          background-size: contain;
 
           &-image {
             background-image: var(--background-image-path);

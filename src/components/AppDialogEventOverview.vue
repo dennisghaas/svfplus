@@ -29,6 +29,7 @@
               :bg-color="user.userImage.bgColor"
               :is-image="!user.userImage.bgColor.includes('--')"
               :user-initials="user.userImage.initials"
+              :hide-initials="user.userImage.hideInitials"
               :display-medium="true"
             />
 
@@ -81,6 +82,7 @@
               :bg-color="user.userImage.bgColor"
               :is-image="!user.userImage.bgColor.includes('--')"
               :user-initials="user.userImage.initials"
+              :hide-initials="user.userImage.hideInitials"
               :display-medium="true"
             />
 
@@ -135,6 +137,7 @@
               :bg-color="user.userImage.bgColor"
               :is-image="!user.userImage.bgColor.includes('--')"
               :user-initials="user.userImage.initials"
+              :hide-initials="user.userImage.hideInitials"
               :display-medium="true"
             />
 
@@ -187,6 +190,7 @@
               :bg-color="user.userImage.bgColor"
               :is-image="!user.userImage.bgColor.includes('--')"
               :user-initials="user.userImage.initials"
+              :hide-initials="user.userImage.hideInitials"
               :display-medium="true"
             />
 
@@ -241,6 +245,7 @@
               :bg-color="user.userImage.bgColor"
               :is-image="!user.userImage.bgColor.includes('--')"
               :user-initials="user.userImage.initials"
+              :hide-initials="user.userImage.hideInitials"
               :display-medium="true"
             />
           </div>

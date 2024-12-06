@@ -2,10 +2,14 @@
   <div v-if="getSelectedUser">
     <div v-if="!showChangePasswordModel && !showUserImageModel" class="row">
       <div class="col-xs-12">
-        <div v-if="isCurrentUsersProfile" class="edit-users-image">
+        <div
+          v-if="isCurrentUsersProfile || store.state.isCommander"
+          class="edit-users-image"
+        >
           <ProfilePanel
             :bg-color="getSelectedUser.userImage.bgColor"
             :user-initials="getSelectedUser.userImage.initials"
+            :hide-initials="getSelectedUser.userImage.hideInitials"
             :user-name="getSelectedUser.name"
             :is-image="!getSelectedUser.userImage.bgColor.includes('--')"
           />
@@ -253,33 +257,36 @@
       </div>
     </div>
     <div
-      v-if="
-        !showChangePasswordModel && showUserImageModel && isCurrentUsersProfile
-      "
+      v-if="!showChangePasswordModel && showUserImageModel"
       class="change-profile-image"
     >
-      <ProfilePanel
-        :user-name="getSelectedUser.name"
-        :user-initials="getSelectedUser.userImage.initials"
-        :bg-color="getSelectedUser.userImage.bgColor"
-        :is-image="!getSelectedUser.userImage.bgColor.includes('--')"
-      />
-      <ColorPicker
-        v-model:selectedColor="getImageColor"
-        :id="getSelectedUser.id"
-        @update:selected-color="updateSelectedColor"
-      />
+      <template v-if="isCurrentUsersProfile || store.state.isCommander">
+        <ProfilePanel
+          :user-name="getSelectedUser.name"
+          :user-initials="getSelectedUser.userImage.initials"
+          :hide-initials="getSelectedUser.userImage.hideInitials"
+          :bg-color="getSelectedUser.userImage.bgColor"
+          :is-image="!getSelectedUser.userImage.bgColor.includes('--')"
+        />
+        <ColorPicker
+          v-model:selectedColor="getImageColor"
+          :id="getSelectedUser.id"
+          :is-current-users-profile="isCurrentUsersProfile"
+          :username="getSelectedUser.username"
+          @update:selected-color="updateSelectedColor"
+        />
 
-      <ButtonWrapper>
-        <template #buttons>
-          <ButtonType
-            :type-button="true"
-            :btn-text="'Änderungen bestätigen'"
-            :btn-class="'w-100'"
-            @click="showUserImageModel = !showUserImageModel"
-          />
-        </template>
-      </ButtonWrapper>
+        <ButtonWrapper>
+          <template #buttons>
+            <ButtonType
+              :type-button="true"
+              :btn-text="'Änderungen bestätigen'"
+              :btn-class="'w-100'"
+              @click="showUserImageModel = !showUserImageModel"
+            />
+          </template>
+        </ButtonWrapper>
+      </template>
     </div>
   </div>
 </template>
@@ -292,7 +299,7 @@ import { getInitials } from '@/helpers/getInitials.ts';
 import { validatePassword } from '@/helpers/validatePassword.ts';
 import { textTruncate } from '@/helpers/textTruncate.ts';
 import store from '@/store';
-import { UserData } from '@/interface';
+import { UserData, Color } from '@/interface';
 import InputType from '@/components/InputType.vue';
 import CheckboxType from '@/components/CheckboxType.vue';
 import PromoteUser from '@/components/PromoteUser.vue';
@@ -305,6 +312,7 @@ import ColorPicker from '@/components/ColorPicker.vue';
 
 const router = useRouter();
 const getSelectedUser = ref<UserData | null>(null);
+const realImage = ref(false);
 const {
   getUserByID,
   updateUserByID,
@@ -334,9 +342,14 @@ const getImageColor = ref([
   },
 ]);
 
-const updateSelectedColor = (color: { color: string }) => {
+const updateSelectedColor = (color: Color) => {
   if (getSelectedUser.value) {
     getSelectedUser.value.userImage.bgColor = color.color;
+
+    if (color.realImage) {
+      realImage.value = color.realImage;
+      getSelectedUser.value.userImage.hideInitials = color.realImage;
+    }
   }
 };
 
@@ -380,6 +393,7 @@ const handleUserAction = () => {
     `${getInitials(getSelectedUser.value.name)}${getInitials(getSelectedUser.value.surname)}`
   );
   getSelectedUser.value.userImage.initials = updateInitials.value;
+  getSelectedUser.value.userImage.hideInitials = realImage.value;
 
   /* error validation */
   nameError.value = !getSelectedUser.value.name;
@@ -416,6 +430,7 @@ const handleUserAction = () => {
       accessRights: usersAccessRights.value,
       isInjured: getSelectedUser.value.isInjured,
       initials: getSelectedUser.value.userImage.initials,
+      hideInitials: getSelectedUser.value.userImage.hideInitials,
     };
 
     setUserFields(getSelectedUser.value, updates);

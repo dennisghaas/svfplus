@@ -26,6 +26,7 @@
               :user-name="store.state.userData.name"
               :display-reverse="true"
               :user-initials="store.state.userData.userImage.initials"
+              :hide-initials="store.state.userData.userImage.hideInitials"
               :bg-color="store.state.userData.userImage.bgColor"
               :link="'/dein-profil'"
               :is-image="!store.state.userData.userImage.bgColor.includes('--')"

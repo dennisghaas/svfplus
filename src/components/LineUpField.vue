@@ -51,6 +51,7 @@
               pos.isSelected ? pos.user?.userImage.bgColor : '--primary'
             "
             :user-initials="pos.isSelected ? pos.user?.userImage.initials : ''"
+            :hide-initials="pos.user?.userImage.hideInitials"
             :is-image="
               pos.isSelected
                 ? !pos.user?.userImage.bgColor.includes('--')
@@ -239,6 +240,7 @@ import {
   formation_442,
   formation_4141,
   formation_443_2,
+  formation_4231,
 } from '@/config/formations.ts';
 import SelectType from '@/components/SelectType.vue';
 import { Positions } from '@/interface';
@@ -304,6 +306,8 @@ const updateSelectedFormation = (formation: string) => {
     selectedFormation.value = formation_442;
   } else if (formation === '4-3-3(2)') {
     selectedFormation.value = formation_443_2;
+  } else if (formation === '4-2-3-1') {
+    selectedFormation.value = formation_4231;
   } else {
     selectedFormation.value = formation_4141;
   }
@@ -591,6 +595,14 @@ const handleClose = () => {
 
           &.cm-top {
             bottom: 60%;
+          }
+        }
+
+        &.com {
+          bottom: 70%;
+
+          &.com-top {
+            bottom: 75%;
           }
         }
 

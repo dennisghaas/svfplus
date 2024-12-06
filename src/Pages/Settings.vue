@@ -29,6 +29,7 @@
             <ProfilePanel
               :bg-color="user.userImage.bgColor"
               :user-initials="user.userImage.initials"
+              :hide-initials="user.userImage.hideInitials"
               :user-name="user.name + ' ' + user.surname"
               :is-image="!user.userImage.bgColor.includes('--')"
               :display-medium="isMobile"
@@ -101,6 +102,7 @@
             <ProfilePanel
               :bg-color="user.userImage.bgColor"
               :user-initials="user.userImage.initials"
+              :hide-initials="user.userImage.hideInitials"
               :user-name="user.name + ' ' + user.surname"
               :display-medium="isMobile"
               :add-border="true"

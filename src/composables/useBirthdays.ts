@@ -55,6 +55,7 @@ export const useBirthdays = () => {
             bgColor: user.userImage.bgColor,
             bgImage: user.userImage.bgImage,
             initials: user.userImage.initials,
+            hideInitials: user.userImage.hideInitials,
           },
         });
       }

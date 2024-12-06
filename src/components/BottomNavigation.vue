@@ -32,6 +32,7 @@
                 v-if="item.properties[0].isProfile"
                 :bg-color="store.state.userData.userImage.bgColor"
                 :user-initials="store.state.userData.userImage.initials"
+                :hide-initials="store.state.userData.userImage.hideInitials"
                 :is-image="
                   !store.state.userData.userImage.bgColor.includes('--')
                 "

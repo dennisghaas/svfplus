@@ -23,6 +23,7 @@ const userIsActivated = ref(false);
 const bgColor = ref('');
 const bgImage = ref('');
 const initials = ref('');
+const hideInitials = ref(false);
 const username = ref('');
 const userNotFound = ref(false);
 const watchedTutorial = ref(false);
@@ -59,6 +60,7 @@ export const useUser = () => {
         bgColor: bgColor.value,
         bgImage: bgImage.value,
         initials: initials.value,
+        hideInitials: hideInitials.value,
       },
       userIsActivated: userIsActivated.value,
       username: username.value,
@@ -85,6 +87,7 @@ export const useUser = () => {
     bgColor.value = user.userImage.bgColor;
     bgImage.value = user.userImage.bgImage;
     initials.value = user.userImage.initials;
+    hideInitials.value = user.userImage.hideInitials;
     username.value = user.username;
     watchedTutorial.value = user.watchedTutorial;
 

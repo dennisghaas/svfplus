@@ -29,6 +29,7 @@
             :jersey-number="getSelectedUser?.jerseyNumber || 0"
             :bg-color="getSelectedUser?.userImage?.bgColor || ''"
             :initials="getSelectedUser?.userImage?.initials || ''"
+            :hide-initials="getSelectedUser?.userImage?.hideInitials || false"
             :is-current-users-profile="isCurrentUsersProfile"
           />
         </div>

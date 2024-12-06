@@ -5,6 +5,7 @@
         <ProfilePanel
           :bg-color="birthdayUser.userImage.bgColor"
           :user-initials="birthdayUser.userImage.initials"
+          :hide-initials="birthdayUser.userImage.hideInitials"
           :user-name="birthdayUser.userImage.name"
           :is-image="!birthdayUser.userImage.bgColor.includes('--')"
           :add-border="true"

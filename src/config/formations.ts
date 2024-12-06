@@ -1,6 +1,6 @@
 import { Positions } from '@/interface';
 
-export const formationNav = ['4-1-4-1', '4-4-2', '4-3-3(2)'];
+export const formationNav = ['4-1-4-1', '4-4-2', '4-3-3(2)', '4-2-3-1'];
 
 /* defined formations */
 export const formation_4141: Positions[] = [
@@ -262,6 +262,97 @@ export const formation_443_2: Positions[] = [
     pos: 'lf',
     x: 'left',
     y: 'winger winger-top',
+    id: 9,
+    isSelected: false,
+    user: null,
+  },
+  {
+    pos: 'st',
+    x: 'center',
+    y: 'st',
+    id: 10,
+    isSelected: false,
+    user: null,
+  },
+];
+
+export const formation_4231: Positions[] = [
+  {
+    pos: 'tw',
+    x: 'center',
+    y: 'gk',
+    id: 0,
+    isSelected: false,
+    user: null,
+  },
+  {
+    pos: 'riv',
+    x: 'center center-right',
+    y: 'cb',
+    id: 1,
+    isSelected: false,
+    user: null,
+  },
+  {
+    pos: 'liv',
+    x: 'center center-left',
+    y: 'cb',
+    id: 2,
+    isSelected: false,
+    user: null,
+  },
+  {
+    pos: 'rv',
+    x: 'right',
+    y: 'fb fb-top',
+    id: 3,
+    isSelected: false,
+    user: null,
+  },
+  {
+    pos: 'lv',
+    x: 'left',
+    y: 'fb fb-top',
+    id: 4,
+    isSelected: false,
+    user: null,
+  },
+  {
+    pos: 'zdm',
+    x: 'center center-left',
+    y: 'cdm cdm-top',
+    id: 5,
+    isSelected: false,
+    user: null,
+  },
+  {
+    pos: 'zdm',
+    x: 'center center-right',
+    y: 'cdm cdm-top',
+    id: 6,
+    isSelected: false,
+    user: null,
+  },
+  {
+    pos: 'zom',
+    x: 'center',
+    y: 'com',
+    id: 7,
+    isSelected: false,
+    user: null,
+  },
+  {
+    pos: 'rm',
+    x: 'right',
+    y: 'winger',
+    id: 8,
+    isSelected: false,
+    user: null,
+  },
+  {
+    pos: 'lm',
+    x: 'left',
+    y: 'winger',
     id: 9,
     isSelected: false,
     user: null,

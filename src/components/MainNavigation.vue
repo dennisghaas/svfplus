@@ -29,6 +29,7 @@
             <ProfilePanel
               v-if="item.properties[0].isProfile"
               :user-initials="store.state.userData.userImage.initials"
+              :hide-initials="store.state.userData.userImage.hideInitials"
               :bg-color="store.state.userData.userImage.bgColor"
               :add-border="true"
               :display-small="true"

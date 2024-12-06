@@ -3,6 +3,7 @@ export interface userImage {
   bgColor: string;
   bgImage: string;
   initials: string;
+  hideInitials?: boolean;
 }
 
 export interface UserData {
@@ -184,4 +185,11 @@ export interface BirthdayObject {
   age: number;
   userImage: userImage;
   nextBirthday?: string | Date;
+}
+
+export interface Color {
+  color: string;
+  name: string;
+  image?: boolean;
+  realImage?: boolean;
 }

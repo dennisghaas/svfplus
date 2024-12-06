@@ -20,11 +20,13 @@
       ]"
       :style="computedStyle"
     >
-      <template v-if="!isAddButton">
-        {{ userInitials }}
-      </template>
-      <template v-else>
-        <i class="icon-injured"></i>
+      <template v-if="!hideInitials">
+        <template v-if="!isAddButton">
+          {{ userInitials }}
+        </template>
+        <template v-else>
+          <i class="icon-injured"></i>
+        </template>
       </template>
     </div>
     <span
@@ -84,6 +86,10 @@ const props = defineProps({
     default: false,
   },
   isAddButton: {
+    type: Boolean,
+    default: false,
+  },
+  hideInitials: {
     type: Boolean,
     default: false,
   },
@@ -161,6 +167,7 @@ const computedStyle = computed(() => {
 
     &.profile-panel__custom-image {
       background-image: var(--profile-custom-image-bg);
+      background-size: contain;
       color: var(--black);
     }
   }

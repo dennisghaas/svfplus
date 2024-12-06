@@ -6,6 +6,7 @@
           <ProfilePanel
             :bg-color="bgColor"
             :user-initials="initials"
+            :hide-initials="hideInitials"
             :add-border="true"
             :is-image="!bgColor.includes('--')"
           />
@@ -212,6 +213,10 @@ const props = defineProps({
   initials: {
     type: String,
     default: '',
+  },
+  hideInitials: {
+    type: Boolean,
+    default: false,
   },
   isCurrentUsersProfile: {
     type: Boolean,

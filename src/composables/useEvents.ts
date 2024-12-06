@@ -66,13 +66,15 @@ export const useEvents = () => {
       const response = await fetchDataFromApi('/events', 'GET');
 
       // Filtert nur Events vom Typ 'Spiel' und deren Datum ab heute
-      const today = new Date();
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      yesterday.setHours(0, 0, 0, 0);
       const filteredEvents = response
         .filter(
           (event: Event) =>
             event.eventType === 'Spiel' &&
             event.eventDate !== null && // Null-Werte ausschließen
-            new Date(event.eventDate) >= today
+            new Date(event.eventDate) >= yesterday
         )
         .sort(
           (a: Event, b: Event) =>
@@ -115,8 +117,6 @@ export const useEvents = () => {
             responses.push(response);
           }
         }
-
-        console.log(responses);
         selectedEvent.value = responses;
       }
     } catch (error) {

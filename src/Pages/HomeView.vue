@@ -115,7 +115,6 @@ import SectionType from '@/components/SectionType.vue';
 import UpcomingEvents from '@/components/UpcomingEvents.vue';
 import CardBirthday from '@/components/CardBirthday.vue';
 import CardBirthdayAlt from '@/components/CardBirthdayAlt.vue';
-import ContentImage from '@/components/ContentImage.vue';
 
 const { isTablet, isMobile } = useBreakpoint();
 const { events } = useEvents();
