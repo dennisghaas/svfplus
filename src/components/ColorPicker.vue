@@ -68,7 +68,6 @@
 </template>
 
 <script setup lang="ts">
-import store from '@/store';
 import { onMounted, ref } from 'vue';
 import { useUser } from '@/composables/useUser.ts';
 import { UserData, Color } from '@/interface';
