@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { formatDate } from '@/helpers/formatDate.ts';
 import { textTruncate } from '@/helpers/textTruncate.ts';
 import { BirthdayObject } from '@/interface';
@@ -50,8 +50,17 @@ const props = defineProps({
   },
 });
 
+/* we need to make sure that we change the birth year to the current one */
+const resolveBirthdayToCurrentYear = () => {
+  const birthday = formatDate(
+    new Date(props.birthdayUser.birthday).toISOString()
+  );
+  const currentYear = formatDate(new Date().toISOString()).year;
+  return `${currentYear}-${birthday.month}-${birthday.day}`;
+};
+
 const formattedDate = computed(() =>
-  formatDate(new Date(props.birthdayUser.birthday).toISOString())
+  formatDate(new Date(resolveBirthdayToCurrentYear()).toISOString())
 );
 </script>
 
