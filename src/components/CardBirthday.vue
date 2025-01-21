@@ -14,7 +14,10 @@
           :add-border="true"
         />
         <div class="body-text-b2">
-          <h4>Alles Gute {{ textTruncate(birthdayUser.name, 10) }} 🥳</h4>
+          <h4>
+            Alles Gute
+            <strong>{{ textTruncate(birthdayUser.name, 10) }}</strong> 🥳
+          </h4>
         </div>
       </div>
     </template>
@@ -52,7 +55,7 @@ import { BirthdayObject } from '@/interface';
 import ProfilePanel from '@/components/ProfilePanel.vue';
 
 const convertCustomProperties = (property: string) => {
-  if (property.includes('svg')) {
+  if (property.includes('svg') || property.includes('png')) {
     return 'bg-blue-primary';
   }
 
