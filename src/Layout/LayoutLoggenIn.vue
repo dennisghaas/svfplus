@@ -23,6 +23,7 @@
     ]"
   >
     <div class="container">
+      <AppBadge v-if="registerNew" />
       <slot name="pageMainContent"></slot>
     </div>
   </main>
@@ -36,6 +37,8 @@ import PageHeader from '@/components/PageHeader.vue';
 import SidebarNavigation from '@/components/SidebarNavigation.vue';
 import BottomNavigation from '@/components/BottomNavigation.vue';
 import LoadingResponse from '@/components/LoadingResponse.vue';
+import { registerNew } from '@/config';
+import AppBadge from '@/components/AppBadge.vue';
 
 /* to detect device width */
 const { isMobile, isTablet, isDesktop } = useBreakpoint();

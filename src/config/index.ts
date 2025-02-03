@@ -5,6 +5,8 @@ export const VITE_APP_API = import.meta.env.VITE_APP_API;
 export const excludeUsernameAdmin =
   import.meta.env.VITE_APP_EXCLUDE_ADMIN.split(',');
 
+export const registerNew = import.meta.env.VITE_APP_REGISTER === 'true';
+
 export const navigation: Navigation[] = [
   {
     linkName: 'Dashboard',
