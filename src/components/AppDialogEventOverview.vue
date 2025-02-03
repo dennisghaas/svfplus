@@ -277,8 +277,9 @@ import { UserData } from '@/interface';
 import ProfilePanel from '@/components/ProfilePanel.vue';
 import ButtonCircle from '@/components/ButtonCircle.vue';
 import BadgeType from '@/components/BadgeType.vue';
-import store from '@/store';
 import CheckboxType from '@/components/CheckboxType.vue';
+import store from '@/store';
+import { excludeUsernameAdmin } from '@/config';
 
 const { fetchAllUsers, completeUserData } = useUser();
 const { fetchEventResponse, selectEventResponses } = useEventResponse();
@@ -318,9 +319,7 @@ const filteredUserData = computed(() => {
   const zusagenUsers = userData.value
     .filter(
       (user) =>
-        user.username !== 'admin123' &&
-        user.username !== 'admin' &&
-        user.accessRights !== 'svf_commander' &&
+        !excludeUsernameAdmin.includes(user.username) &&
         user.userIsActivated &&
         !props.playerWithNoAccess.includes(user.id.toString()) &&
         selectEventResponses.value?.some(
@@ -344,9 +343,7 @@ const filteredUserData = computed(() => {
   const absagenUsers = userData.value
     .filter(
       (user) =>
-        user.username !== 'admin123' &&
-        user.username !== 'admin' &&
-        user.accessRights !== 'svf_commander' &&
+        !excludeUsernameAdmin.includes(user.username) &&
         user.userIsActivated &&
         !props.playerWithNoAccess.includes(user.id.toString()) &&
         selectEventResponses.value?.some(
@@ -370,9 +367,7 @@ const filteredUserData = computed(() => {
   const unsicherUsers = userData.value
     .filter(
       (user) =>
-        user.username !== 'admin123' &&
-        user.username !== 'admin' &&
-        user.accessRights !== 'svf_commander' &&
+        !excludeUsernameAdmin.includes(user.username) &&
         user.userIsActivated &&
         !props.playerWithNoAccess.includes(user.id.toString()) &&
         selectEventResponses.value?.some(
@@ -396,9 +391,7 @@ const filteredUserData = computed(() => {
   const keineReaktionUsers = userData.value
     .filter(
       (user) =>
-        user.username !== 'admin123' &&
-        user.username !== 'admin' &&
-        user.accessRights !== 'svf_commander' &&
+        !excludeUsernameAdmin.includes(user.username) &&
         user.userIsActivated &&
         !props.playerWithNoAccess.includes(user.id.toString()) &&
         !selectEventResponses.value?.some(
@@ -412,9 +405,7 @@ const filteredUserData = computed(() => {
 
   const nichtNominiertUsers = userData.value.filter(
     (user) =>
-      user.username !== 'admin123' &&
-      user.username !== 'admin' &&
-      user.accessRights !== 'svf_commander' &&
+      !excludeUsernameAdmin.includes(user.username) &&
       user.userIsActivated &&
       props.playerWithNoAccess.includes(user.id.toString())
   );

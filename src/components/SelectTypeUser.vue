@@ -18,8 +18,7 @@
           <option
             v-if="
               user.id !== 1 &&
-              user.username !== 'admin123' &&
-              user.username !== 'admin' &&
+              !excludeUsernameAdmin.includes(user.username) &&
               !selectedUsers.includes(`${user.id}`)
             "
             :value="user.id"
@@ -49,6 +48,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useUser } from '@/composables/useUser.ts';
+import { excludeUsernameAdmin } from '@/config';
 
 const props = defineProps({
   selectID: {

@@ -78,7 +78,7 @@
 import { onMounted, ref, computed, Ref } from 'vue';
 import { useUser } from '@/composables/useUser.ts';
 import store from '@/store';
-import { accessibleRoles } from '@/config';
+import { accessibleRoles, excludeUsernameAdmin } from '@/config';
 import { UserData } from '@/interface';
 import CardMember from '@/components/CardMember.vue';
 import RoleDots from '@/components/RoleDots.vue';
@@ -98,7 +98,8 @@ const filteredUsers = computed<UserData[]>(() => {
 
   // Filter out users who are not activated
   const activatedUsers = completeUserData.value.filter(
-    (user) => user.userIsActivated && user.username !== 'admin'
+    (user) =>
+      user.userIsActivated && !excludeUsernameAdmin.includes(user.username)
   ) as UserData[];
 
   if (updatedValue.value === 'Alle') {
