@@ -319,6 +319,7 @@ const filteredUserData = computed(() => {
     .filter(
       (user) =>
         user.username !== 'admin123' &&
+        user.username !== 'admin' &&
         user.accessRights !== 'svf_commander' &&
         user.userIsActivated &&
         !props.playerWithNoAccess.includes(user.id.toString()) &&
@@ -344,6 +345,7 @@ const filteredUserData = computed(() => {
     .filter(
       (user) =>
         user.username !== 'admin123' &&
+        user.username !== 'admin' &&
         user.accessRights !== 'svf_commander' &&
         user.userIsActivated &&
         !props.playerWithNoAccess.includes(user.id.toString()) &&
@@ -369,6 +371,7 @@ const filteredUserData = computed(() => {
     .filter(
       (user) =>
         user.username !== 'admin123' &&
+        user.username !== 'admin' &&
         user.accessRights !== 'svf_commander' &&
         user.userIsActivated &&
         !props.playerWithNoAccess.includes(user.id.toString()) &&
@@ -394,6 +397,7 @@ const filteredUserData = computed(() => {
     .filter(
       (user) =>
         user.username !== 'admin123' &&
+        user.username !== 'admin' &&
         user.accessRights !== 'svf_commander' &&
         user.userIsActivated &&
         !props.playerWithNoAccess.includes(user.id.toString()) &&
@@ -409,6 +413,7 @@ const filteredUserData = computed(() => {
   const nichtNominiertUsers = userData.value.filter(
     (user) =>
       user.username !== 'admin123' &&
+      user.username !== 'admin' &&
       user.accessRights !== 'svf_commander' &&
       user.userIsActivated &&
       props.playerWithNoAccess.includes(user.id.toString())
