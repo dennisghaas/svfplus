@@ -318,7 +318,7 @@ const filteredUserData = computed(() => {
   const zusagenUsers = userData.value
     .filter(
       (user) =>
-        user.username !== 'admin' &&
+        user.username !== 'admin123' &&
         user.accessRights !== 'svf_commander' &&
         user.userIsActivated &&
         !props.playerWithNoAccess.includes(user.id.toString()) &&
@@ -343,7 +343,7 @@ const filteredUserData = computed(() => {
   const absagenUsers = userData.value
     .filter(
       (user) =>
-        user.username !== 'admin' &&
+        user.username !== 'admin123' &&
         user.accessRights !== 'svf_commander' &&
         user.userIsActivated &&
         !props.playerWithNoAccess.includes(user.id.toString()) &&
@@ -368,7 +368,7 @@ const filteredUserData = computed(() => {
   const unsicherUsers = userData.value
     .filter(
       (user) =>
-        user.username !== 'admin' &&
+        user.username !== 'admin123' &&
         user.accessRights !== 'svf_commander' &&
         user.userIsActivated &&
         !props.playerWithNoAccess.includes(user.id.toString()) &&
@@ -393,7 +393,7 @@ const filteredUserData = computed(() => {
   const keineReaktionUsers = userData.value
     .filter(
       (user) =>
-        user.username !== 'admin' &&
+        user.username !== 'admin123' &&
         user.accessRights !== 'svf_commander' &&
         user.userIsActivated &&
         !props.playerWithNoAccess.includes(user.id.toString()) &&
@@ -408,7 +408,7 @@ const filteredUserData = computed(() => {
 
   const nichtNominiertUsers = userData.value.filter(
     (user) =>
-      user.username !== 'admin' &&
+      user.username !== 'admin123' &&
       user.accessRights !== 'svf_commander' &&
       user.userIsActivated &&
       props.playerWithNoAccess.includes(user.id.toString())

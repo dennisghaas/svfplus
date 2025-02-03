@@ -18,7 +18,7 @@
           <option
             v-if="
               user.id !== 1 &&
-              user.name !== 'admin' &&
+              user.name !== 'admin123' &&
               !selectedUsers.includes(`${user.id}`)
             "
             :value="user.id"
