@@ -183,6 +183,7 @@ export interface BirthdayObject {
   surname: string;
   birthday: string;
   age: number;
+  newAge: number;
   userImage: userImage;
   nextBirthday?: string | Date;
 }

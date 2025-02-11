@@ -27,7 +27,7 @@
         <p>
           [...] wird am {{ formattedDate.weekday }}, den
           {{ formattedDate.day }}.{{ formattedDate.month }} -
-          <strong>{{ birthdayUser.age }}&nbsp;Jahre</strong> alt
+          <strong>{{ birthdayUser.newAge }}&nbsp;Jahre</strong> alt
         </p>
       </div>
     </template>

@@ -19,18 +19,20 @@ export const useBirthdays = () => {
   }
 
   const getAge = (birthday: string) => {
-    const today = createTodaysDate();
-    const [todayYear, todayMonth, todayDay] = splitDate(today);
-    const [birthYear, birthMonth, birthDay] = splitDate(birthday);
+    if (!birthday) return 0;
 
-    if (!todayYear || !birthYear) return 0; // Sicherstellen, dass die Werte vorhanden sind
+    const today = new Date();
+    const birthDate = new Date(birthday);
 
-    let age = todayYear - birthYear;
+    let age = today.getUTCFullYear() - birthDate.getUTCFullYear();
 
-    if (
-      todayMonth < birthMonth ||
-      (todayMonth === birthMonth && todayDay < birthDay)
-    ) {
+    // Prüfen, ob der Geburtstag in diesem Jahr noch nicht war
+    const hasBirthdayPassed =
+      today.getUTCMonth() > birthDate.getUTCMonth() ||
+      (today.getUTCMonth() === birthDate.getUTCMonth() &&
+        today.getUTCDate() >= birthDate.getUTCDate());
+
+    if (!hasBirthdayPassed) {
       age -= 1;
     }
 
@@ -51,6 +53,7 @@ export const useBirthdays = () => {
           surname: user.surname,
           birthday: extractDateAndTime(user.birthday).day,
           age: age,
+          newAge: age + 1,
           userImage: {
             bgColor: user.userImage.bgColor,
             bgImage: user.userImage.bgImage,
