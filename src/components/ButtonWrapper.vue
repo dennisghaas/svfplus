@@ -22,6 +22,7 @@ defineProps({
   &--as-row {
     flex-direction: row;
     align-items: center;
+    flex-wrap: wrap;
   }
 }
 </style>
