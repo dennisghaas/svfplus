@@ -297,6 +297,7 @@ export const useUser = () => {
     getUserByID,
     changePassword,
     fetchAllUsers,
+    deleteUserByID,
     completeUserData,
     responseMessage,
     id,

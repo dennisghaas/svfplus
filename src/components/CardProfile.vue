@@ -104,6 +104,15 @@
           <span v-if="role.includes('Trainer')"> Befreit </span>
           <span v-else> {{ debts.toFixed(2) }}&nbsp;€ </span>
         </div>
+
+        <div class="card-body-profile--item" v-if="store.state.isMajor">
+          <ButtonType
+            :btn-class="'w-100'"
+            :btn-text="'Spielerprofil löschen'"
+            :type-button="true"
+            @click="handleOpenDeleteDialog()"
+          />
+        </div>
       </div>
 
       <div v-if="isInjured" class="card-body-profile--injured">
@@ -120,34 +129,71 @@
   <AppDialog
     :open="dialogOpen"
     :reaction-layout="false"
-    :headline="`Profil von ${name} bearbeiten`"
+    :headline="
+      !deleteDialog
+        ? `Profil von ${name} bearbeiten`
+        : `${name} wirklich entfernen?`
+    "
     @update:open="closeAppDialog()"
   >
     <template #DialogBody>
       <AppDialogSingleUser
+        v-if="!deleteDialog"
         :id="id"
         :is-current-users-profile="isCurrentUsersProfile"
       />
+      <div v-else class="app-dialog__confirm-deletion">
+        <div class="body-text-b2">
+          <p>
+            Wenn du fortfährst wird das Profil von {{ name }} unwiderruflich
+            gelöscht.
+          </p>
+        </div>
+
+        <ButtonWrapper :align-as-row="true" style="margin-top: 40px">
+          <template #buttons>
+            <ButtonType
+              :btn-text="`Ja, ${name} löschen`"
+              :btn-class="''"
+              :type-button="true"
+              @click="confirmUserDeletion(id)"
+            />
+
+            <ButtonType
+              :btn-text="`Nein, abrechen`"
+              :btn-class="'btn-secondary'"
+              :type-button="true"
+              @click="closeAppDialog()"
+            />
+          </template>
+        </ButtonWrapper>
+      </div>
     </template>
   </AppDialog>
 </template>
 
 <script setup lang="ts">
+import store from '@/store';
 import { computed, ref } from 'vue';
 import { resolveRole } from '@/helpers/resolveRole.ts';
 import { formatDate } from '@/helpers/formatDate.ts';
 import { handleJerseyNumber } from '@/helpers/handleJerseyNumber.ts';
 import { handleSuit } from '@/helpers/handleSuit.ts';
 import { useBreakpoint } from '@/composables/useBreakpoint.ts';
+import { useUser } from '@/composables/useUser.ts';
+import { useRouter } from 'vue-router';
 import CardFrame from '@/components/CardFrame.vue';
 import BadgeType from '@/components/BadgeType.vue';
 import ProfilePanel from '@/components/ProfilePanel.vue';
 import LinkType from '@/components/LinkType.vue';
 import AppDialog from '@/components/AppDialog.vue';
-import store from '@/store';
 import AppDialogSingleUser from '@/components/AppDialogSingleUser.vue';
+import ButtonType from '@/components/ButtonType.vue';
+import ButtonWrapper from '@/components/ButtonWrapper.vue';
 
 const { isMobile } = useBreakpoint();
+const { deleteUserByID } = useUser();
+const router = useRouter();
 
 const props = defineProps({
   title: {
@@ -233,6 +279,7 @@ const dialogOpen = ref(false);
 
 const closeAppDialog = () => {
   dialogOpen.value = false;
+  deleteDialog.value = false;
 
   /* close edit modal dialog if app dialog is closed */
   handleClose();
@@ -245,6 +292,19 @@ const handleClose = () => {
 
 const toggleDialog = () => {
   dialogOpen.value = true;
+  store.updateOverflowHidden(true);
+};
+
+const confirmUserDeletion = async (id: number) => {
+  await deleteUserByID(id);
+  await router.push('/team');
+};
+
+const deleteDialog = ref(false);
+
+const handleOpenDeleteDialog = () => {
+  dialogOpen.value = true;
+  deleteDialog.value = true;
   store.updateOverflowHidden(true);
 };
 </script>
